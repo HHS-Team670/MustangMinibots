@@ -9,7 +9,7 @@ package frc.team670.robot;
 
 import frc.team670.robot.Robot;
 
-import edu.wpi.first.wpilibj.RobotBase;
+//import edu.wpi.first.wpilibj.RobotBase;
 
 /**
  * Do NOT add any static variables to this class, or any initialization at all.
@@ -26,6 +26,6 @@ public final class Main {
    * <p>If you change your main robot class, change the parameter type.
    */
   public static void main(String... args) {
-    RobotBase.startRobot(Robot::new);
+    //RobotBase.startRobot(Robot::new);
   }
 }
