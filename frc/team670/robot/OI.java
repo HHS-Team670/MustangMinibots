@@ -7,22 +7,22 @@
 
 package frc.team670.robot;
 
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+//import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.InstantCommand;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.team670.robot.commands.arm.movement.MoveArm;
-import frc.team670.robot.commands.cameras.FlipDriverCameraMode;
-import frc.team670.robot.commands.claw.CloseClaw;
-import frc.team670.robot.commands.claw.OpenClaw;
-import frc.team670.robot.commands.drive.teleop.FlipDriveAndCamera;
-import frc.team670.robot.constants.RobotMap;
-import frc.team670.robot.dataCollection.XKeys;
-import frc.team670.robot.subsystems.Arm;
-import frc.team670.robot.subsystems.Arm.LegalState;
-import frc.team670.robot.utils.MustangController;
-import frc.team670.robot.utils.MustangController.XboxButtons;
+//import edu.wpi.first.wpilibj.command.InstantCommand;
+//import edu.wpi.first.wpilibj.command.Scheduler;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+////import frc.team670.robot.commands.arm.movement.MoveArm;
+////import frc.team670.robot.commands.cameras.FlipDriverCameraMode;
+////import frc.team670.robot.commands.claw.CloseClaw;
+////import frc.team670.robot.commsands.claw.OpenClaw;
+////import frc.team670.robot.commands.drive.teleop.FlipDriveAndCamera;
+////import frc.team670.robot.constants.RobotMap;
+////import frc.team670.robot.dataCollection.XKeys;
+////import frc.team670.robot.subsystems.Arm;
+////import frc.team670.robot.subsystems.Arm.LegalState;
+////import frc.team670.robot.utils.MustangController;
+////import frc.team670.robot.utils.MustangController.XboxButtons;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -31,32 +31,32 @@ import frc.team670.robot.utils.MustangController.XboxButtons;
 public class OI {
 
   // Controllers/Joysticks
-  private MustangController driverController;
-
-  private XKeys xkeys;
-
-  // Buttons
-  private JoystickButton toggleReverseDrive, toggleDriverCameraMode;
-  private JoystickButton armToNeutral;  
-
-  private JoystickButton dropBall, grabBall;
+//  private MustangController driverController;
+//
+//  private XKeys xkeys;
+//
+//  // Buttons
+//  private JoystickButton toggleReverseDrive, toggleDriverCameraMode;
+//  private JoystickButton armToNeutral;  
+//
+//  private JoystickButton dropBall, grabBall;
 
   public OI() {
-    driverController = new MustangController(RobotMap.DRIVER_CONTROLLER_PORT);
-    // operatorController = new MustangController(RobotMap.OPERATOR_CONTROLLER_PORT);
-    xkeys = new XKeys();
-    toggleReverseDrive = new JoystickButton(driverController, XboxButtons.LEFT_BUMPER);
-    toggleReverseDrive.whenPressed(new FlipDriveAndCamera());
-    toggleDriverCameraMode = new JoystickButton(driverController, XboxButtons.B);
-    toggleDriverCameraMode.whenPressed(new FlipDriverCameraMode());
-    armToNeutral = new JoystickButton(driverController, XboxButtons.A);
-    armToNeutral.whenPressed(
-      new InstantCommand() {
-        protected void initialize() {
-          Scheduler.getInstance().add(new MoveArm(Arm.getArmState(LegalState.NEUTRAL), Robot.arm));
-        }
-      }
-    );
+//    driverController = new MustangController(RobotMap.DRIVER_CONTROLLER_PORT);
+//    // operatorController = new MustangController(RobotMap.OPERATOR_CONTROLLER_PORT);
+//    xkeys = new XKeys();
+//    toggleReverseDrive = new JoystickButton(driverController, XboxButtons.LEFT_BUMPER);
+//    toggleReverseDrive.whenPressed(new FlipDriveAndCamera());
+//    toggleDriverCameraMode = new JoystickButton(driverController, XboxButtons.B);
+//    toggleDriverCameraMode.whenPressed(new FlipDriverCameraMode());
+//    armToNeutral = new JoystickButton(driverController, XboxButtons.A);
+//    armToNeutral.whenPressed(
+//      new InstantCommand() {
+//        protected void initialize() {
+//          Scheduler.getInstance().add(new MoveArm(Arm.getArmState(LegalState.NEUTRAL), Robot.arm));
+//        }
+//      }
+//    );
 
     // FOR TESTING OPENING/CLOSING the claw
     // dropBall = new JoystickButton(driverController, XboxButtons.Y);
