@@ -6,9 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 
-//import edu.wpi.first.wpilibj.DriverStation;
-//import edu.wpi.first.wpilibj.Notifier;
-//import frc.team670.robot.utils.Logger;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,14 +16,11 @@
  */
 public class Robot extends TimedRobot {
   public static OI oi;
+  
   public static DriveBase driveBase = new DriveBase();
+ 
 
- // private Notifier updateArbitraryFeedForwards;
-
- // private Command autonomousCommand, operatorControl;
-  //private SendableChooser<Command> auton_chooser = new SendableChooser<>();
-
-  private boolean firstTimeEnteringTeleop;
+  private Command autonomousCommand, operatorControl;
   
   public Robot() {
   }
@@ -37,7 +31,28 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    // auton_chooser.addDefault("Default Auto", new TimeDrive());
+    // chooser.addObject("My Auto", new MyAutoCommand());
+
+    
     oi = new OI();
+
+    try
+    {
+        Logger.CustomLogger.setup();
+    }
+    catch (Throwable e) { Logger.logException(e);}
+    
+    Logger.consoleLog();
+
+    
+    Logger.consoleLog();
+    System.out.println("Robot init");
+
+    
+    System.out.println("LED Setup Run");
+
+    // autonomousCommand = oi.getSelectedAutonCommand();
   }
 
   /**
@@ -48,9 +63,11 @@ public class Robot extends TimedRobot {
    * <p>This runs after the mode specific periodic functions, but before
    * LiveWindow and SmartDashboard integrated updating.
    */  
-  @Override
+ @Override
   public void robotPeriodic() {
-    //driveBase.sendEncoderDataToDashboard();
+    // SmartDashboard.putNumber("gyro", (int) sensors.getAngle() % 360);
+    // SmartDashboard.putString("current-command", Scheduler.getInstance().getName());
+   // driveBase.sendEncoderDataToDashboard();
 
   }
   /**
@@ -60,78 +77,46 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-	  Logger.consoleLog("Robot Disabled");
-   // // autonomousCommand = oi.getSelectedAutonCommand();
+//    SmartDashboard.putString("robot-state", "disabledPeriodic()");
+    Logger.consoleLog("Robot Disabled");
+    // autonomousCommand = oi.getSelectedAutonCommand();
+    //leds.setStillDrive(true);
     // driveBase.initCoastMode();
+//    intake.stop();
+//    elbow.stop();
+//    extension.stop();
+//    wrist.stop();
+    //TODO Stop motors here
   }
 
   @Override
-  public void disabledPeriodic() {
+  public void disabledPeriodic() throws Exception {
 
-   // driveBase.sendEncoderDataToDashboard();
+    //sensors.sendUltrasonicDataToDashboard();
+    //driveBase.sendEncoderDataToDashboard();
 
-    //Scheduler.getInstance().run();
+    Scheduler.getInstance().run();
   }
 
-  /**
-   * This autonomous (along with the chooser code above) shows how to select
-   * between different autonomous modes using the dashboard. The sendable
-   * chooser code works with the Java SmartDashboard. If you prefer the
-   * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-   * getString code to get the auto name from the text box below the Gyro
-   *
-   * <p>You can add additional auto modes by adding additional commands to the
-   * chooser code above (like the commented example) or additional comparisons
-   * to the switch structure below with additional strings & commands.
-   */
-  @Override
-  public void autonomousInit() {
-
-//    if(DriverStation.getInstance().getAlliance().equals(Alliance.Red)) {
-//      leds.changeAlliance(false);
-//    } else if (DriverStation.getInstance().getAlliance().equals(Alliance.Blue)) {
-//      leds.changeAlliance(true);
-//    } else {
-//      leds.changeAlliance(true);
-//    }
-//    leds.setForwardData(true);
-//
-//    driveBase.initBrakeMode();
-//
-    Logger.consoleLog("Auton Started");
-//
-//    Scheduler.getInstance().add(new SafelyResetExtension());
-//
-//    if (autonomousCommand != null) {
-//      autonomousCommand.start();
-//    }
-//
-//    // if (operatorControl != null) {
-//    //   operatorControl.start();
-    // }
-  }
-
-  /**
-   * This function is called periodically during autonomous.
-   */
-  @Override
-  public void autonomousPeriodic() {
-//    Scheduler.getInstance().run();
-  }
+  
 
   @Override
   public void teleopInit() {
-   // driveBase.initBrakeMode();
-//
+    //SmartDashboard.putString("robot-state", "teleopPeriodic()");
+    //leds.setForwardData(true);
+    //driveBase.initBrakeMode();
+
 //    if(DriverStation.getInstance().getMatchTime() < 130) {
 //      Scheduler.getInstance().add(new SafelyResetExtension());
 //    }
-//
-   Logger.consoleLog("Teleop Started");
-//    // This makes sure that the autonomous stops running when
-//    // teleop starts running. If you want the autonomous to
-//    // continue until interrupted by another command, remove
-//    // this line or comment it out.
+	  
+	  //TODO Test cocmmand goes here
+
+    Logger.consoleLog("Teleop Started");
+    // This makes sure that the autonomous stops running when
+    // teleop starts running. If you want the autonomous to
+    // continue until interrupted by another command, remove
+    // this line or comment it out.
 //    if (autonomousCommand != null) {
 //      autonomousCommand.cancel();
 //    }
@@ -139,10 +124,11 @@ public class Robot extends TimedRobot {
 
   /**
    * This function is called periodically during operator control.
+ * @throws Exception 
    */
   @Override
-  public void teleopPeriodic() {
-    //Scheduler.getInstance().run();
+  public void teleopPeriodic() throws Exception {
+    Scheduler.getInstance().run();
   }
 
   /**

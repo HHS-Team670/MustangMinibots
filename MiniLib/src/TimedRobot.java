@@ -55,10 +55,11 @@ public class TimedRobot extends IterativeRobotBase {
 
   /**
    * Provide an alternate "main loop" via startCompetition().
+ * @throws Exception 
    */
   @Override
   @SuppressWarnings("UnsafeFinalization")
-  public void startCompetition() {
+  public void startCompetition() throws Exception {
     robotInit();
 
     // Tell the DS that the robot is ready to be enabled

@@ -93,7 +93,7 @@ public abstract class Command {
   /**
    * The {@link CommandGroup} this is in.
    */
- // private CommandGroup m_parent;
+ private CommandGroup m_parent;
 
   /**
    * Creates a new command. The name of this command will be set to its class name.
@@ -224,9 +224,9 @@ public abstract class Command {
    *
    * @return the time since this command was initialized (in seconds).
    */
-//  public final synchronized double timeSinceInitialized() {
-//    return m_startTime < 0 ? 0 : Timer.getFPGATimestamp() - m_startTime;
-//  }
+  public final synchronized double timeSinceInitialized() {
+    return m_startTime < 0 ? 0 : System.currentTimeMillis() - m_startTime; // TODO System.time
+  }
 
   /**
    * This method specifies that the given {@link Subsystem} is used by this command. This method is
@@ -235,14 +235,13 @@ public abstract class Command {
    * <p>Note that the recommended way to call this method is in the constructor.
    *
    * @param subsystem the {@link Subsystem} required
- * @throws Exception 
+   * @throws Exception 
    * @throws IllegalArgumentException     if subsystem is null
    * @throws IllegalUseOfCommandException if this command has started before or if it has been given
    *                                      to a {@link CommandGroup}
    * @see Subsystem
    */
   protected synchronized void requires(Subsystem subsystem) throws Exception {
-//    validate("Can not add new requirement to command");
 	 if(!m_locked) {
 		  if (subsystem != null) {
 		      m_requirements.add(subsystem);
@@ -279,35 +278,39 @@ public abstract class Command {
    * The run method is used internally to actually run the commands.
    *
    * @return whether or not the command should stay within the {@link Scheduler}.
+ * @throws Exception 
    */
-//  synchronized boolean run() {
-//    if (!m_runWhenDisabled && m_parent == null && RobotState.isDisabled()) {
-//      cancel();
-//    }
-//    if (isCanceled()) {
-//      return false;
-//    }
-//    if (!m_initialized) {
-//      m_initialized = true;
-//      startTiming();
-//      _initialize();
-//      initialize();
-//    }
-//    _execute();
-//    execute();
-//    return !isFinished();
-//  }
+  synchronized boolean run() throws Exception {
+    if (!m_runWhenDisabled && m_parent == null && RobotState.isDisabled()) {
+      cancel();
+    }
+    if (isCanceled()) {
+      return false;
+    }
+    if (!m_initialized) {
+      m_initialized = true;
+      startTiming();
+      _initialize();
+      initialize();
+    }
+    _execute();
+    execute();
+    return !isFinished();
+  }
 
   /**
    * The initialize method is called the first time this Command is run after being started.
    */
-  protected void initialize() {}
+  protected void initialize() {
+	 
+  }
 
   /**
    * A shadow method called before {@link Command#initialize() initialize()}.
    */
   @SuppressWarnings("MethodName")
   void _initialize() {
+	  m_startTime = System.currentTimeMillis();
   }
 
   /**
@@ -320,7 +323,7 @@ public abstract class Command {
    * A shadow method called before {@link Command#execute() execute()}.
    */
   @SuppressWarnings("MethodName")
-  void _execute() {
+  void _execute() throws Exception{
   }
 
   /**
@@ -388,9 +391,9 @@ public abstract class Command {
    *
    * @return whether the time has expired
    */
-//  protected synchronized boolean isTimedOut() {
-//    return m_timeout != -1 && timeSinceInitialized() >= m_timeout;
-//  }
+  protected synchronized boolean isTimedOut() {
+    return m_timeout != -1 && timeSinceInitialized() >= m_timeout;
+  }
 
   /**
    * Returns the requirements (as an {@link Enumeration Enumeration} of {@link Subsystem
@@ -399,9 +402,9 @@ public abstract class Command {
    * @return the requirements (as an {@link Enumeration Enumeration} of {@link Subsystem
    * Subsystems}) of this command
    */
-//  synchronized Enumeration getRequirements() {
-//    return m_requirements.getElements();
-//  }
+  synchronized Enumeration getRequirements() {
+    return m_requirements.getElements();
+  }
 
   /**
    * Prevents further changes from being made.
@@ -414,37 +417,38 @@ public abstract class Command {
    * If changes are locked, then this will throw an {@link IllegalUseOfCommandException}.
    *
    * @param message the message to say (it is appended by a default message)
+ * @throws Exception 
    */
-//  synchronized void validate(String message) {
-//    if (m_locked) {
-//      throw new IllegalUseOfCommandException(message
-//          + " after being started or being added to a command group");
-//    }
-//  }
+  synchronized void validate(String message) throws Exception {
+    if (m_locked) {
+      throw new Exception(message  + " after being started or being added to a command group");
+    }
+  }
 
   /**
    * Sets the parent of this command. No actual change is made to the group.
    *
    * @param parent the parent
+ * @throws Exception 
    * @throws IllegalUseOfCommandException if this {@link Command} already is already in a group
    */
-//  synchronized void setParent(CommandGroup parent) {
-//    if (m_parent != null) {
-//      throw new IllegalUseOfCommandException(
-//          "Can not give command to a command group after already being put in a command group");
-//    }
-//    lockChanges();
-//    m_parent = parent;
-//  }
+  synchronized void setParent(CommandGroup parent) throws Exception {
+    if (m_parent != null) {
+      throw new Exception(
+          "Can not give command to a command group after already being put in a command group");
+    }
+    lockChanges();
+    m_parent = parent;
+  }
 
   /**
    * Returns whether the command has a parent.
    *
    * @return true if the command has a parent.
    */
-//  synchronized boolean isParented() {
-//    return m_parent != null;
-//  }
+  synchronized boolean isParented() {
+    return m_parent != null;
+  }
 
   /**
    * Clears list of subsystem requirements. This is only used by
@@ -459,18 +463,19 @@ public abstract class Command {
    * Starts up the command. Gets the command ready to start. <p> Note that the command will
    * eventually start, however it will not necessarily do so immediately, and may in fact be
    * canceled before initialize is even called. </p>
+ * @throws Exception 
    *
    * @throws IllegalUseOfCommandException if the command is a part of a CommandGroup
    */
-//  public synchronized void start() {
-//    lockChanges();
-//    if (m_parent != null) {
-//      throw new IllegalUseOfCommandException(
-//          "Can not start a command that is a part of a command group");
-//    }
-//   // Scheduler.getInstance().add(this);
-//    m_completed = false;
-//  }
+  public synchronized void start() throws Exception {
+    lockChanges();
+    if (m_parent != null) {
+      throw new Exception(
+          "Can not start a command that is a part of a command group");
+    }
+   // Scheduler.getInstance().add(this);
+    m_completed = false;
+  }
 
   /**
    * This is used internally to mark that the command has been started. The lifecycle of a command
@@ -502,16 +507,16 @@ public abstract class Command {
    * command is running though, then the command will be marked as canceled and eventually removed.
    * </p> <p> A command can not be canceled if it is a part of a command group, you must cancel the
    * command group instead. </p>
+ * @throws Exception 
    *
    * @throws IllegalUseOfCommandException if this command is a part of a command group
    */
-//  public synchronized void cancel() {
-//    if (m_parent != null) {
-//      throw new IllegalUseOfCommandException("Can not manually cancel a command in a command "
-//          + "group");
-//    }
-//    _cancel();
-//  }
+  public synchronized void cancel() throws Exception {
+    if (m_parent != null) {
+      throw new Exception("Can not manually cancel a command in a command " + "group");
+    }
+    _cancel();
+  }
 
   /**
    * This works like cancel(), except that it doesn't throw an exception if it is a part of a
@@ -566,9 +571,9 @@ public abstract class Command {
    * @param system the system
    * @return whether or not the subsystem is required, or false if given null
    */
-//  public synchronized boolean doesRequire(Subsystem system) {
-//    return m_requirements.contains(system);
-//  }
+  public synchronized boolean doesRequire(Subsystem system) {
+    return m_requirements.contains(system);
+  }
 
   /**
    * Returns the {@link CommandGroup} that this command is a part of. Will return null if this

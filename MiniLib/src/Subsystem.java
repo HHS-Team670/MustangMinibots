@@ -104,13 +104,13 @@ public abstract class Subsystem{
    *
    * @return the default command
    */
-//  public Command getDefaultCommand() {
-//    if (!m_initializedDefaultCommand) {
-//      m_initializedDefaultCommand = true;
-//      initDefaultCommand();
-//    }
-//    return m_defaultCommand;
-//  }
+  public Command getDefaultCommand() {
+    if (!m_initializedDefaultCommand) {
+      m_initializedDefaultCommand = true;
+      initDefaultCommand();
+    }
+    return m_defaultCommand;
+  }
 
   /**
    * Returns the default command name, or empty string is there is none.
@@ -131,30 +131,30 @@ public abstract class Subsystem{
    *
    * @param command the new current command
    */
-//  void setCurrentCommand(Command command) {
-//    m_currentCommand = command;
-//    m_currentCommandChanged = true;
-//  }
+  void setCurrentCommand(Command command) {
+    m_currentCommand = command;
+    m_currentCommandChanged = true;
+  }
 
   /**
    * Call this to alert Subsystem that the current command is actually the command. Sometimes, the
    * {@link Subsystem} is told that it has no command while the {@link Scheduler} is going through
    * the loop, only to be soon after given a new one. This will avoid that situation.
    */
-//  void confirmCommand() {
-//    if (m_currentCommandChanged) {
-//      m_currentCommandChanged = false;
-//    }
-//  }
+  void confirmCommand() {
+    if (m_currentCommandChanged) {
+      m_currentCommandChanged = false;
+    }
+  }
 
   /**
    * Returns the command which currently claims this subsystem.
    *
    * @return the command which currently claims this subsystem
    */
-//  public Command getCurrentCommand() {
-//    return m_currentCommand;
-//  }
+  public Command getCurrentCommand() {
+    return m_currentCommand;
+  }
 
   /**
    * Returns the current command name, or empty string if no current command.

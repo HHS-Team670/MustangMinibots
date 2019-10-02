@@ -130,18 +130,21 @@ public abstract class RobotBase  { //implements AutoCloseable
    *
    * @return True if the Robot is currently disabled by the field controls.
    */
-//  public boolean isDisabled() {
-//    return m_ds.isDisabled();
-//  }
+  public boolean isDisabled() {
+    //return m_ds.isDisabled();
+	  return false;
+	  //TODO add a variable to  do all this  suff from server or file
+  }
 
   /**
    * Determine if the Robot is currently enabled.
    *
    * @return True if the Robot is currently enabled by the field controls.
    */
-//  public boolean isEnabled() {
-//    return m_ds.isEnabled();
-//  }
+  public boolean isEnabled() {
+    //return m_ds.isEnabled();
+	  return true;
+  }
 
   /**
    * Determine if the robot is currently in Autonomous mode as determined by the field
@@ -185,7 +188,7 @@ public abstract class RobotBase  { //implements AutoCloseable
   /**
    * Provide an alternate "main loop" via startCompetition().
    */
-  public abstract void startCompetition();
+  public abstract void startCompetition() throws Exception;
 
   @SuppressWarnings("JavadocMethod")
   public static boolean getBooleanProperty(String name, boolean defaultValue) {
@@ -205,9 +208,9 @@ public abstract class RobotBase  { //implements AutoCloseable
   /**
    * Starting point for the applications.
    */
-//  @SuppressWarnings({"PMD.AvoidInstantiatingObjectsInLoops", "PMD.AvoidCatchingThrowable",
-//                     "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
-//  public static <T extends RobotBase> void startRobot(Supplier<T> robotSupplier) {
+  @SuppressWarnings({"PMD.AvoidInstantiatingObjectsInLoops", "PMD.AvoidCatchingThrowable",
+                     "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
+  public static <T extends RobotBase> void startRobot(Supplier<T> robotSupplier) {
 //    if (!HAL.initialize(500, 0)) {
 //      throw new IllegalStateException("Failed to initialize. Terminating");
 //    }
@@ -217,30 +220,30 @@ public abstract class RobotBase  { //implements AutoCloseable
 //    CameraServerJNI.enumerateSinks();
 //
 //    HAL.report(tResourceType.kResourceType_Language, tInstances.kLanguage_Java);
-//
-//    System.out.println("********** Robot program starting **********");
-//
-//    T robot;
-//    try {
-//      robot = robotSupplier.get();
-//    } catch (Throwable throwable) {
-//      Throwable cause = throwable.getCause();
-//      if (cause != null) {
-//        throwable = cause;
-//      }
-//      String robotName = "Unknown";
-//      StackTraceElement[] elements = throwable.getStackTrace();
-//      if (elements.length > 0) {
-//        robotName = elements[0].getClassName();
-//      }
+
+    System.out.println("********** Robot program starting **********");
+
+    T robot;
+    try {
+      robot = robotSupplier.get();
+    } catch (Throwable throwable) {
+      Throwable cause = throwable.getCause();
+      if (cause != null) {
+        throwable = cause;
+      }
+      String robotName = "Unknown";
+      StackTraceElement[] elements = throwable.getStackTrace();
+      if (elements.length > 0) {
+        robotName = elements[0].getClassName();
+      }
 //      DriverStation.reportError("Unhandled exception instantiating robot " + robotName + " "
 //          + throwable.toString(), elements);
 //      DriverStation.reportWarning("Robots should not quit, but yours did!", false);
 //      DriverStation.reportError("Could not instantiate robot " + robotName + "!", false);
-//      System.exit(1);
-//      return;
-//    }
-//
+      System.exit(1);
+      return;
+    }
+
 //    if (isReal()) {
 //      try {
 //        final File file = new File("/tmp/frc_versions/FRC_Lib_Version.ini");
@@ -261,21 +264,21 @@ public abstract class RobotBase  { //implements AutoCloseable
 //                ex.getStackTrace());
 //      }
 //    }
-//
-//    boolean errorOnExit = false;
-//    try {
-//      robot.startCompetition();
-//    } catch (Throwable throwable) {
-//      Throwable cause = throwable.getCause();
-//      if (cause != null) {
-//        throwable = cause;
-//      }
-//      DriverStation.reportError("Unhandled exception: " + throwable.toString(),
-//          throwable.getStackTrace());
-//      errorOnExit = true;
-//    } finally {
-//      // startCompetition never returns unless exception occurs....
-//      DriverStation.reportWarning("Robots should not quit, but yours did!", false);
+
+    boolean errorOnExit = false;
+    try {
+      robot.startCompetition();
+    } catch (Throwable throwable) {
+      Throwable cause = throwable.getCause();
+      if (cause != null) {
+        throwable = cause;
+      }
+     // DriverStation.reportError("Unhandled exception: " + throwable.toString(),
+          //throwable.getStackTrace());
+      errorOnExit = true;
+    } finally {
+      // startCompetition never returns unless exception occurs....
+      //DriverStation.reportWarning("Robots should not quit, but yours did!", false);
 //      if (errorOnExit) {
 //        DriverStation.reportError(
 //            "The startCompetition() method (or methods called by it) should have "
@@ -283,7 +286,7 @@ public abstract class RobotBase  { //implements AutoCloseable
 //      } else {
 //        DriverStation.reportError("Unexpected return from startCompetition() method.", false);
 //      }
-//    }
-//    System.exit(1);
- // }
+    }
+    System.exit(1);
+  }
 }

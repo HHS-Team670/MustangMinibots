@@ -83,7 +83,7 @@ public class Logger {
             //DriverStation ds = DriverStation.getInstance();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss");
 	        Date date = new Date();
-            fileTxt = new FileHandler(String.format("/home/lvuser/Log_%s_%s_%s.txt", "MiniBot tests", 0, dateFormat.format(date)));    
+            fileTxt = new FileHandler(String.format("/tmp/Log_%s_%s_%s.txt", "MiniBot tests", 0, dateFormat.format(date)));    
             
             fileTxt.setFormatter(logFormatter);
 
@@ -242,10 +242,9 @@ public class Logger {
      * log file.
      * @param e The exception to log.
      */
-//    public static void logException(Throwable e)
-//    {
-//        DriverStation.reportError(e.toString(), false);
-//                
-//        e.printStackTrace(Logger.LOG_PRINT_STREAM);
-//    }
+    public static void logException(Throwable e)
+    {
+                
+        e.printStackTrace(Logger.LOG_PRINT_STREAM);
+    }
 }

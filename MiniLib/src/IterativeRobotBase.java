@@ -70,7 +70,7 @@ public abstract class IterativeRobotBase extends RobotBase {
    * Provide an alternate "main loop" via startCompetition().
    */
   @Override
-  public abstract void startCompetition();
+  public abstract void startCompetition() throws Exception;
 
   /* ----------- Overridable initialization code ----------------- */
 
@@ -148,7 +148,7 @@ public abstract class IterativeRobotBase extends RobotBase {
   /**
    * Periodic code for disabled mode should go here.
    */
-  public void disabledPeriodic() {
+  public void disabledPeriodic() throws Exception{
     if (m_dpFirstRun) {
       System.out.println("Default disabledPeriodic() method... Override me!");
       m_dpFirstRun = false;
@@ -172,7 +172,7 @@ public abstract class IterativeRobotBase extends RobotBase {
   /**
    * Periodic code for teleop mode should go here.
    */
-  public void teleopPeriodic() {
+  public void teleopPeriodic() throws Exception{
     if (m_tpFirstRun) {
       System.out.println("Default teleopPeriodic() method... Override me!");
       m_tpFirstRun = false;
@@ -192,7 +192,7 @@ public abstract class IterativeRobotBase extends RobotBase {
     }
   }
 
-  protected void loopFunc() {
+  protected void loopFunc() throws Exception {
 //    m_watchdog.reset();
 //
 //    // Call the appropriate function depending upon the current robot mode
@@ -236,8 +236,13 @@ public abstract class IterativeRobotBase extends RobotBase {
 //      }
 //
 //      HAL.observeUserProgramTeleop();
-//      teleopPeriodic();
-//      m_watchdog.addEpoch("teleopPeriodic()");
+	  if(isDisabled()) {
+		  // TODO shut down motors here
+	  }
+	  else {  
+      teleopPeriodic();
+	  }
+     // m_watchdog.addEpoch("teleopPeriodic()");
 //    } else {
 //      // Call TestInit() if we are now just entering test mode from either a different mode or from
 //      // power-on.
@@ -268,7 +273,7 @@ public abstract class IterativeRobotBase extends RobotBase {
 //    // Warn on loop time overruns
 //    if (m_watchdog.isExpired()) {
 //      m_watchdog.printEpochs();
-    //}
+//    }
   }
 
   private void printLoopOverrunMessage() {
