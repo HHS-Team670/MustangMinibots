@@ -17,7 +17,7 @@ public class Timer {
   @SuppressWarnings("AbbreviationAsWordInName")
   public static double getFPGATimestamp() {
     //return RobotController.getFPGATime() / 1000000.0;
-	  return 0.0; //TODO RobotController has to be setup correctly which can be done by moodifying HALUtil
+	  return System.currentTimeMillis();
   }
 
   /**
@@ -53,14 +53,14 @@ public class Timer {
   private double m_accumulatedTime;
   private boolean m_running;
 
- // @SuppressWarnings("JavadocMethod")
-//  public Timer() {
-//    reset();
-//  }
+ @SuppressWarnings("JavadocMethod")
+ public Timer() {
+   reset();
+ }
 
-//  private double getMsClock() {
-//    return RobotController.getFPGATime() / 1000.0;
-//  }
+ private double getMsClock() {
+   return System.currentTimeMillis(); // .getFPGATime() / 1000.0;
+ }
 
   /**
    * Get the current time from the timer. If the clock is running it is derived from the current
@@ -69,42 +69,42 @@ public class Timer {
    *
    * @return Current time value for this timer in seconds
    */
-//  public synchronized double get() {
-//    if (m_running) {
-//      return m_accumulatedTime + (getMsClock() - m_startTime) / 1000.0;
-//    } else {
-//      return m_accumulatedTime;
-//    }
-//  }
+ public synchronized double get() {
+   if (m_running) {
+     return m_accumulatedTime + (getMsClock() - m_startTime) / 1000.0;
+   } else {
+     return m_accumulatedTime;
+   }
+ }
 
   /**
    * Reset the timer by setting the time to 0. Make the timer startTime the current time so new
    * requests will be relative now
    */
-//  public synchronized void reset() {
-//    m_accumulatedTime = 0;
-//    m_startTime = getMsClock();
-//  }
+ public synchronized void reset() {
+   m_accumulatedTime = 0;
+   m_startTime = getMsClock();
+ }
 
   /**
    * Start the timer running. Just set the running flag to true indicating that all time requests
    * should be relative to the system clock.
    */
-//  public synchronized void start() {
-//    m_startTime = getMsClock();
-//    m_running = true;
-//  }
+ public synchronized void start() {
+   m_startTime = getMsClock();
+   m_running = true;
+ }
 
   /**
    * Stop the timer. This computes the time as of now and clears the running flag, causing all
    * subsequent time requests to be read from the accumulated time rather than looking at the system
    * clock.
    */
-//  public synchronized void stop() {
-//    final double temp = get();
-//    m_accumulatedTime = temp;
-//    m_running = false;
-//  }
+ public synchronized void stop() {
+   final double temp = get();
+   m_accumulatedTime = temp;
+   m_running = false;
+ }
 
   /**
    * Check if the period specified has passed and if it has, advance the start time by that period.
@@ -114,13 +114,13 @@ public class Timer {
    * @param period The period to check for (in seconds).
    * @return If the period has passed.
    */
-//  public synchronized boolean hasPeriodPassed(double period) {
-//    if (get() > period) {
-//      // Advance the start time by the period.
-//      // Don't set it to the current time... we want to avoid drift.
-//      m_startTime += period * 1000;
-//      return true;
-//    }
-//    return false;
-//  }
+ public synchronized boolean hasPeriodPassed(double period) {
+   if (get() > period) {
+     // Advance the start time by the period.
+     // Don't set it to the current time... we want to avoid drift.
+     m_startTime += period * 1000;
+     return true;
+   }
+   return false;
+ }
 }
