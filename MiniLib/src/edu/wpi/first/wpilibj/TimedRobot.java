@@ -5,6 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+package edu.wpi.first.wpilibj;
 
 //import edu.wpi.first.hal.FRCNetComm.tInstances;
 //import edu.wpi.first.hal.FRCNetComm.tResourceType;
@@ -68,8 +69,8 @@ public class TimedRobot extends IterativeRobotBase {
 //    m_expirationTime = RobotController.getFPGATime() * 1e-6 + m_period;
 //    updateAlarm();
 //
-//    // Loop forever, calling the appropriate mode-dependent function
-//    while (true) {
+    // Loop forever, calling the appropriate mode-dependent function
+    while (true) {
 //      long curTime = NotifierJNI.waitForNotifierAlarm(m_notifier);
 //      if (curTime == 0) {
 //        break;
@@ -96,4 +97,4 @@ public class TimedRobot extends IterativeRobotBase {
 //  private void updateAlarm() {
 //   // NotifierJNI.updateNotifierAlarm(m_notifier, (long) (m_expirationTime * 1e6));
 //  }
-//}
+}

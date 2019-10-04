@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Main",
+            "request": "launch",
+            "mainClass": "frc.team670.robot.Main",
+            "projectName": "MiniLib"
+        }
+    ]
+}

@@ -5,8 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+package frc.team670.robot.commands.drive;
 
-//import frc.team670.robot.utils.Logger;
+import edu.wpi.first.wpilibj.command.Command;
+import frc.team670.robot.utils.Logger;
 
 /**
  * An example command.  You can replace me with your own command.

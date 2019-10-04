@@ -5,6 +5,8 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+package edu.wpi.first.wpilibj.command;
+
 import java.util.Enumeration;
 import java.util.Vector;
 

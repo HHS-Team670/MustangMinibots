@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-
+package edu.wpi.first.wpilibj;
 
 /**
  * Contains functions for roboRIO functionality.

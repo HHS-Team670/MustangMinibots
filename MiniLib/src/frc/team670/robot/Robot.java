@@ -5,7 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+package frc.team670.robot;
 
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.team670.robot.subsystems.DriveBase;
+import frc.team670.robot.utils.Logger;
 
 /**
  * The VM is configured to automatically run this class, and to call the

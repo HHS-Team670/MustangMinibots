@@ -5,10 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+package edu.wpi.first.wpilibj.command;
 
 import java.util.Enumeration;
 
-//import edu.wpi.first.wpilibj.RobotState;
+import edu.wpi.first.wpilibj.RobotState;
 //import edu.wpi.first.wpilibj.SendableBase;
 //import edu.wpi.first.wpilibj.Timer;
 //import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;

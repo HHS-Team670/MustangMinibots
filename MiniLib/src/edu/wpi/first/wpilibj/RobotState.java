@@ -5,6 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+package edu.wpi.first.wpilibj;
 
 @SuppressWarnings("JavadocMethod")
 public final class RobotState {
