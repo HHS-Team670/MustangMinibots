@@ -69,6 +69,10 @@ public class TimedRobot extends IterativeRobotBase {
 //    m_expirationTime = RobotController.getFPGATime() * 1e-6 + m_period;
 //    updateAlarm();
 //
+
+    // using currentTime/nextTime to replace the NotifierJNI - we could probably get NotifierJNI to work if it ever mattered
+    long millisToNextTime = (long)(1000.0 * m_period);
+    long nextTime = System.currentTimeMillis() + millisToNextTime;
     // Loop forever, calling the appropriate mode-dependent function
     while (true) {
 //      long curTime = NotifierJNI.waitForNotifierAlarm(m_notifier);
@@ -79,7 +83,13 @@ public class TimedRobot extends IterativeRobotBase {
 //      m_expirationTime += m_period;
 //      updateAlarm();
 
+      long currentTime = System.currentTimeMillis();
+      while (currentTime < nextTime) {
+        Thread.sleep(nextTime - currentTime);
+        currentTime = System.currentTimeMillis();
+      }
       loopFunc();
+      nextTime = currentTime + millisToNextTime;
     }
   }
 
