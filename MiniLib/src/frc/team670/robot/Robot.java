@@ -10,6 +10,7 @@ package frc.team670.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.team670.robot.commands.drive.TimeDrive;
 import frc.team670.robot.subsystems.DriveBase;
 import frc.team670.robot.utils.Logger;
 
@@ -26,7 +27,7 @@ public class Robot extends TimedRobot {
   public static DriveBase driveBase = new DriveBase();
  
 
-  private Command autonomousCommand, operatorControl;
+//  private Command autonomousCommand, operatorControl;
   
   public Robot() {
   }
@@ -43,22 +44,16 @@ public class Robot extends TimedRobot {
     
     oi = new OI();
 
-    try
-    {
-        Logger.CustomLogger.setup();
+    try {
+      Logger.CustomLogger.setup();
+    } catch (Throwable e) {
+      Logger.logException(e);
     }
-    catch (Throwable e) { Logger.logException(e);}
     
     Logger.consoleLog();
 
-    
-    Logger.consoleLog();
-    System.out.println("Robot init");
-
-    
-    System.out.println("LED Setup Run");
-
-    // autonomousCommand = oi.getSelectedAutonCommand();
+    // The command we want to test goes here
+    Scheduler.getInstance().add(new TimeDrive(5, 0.2));
   }
 
   /**
@@ -116,8 +111,6 @@ public class Robot extends TimedRobot {
 //      Scheduler.getInstance().add(new SafelyResetExtension());
 //    }
 	  
-	  //TODO Test cocmmand goes here
-
     Logger.consoleLog("Teleop Started");
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to

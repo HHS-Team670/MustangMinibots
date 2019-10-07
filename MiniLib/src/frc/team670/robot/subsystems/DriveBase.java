@@ -11,12 +11,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.team670.robot.commands.drive.TimeDrive;
+
 /**
  * Represents a tank drive base.
  * 
  * @author lakshbhambhani
  */
-public class DriveBase {  
+public class DriveBase extends Subsystem {  
 
 	public DriveBase() {
 		
@@ -85,4 +88,9 @@ public class DriveBase {
 //      SmartDashboard.putString("Left Encoder Inches", "null");
 //    }
 //  }
+
+  @Override
+  public void initDefaultCommand() {
+    setDefaultCommand(null);
+  }
 }
