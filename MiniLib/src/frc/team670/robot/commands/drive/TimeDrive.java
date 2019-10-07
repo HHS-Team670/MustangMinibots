@@ -8,6 +8,7 @@
 package frc.team670.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.team670.robot.Robot;
 import frc.team670.robot.utils.Logger;
 
 /**
@@ -22,35 +23,34 @@ public class TimeDrive extends Command {
     this.speed = speed;
     this.seconds = seconds;
     executeCounter = 0;
-    //requires(Robot.driveBase);
+    requires(Robot.driveBase);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     setTimeout(seconds);
-    //Logger.consoleLog("Speed: %s Seconds: %s", speed, seconds);
+    Logger.consoleLog("Speed: %s Seconds: %s", speed, seconds);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() { 
-    //Robot.driveBase.tankDrive(speed, speed, false);
-    //Logger.consoleLog();
-
+    Robot.driveBase.tankDrive(speed, speed, false);
+    Logger.consoleLog();
   }
 
   // Make this return true when this Command no longer needs to run execute()
-  //@Override
-//  protected boolean isFinished() {
-//    //return isTimedOut();
-//  }
+  @Override
+  protected boolean isFinished() {
+    return isTimedOut();
+  }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-   // Robot.driveBase.stop();
-    //ogger.consoleLog("Speed: %s Seconds: %s", speed, seconds);
+    Robot.driveBase.stop();
+    Logger.consoleLog("Speed: %s Seconds: %s", speed, seconds);
   }
 
   // Called when another command which requires one or more of the same
@@ -59,10 +59,4 @@ public class TimeDrive extends Command {
   protected void interrupted() {
     end();
   }
-
-@Override
-protected boolean isFinished() {
-	// TODO Auto-generated method stub
-	return false;
-}
 }

@@ -11,7 +11,7 @@ import java.util.Enumeration;
 
 import edu.wpi.first.wpilibj.RobotState;
 //import edu.wpi.first.wpilibj.SendableBase;
-//import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Timer;
 //import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 
 /**
@@ -145,7 +145,7 @@ public abstract class Command {
    */
   public Command(Subsystem subsystem) {
     this();
-    //requires(subsystem);
+    requires(subsystem);
   }
 
   /**
@@ -157,7 +157,7 @@ public abstract class Command {
    */
   public Command(String name, Subsystem subsystem) {
     this(name);
-    //requires(subsystem);
+    requires(subsystem);
   }
 
   /**
@@ -171,7 +171,7 @@ public abstract class Command {
    */
   public Command(double timeout, Subsystem subsystem) {
     this(timeout);
-    //requires(subsystem);
+    requires(subsystem);
   }
 
   /**
@@ -202,7 +202,7 @@ public abstract class Command {
    */
   public Command(String name, double timeout, Subsystem subsystem) {
     this(name, timeout);
-    //requires(subsystem);
+    requires(subsystem);
   }
 
   /**
@@ -226,7 +226,7 @@ public abstract class Command {
    * @return the time since this command was initialized (in seconds).
    */
   public final synchronized double timeSinceInitialized() {
-    return m_startTime < 0 ? 0 : System.currentTimeMillis() - m_startTime; // TODO System.time
+    return m_startTime < 0 ? 0 : (System.currentTimeMillis() - m_startTime) / 1000.0;
   }
 
   /**
@@ -242,7 +242,7 @@ public abstract class Command {
    *                                      to a {@link CommandGroup}
    * @see Subsystem
    */
-  protected synchronized void requires(Subsystem subsystem) throws Exception {
+  protected synchronized void requires(Subsystem subsystem) {
 	 if(!m_locked) {
 		  if (subsystem != null) {
 		      m_requirements.add(subsystem);
@@ -251,7 +251,7 @@ public abstract class Command {
 		   } 
 	  }
 	 else {
-		 throw new Exception("Command should not be lock");
+		 throw new IllegalUseOfCommandException("Command should not be lock");
 	 }
   }
 
@@ -382,7 +382,7 @@ public abstract class Command {
    * Command#initialize() initialize()} is, inside the {@link Command#run() run()} method.
    */
   private void startTiming() {
-   // m_startTime = Timer.getFPGATimestamp();
+    m_startTime = Timer.getFPGATimestamp();
   }
 
   /**
