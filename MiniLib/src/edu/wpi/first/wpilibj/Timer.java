@@ -17,7 +17,7 @@ public class Timer {
   @SuppressWarnings("AbbreviationAsWordInName")
   public static double getFPGATimestamp() {
     //return RobotController.getFPGATime() / 1000000.0;
-	  return System.currentTimeMillis();
+	  return System.currentTimeMillis() / 1000.0;
   }
 
   /**
@@ -59,7 +59,7 @@ public class Timer {
  }
 
  private double getMsClock() {
-   return System.currentTimeMillis(); // .getFPGATime() / 1000.0;
+   return System.currentTimeMillis();
  }
 
   /**

@@ -28,7 +28,7 @@ import java.util.Collections;
  *
  * @see Command
  */
-public abstract class Subsystem{
+public abstract class Subsystem {
   /**
    * Whether or not getDefaultCommand() was called.
    */
@@ -89,16 +89,16 @@ public abstract class Subsystem{
    * @param command the default command (or null if there should be none)
    * @throws IllegalUseOfCommandException if the command does not require the subsystem
    */
-//  public void setDefaultCommand(Command command) {
-//    if (command == null) {
-//      m_defaultCommand = null;
-//    } else {
-//      if (!Collections.list(command.getRequirements()).contains(this)) {
-//        throw new IllegalUseOfCommandException("A default command must require the subsystem");
-//      }
-//      m_defaultCommand = command;
-//    }
- // }
+ public void setDefaultCommand(Command command) {
+   if (command == null) {
+     m_defaultCommand = null;
+   } else {
+     if (!Collections.list(command.getRequirements()).contains(this)) {
+       throw new IllegalUseOfCommandException("A default command must require the subsystem");
+     }
+     m_defaultCommand = command;
+   }
+ }
 
   /**
    * Returns the default command (or null if there is none).
