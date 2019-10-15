@@ -17,12 +17,15 @@ public class PiTest {
         final GpioController gpio = GpioFactory.getInstance();
 
         // provision gpio pin #01 as an output pin and turn on
-        final GpioPinDigitalOutput a= gpio.provisionDigitalOutputPin(RaspiPin.GPIO_24, "Motor A", PinState.HIGH);
-        final GpioPinDigitalOutput b = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_26, "Motor B", PinState.LOW);
+        final GpioPinDigitalOutput a= gpio.provisionDigitalOutputPin(RaspiPin.GPIO_13, "Motor A", PinState.LOW);
+        final GpioPinDigitalOutput b = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_15, "Motor B", PinState.LOW);
+        final GpioPinDigitalOutput ic = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_11, "IC Pin", PinState.HIGH);
 
+        
         // set shutdown state for this pin
         a.setShutdownOptions(true, PinState.LOW);
         b.setShutdownOptions(true, PinState.LOW);
+        ic.setShutdownOptions(true, PinState.HIGH);
 
         System.out.println("--> GPIO state should be: ON");
 
