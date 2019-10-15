@@ -3,61 +3,83 @@ package pi;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
-import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
-
-
+import com.pi4j.wiringpi.SoftPwm;
+/**
+ * Controls motor direction of a single motor
+ * @author https://javatutorial.net
+ */
 public class PiTest {
-
-    public static void main(String[] args) throws InterruptedException {
-
-        System.out.println("<--Pi4J--> GPIO Control Example ... started.");
-
-        // create gpio controller
-        final GpioController gpio = GpioFactory.getInstance();
-
-        // provision gpio pin #01 as an output pin and turn on
-        final GpioPinDigitalOutput a= gpio.provisionDigitalOutputPin(RaspiPin.GPIO_13, "Motor A", PinState.LOW);
-        final GpioPinDigitalOutput b = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_15, "Motor B", PinState.LOW);
-        final GpioPinDigitalOutput ic = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_11, "IC Pin", PinState.HIGH);
-
-        
-        // set shutdown state for this pin
-        a.setShutdownOptions(true, PinState.LOW);
-        b.setShutdownOptions(true, PinState.LOW);
-        ic.setShutdownOptions(true, PinState.HIGH);
-
-        System.out.println("--> GPIO state should be: ON");
-
-        Thread.sleep(5000);
-
-        // turn off gpio pin #01
-        a.low();
-        b.low();
-        System.out.println("--> GPIO state should be: OFF");
-
-        Thread.sleep(5000);
-
-        // toggle the current state of gpio pin #01 (should turn on)
-        a.toggle();
-        System.out.println("--> GPIO state should be: ON");
-
-        Thread.sleep(5000);
-
-        // toggle the current state of gpio pin #01  (should turn off)
-        a.toggle();
-        System.out.println("--> GPIO state should be: OFF");
-
-        Thread.sleep(5000);
-
-        // turn on gpio pin #01 for 1 second and then off
-        System.out.println("--> GPIO state should be: ON for only 1 second");
-        a.pulse(1000, true); // set second argument to 'true' use a blocking call
-
-        // stop all GPIO activity/threads by shutting down the GPIO controller
-        // (this method will forcefully shutdown all GPIO monitoring threads and scheduled tasks)
-        gpio.shutdown();
-
-        System.out.println("Exiting ControlGpioExample");
-    }
+//	public static void main(String[] args) throws InterruptedException {
+//		// get a handle to the GPIO controller
+//		Motor a = new Motor(RaspiPin.GPIO_06, RaspiPin.GPIO_04, RaspiPin.GPIO_05);
+//		System.out.println("rotate motor clockwise for 3 seconds");
+//		a.forward(100);
+//		// wait 3 seconds
+//		Thread.sleep(3000);
+//		System.out.println("rotate motor in oposite derection for 6 seconds");
+//		a.reverse(100);
+//		
+//		Thread.sleep(6000);
+//		// stop motor
+//		a.stop();
+//		System.out.println("Stopping motor");
+//		
+//		
+//		
+//	}
+	
+	private static int MOTOR_1_PIN_A = 4;
+	private static int MOTOR_1_PIN_B = 5;
+	private static int MOTOR_2_PIN_A = 0;
+	private static int MOTOR_2_PIN_B = 2;
+	public static void main(String[] args) throws InterruptedException {
+		// get a handle to the GPIO controller
+		final GpioController gpio = GpioFactory.getInstance();
+		// init soft PWM pins
+		// softPwmCreate(int pin, int value, int range)
+		// the range is set like (min=0 ; max=100)
+		SoftPwm.softPwmCreate(MOTOR_1_PIN_A, 0, 100);
+		SoftPwm.softPwmCreate(MOTOR_1_PIN_B, 0, 100);
+		SoftPwm.softPwmCreate(MOTOR_2_PIN_A, 0, 100);
+		SoftPwm.softPwmCreate(MOTOR_2_PIN_B, 0, 100);
+		// init GPIO pins
+		final GpioPinDigitalOutput motor1pinE = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "m1E");
+		final GpioPinDigitalOutput motor2pinE = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "m2E");
+		System.out.println("rotate motor 1 clockwise at 15% speed for 2 seconds");
+		motor1pinE.high();
+		SoftPwm.softPwmWrite(MOTOR_1_PIN_A, 15);
+		// wait 2 seconds
+		Thread.sleep(2000);
+		System.out.println("rotate motor 1 clockwise at 60% speed for 2 seconds");
+		SoftPwm.softPwmWrite(MOTOR_1_PIN_A, 60);
+		// wait 2 seconds
+		Thread.sleep(2000);
+		System.out.println("rotate motor 1 clockwise at full speed for 2 seconds");
+		SoftPwm.softPwmWrite(MOTOR_1_PIN_A, 100);
+		// wait 2 seconds
+		Thread.sleep(2000);
+		System.out.println("rotate motor 1 in opposite direction at 50% speed for 3 seconds");
+		SoftPwm.softPwmWrite(MOTOR_1_PIN_A, 0);
+		SoftPwm.softPwmWrite(MOTOR_1_PIN_B, 50);
+		// wait 3 seconds
+		Thread.sleep(3000);
+		// disable motor 1
+		SoftPwm.softPwmWrite(MOTOR_1_PIN_B, 0);
+		motor1pinE.low();
+		System.out.println("rotate motor 2 clockwise at 30% speed for 2 seconds");
+		motor2pinE.high();
+		SoftPwm.softPwmWrite(MOTOR_2_PIN_A, 30);
+		// wait 2 seconds
+		Thread.sleep(2000);
+		System.out.println("rotate motor 2 in opposite direction at 100% speed for 3 seconds");
+		SoftPwm.softPwmWrite(MOTOR_2_PIN_A, 0);
+		SoftPwm.softPwmWrite(MOTOR_2_PIN_B, 100);
+		// wait 3 seconds
+		Thread.sleep(3000);
+		// disable motor 2
+		SoftPwm.softPwmWrite(MOTOR_2_PIN_B, 0);
+		motor2pinE.low();
+		gpio.shutdown();
+	}
 }
