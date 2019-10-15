@@ -17,8 +17,8 @@ public class PiTest {
         final GpioController gpio = GpioFactory.getInstance();
 
         // provision gpio pin #01 as an output pin and turn on
-        final GpioPinDigitalOutput a= gpio.provisionDigitalOutputPin(RaspiPin.GPIO_13, "Motor A", PinState.HIGH);
-        final GpioPinDigitalOutput b = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_15, "Motor B", PinState.LOW);
+        final GpioPinDigitalOutput a= gpio.provisionDigitalOutputPin(RaspiPin.GPIO_24, "Motor A", PinState.HIGH);
+        final GpioPinDigitalOutput b = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_26, "Motor B", PinState.LOW);
 
         // set shutdown state for this pin
         a.setShutdownOptions(true, PinState.LOW);
