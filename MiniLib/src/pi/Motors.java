@@ -18,6 +18,9 @@ public class Motors {
 	private static int MOTOR_L_PIN_B = 5;
 	private static int MOTOR_R_PIN_A = 0;
 	private static int MOTOR_R_PIN_B = 2;
+	
+	final GpioPinDigitalOutput motor1pinE = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "m1E");
+	final GpioPinDigitalOutput motor2pinE = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "m2E");
 
 	/**
 	 * 
@@ -31,8 +34,8 @@ public class Motors {
 		SoftPwm.softPwmCreate(MOTOR_L_PIN_A, 0, 100);
 		SoftPwm.softPwmCreate(MOTOR_L_PIN_B, 0, 100);
 		
-		final GpioPinDigitalOutput motor1pinE = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "m1E");
-		final GpioPinDigitalOutput motor2pinE = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "m2E");
+		motor2pinE.high();
+		motor1pinE.high();
 	}
 
 
@@ -69,7 +72,7 @@ public class Motors {
 	}
 	
 	public void forward(int speed) {
-		System.out.println("All Motors Reverse");
+		System.out.println("All Motors Forward");
 		SoftPwm.softPwmWrite(MOTOR_L_PIN_A, speed);
 		SoftPwm.softPwmWrite(MOTOR_L_PIN_B, 0);
 		SoftPwm.softPwmWrite(MOTOR_R_PIN_A, speed);
@@ -80,7 +83,16 @@ public class Motors {
 		System.out.println("Stopping");
 		SoftPwm.softPwmWrite(MOTOR_R_PIN_A, 0);
 		SoftPwm.softPwmWrite(MOTOR_R_PIN_B, 0);
+		SoftPwm.softPwmWrite(MOTOR_L_PIN_A, 0);
+		SoftPwm.softPwmWrite(MOTOR_L_PIN_B, 0);
 	}
+	
+	public void close() {
+		motor1pinE.low();
+		motor2pinE.low();
+	}
+	
+	
 	
 	
 	
