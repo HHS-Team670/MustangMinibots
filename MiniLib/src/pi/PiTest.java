@@ -13,16 +13,17 @@ public class PiTest {
 	public static void main(String[] args) throws InterruptedException {
 		// get a handle to the GPIO controller
 		Motors motors = new Motors();
-		System.out.println("rotate motor clockwise for 3 seconds");
-		a.forward(100);
-		// wait 3 seconds
-		Thread.sleep(3000);
-		System.out.println("rotate motor in oposite derection for 6 seconds");
-		a.reverse(100);
 		
-		Thread.sleep(6000);
+		System.out.println("rotate motor clockwise for 3 seconds");
+		motors.reverse(100);
+		Thread.sleep(3000); 		// wait 3 seconds
+		
+		System.out.println("rotate motor in oposite derection for 6 seconds");
+		motors.forward(100);
+		Thread.sleep(3000);
+		
 		// stop motor
-		a.stop();
+		motors.stop();
 		System.out.println("Stopping motor");
 		
 		

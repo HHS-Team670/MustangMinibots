@@ -36,28 +36,44 @@ public class Motors {
 	}
 
 
-	public void leftMotorsforward(int speed) {
+	public void leftForward(int speed) {
 		System.out.println("Left Motors Forward");
 		SoftPwm.softPwmWrite(MOTOR_L_PIN_A, speed);
 		SoftPwm.softPwmWrite(MOTOR_L_PIN_B, 0);
 	}
 	
-	public void leftMotorsReverse(int speed) {
+	public void leftReverse(int speed) {
 		System.out.println("Left Motors Reverse");
 		SoftPwm.softPwmWrite(MOTOR_L_PIN_A, 0);
 		SoftPwm.softPwmWrite(MOTOR_L_PIN_B, speed);
 	}
 
-	public void rightMotorsforward(int speed) {
+	public void rightForward(int speed) {
 		System.out.println("Right Motors Forward");
 		SoftPwm.softPwmWrite(MOTOR_R_PIN_A, speed);
 		SoftPwm.softPwmWrite(MOTOR_R_PIN_B, 0);
 	}
 	
-	public void rightMotorsReverse(int speed) {
+	public void rightReverse(int speed) {
 		System.out.println("Right Motors Reverse");
 		SoftPwm.softPwmWrite(MOTOR_R_PIN_A, 0);
 		SoftPwm.softPwmWrite(MOTOR_R_PIN_B, speed);
+	}
+	
+	public void reverse(int speed) {
+		System.out.println("All Motors Reverse");
+		SoftPwm.softPwmWrite(MOTOR_L_PIN_A, 0);
+		SoftPwm.softPwmWrite(MOTOR_L_PIN_B, speed);
+		SoftPwm.softPwmWrite(MOTOR_R_PIN_A, 0);
+		SoftPwm.softPwmWrite(MOTOR_R_PIN_B, speed);
+	}
+	
+	public void forward(int speed) {
+		System.out.println("All Motors Reverse");
+		SoftPwm.softPwmWrite(MOTOR_L_PIN_A, speed);
+		SoftPwm.softPwmWrite(MOTOR_L_PIN_B, 0);
+		SoftPwm.softPwmWrite(MOTOR_R_PIN_A, speed);
+		SoftPwm.softPwmWrite(MOTOR_R_PIN_B, 0);
 	}
 	
 	public void stop() {
