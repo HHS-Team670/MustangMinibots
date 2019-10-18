@@ -1,4 +1,4 @@
-package pi;
+package frc.team670.pi;
 
 /**
  * Possible control modes for a motor.

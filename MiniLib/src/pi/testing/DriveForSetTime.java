@@ -3,7 +3,8 @@ package pi.testing;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.RaspiPin;
-import pi.Motor;
+
+import frc.team670.pi.Motor;
 /**
  * Drive for a specified amount of time
  */

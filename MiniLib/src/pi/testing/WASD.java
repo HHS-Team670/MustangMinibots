@@ -9,7 +9,7 @@ import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.RaspiPin;
 
-import pi.Motor;
+import frc.team670.pi.Motor;
 
 /**
  * Just for fun

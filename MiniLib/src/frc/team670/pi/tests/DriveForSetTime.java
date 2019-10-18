@@ -1,10 +1,12 @@
-package pi;
+package frc.team670.pi.tests;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.wiringpi.SoftPwm;
+
+import frc.team670.pi.Motor;
 
 /**
  * Drive for a specified amount of time

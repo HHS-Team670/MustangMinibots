@@ -16,8 +16,8 @@ import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.RaspiPin;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.team670.pi.Motor;
 import frc.team670.robot.commands.drive.TimeDrive;
-import pi.Motor;
 
 /**
  * Represents a tank drive base.

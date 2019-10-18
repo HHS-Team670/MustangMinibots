@@ -1,4 +1,4 @@
-package pi;
+package frc.team670.pi.tests;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
@@ -49,8 +49,8 @@ public class PiTest {
 				System.out.println("rotate motor 1 clockwise at 15% speed for 2 seconds");
 				motor1pinE.high();
 				motor2pinE.high();
-				SoftPwm.softPwmWrite(MOTOR_1_PIN_A, 100);
-				SoftPwm.softPwmWrite(MOTOR_2_PIN_B, 100);
+				SoftPwm.softPwmWrite(MOTOR_1_PIN_A, 50);
+				SoftPwm.softPwmWrite(MOTOR_2_PIN_A, 50);
 				// wait 2 seconds
 				Thread.sleep(3000);
 				
