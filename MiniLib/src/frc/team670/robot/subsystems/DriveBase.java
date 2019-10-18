@@ -31,15 +31,15 @@ public class DriveBase extends Subsystem {
 	private static int MOTOR_2_PIN_A = 0;
 	private static int MOTOR_2_PIN_B = 1;
 	
-	Motor m1;
-	Motor m2;
+	Motor left;
+	Motor right;
 
 	public DriveBase() {
 		// get a handle to the GPIO controller
 		final GpioController gpio = GpioFactory.getInstance();
 		// initialize your motors
-		Motor left = new Motor(MOTOR_1_PIN_A, MOTOR_1_PIN_B, RaspiPin.GPIO_06);
-		Motor right = new Motor(MOTOR_2_PIN_A, MOTOR_2_PIN_B, RaspiPin.GPIO_03);
+		left = new Motor(MOTOR_1_PIN_A, MOTOR_1_PIN_B, RaspiPin.GPIO_06);
+		right = new Motor(MOTOR_2_PIN_A, MOTOR_2_PIN_B, RaspiPin.GPIO_03);
 	}
 
   /**
@@ -72,8 +72,8 @@ public class DriveBase extends Subsystem {
    */
   public void tankDrive(double leftSpeed, double rightSpeed, boolean squaredInputs){
    // driveTrain.tankDrive(leftSpeed, rightSpeed, squaredInputs);
-	  m1.set(leftSpeed);
-	  m2.set(rightSpeed);
+	  left.set(leftSpeed);
+	  right.set(rightSpeed);
   }
 
   /**
