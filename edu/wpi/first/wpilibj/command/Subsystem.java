@@ -9,10 +9,10 @@ package edu.wpi.first.wpilibj.command;
 
 import java.util.Collections;
 
-import edu.wpi.first.wpilibj.Sendable;
-import edu.wpi.first.wpilibj.SendableBase;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
+//import edu.wpi.first.wpilibj.Sendable;
+//import edu.wpi.first.wpilibj.SendableBase;
+//import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+//import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 
 /**
  * This class defines a major component of the robot.
@@ -28,7 +28,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
  *
  * @see Command
  */
-public abstract class Subsystem extends SendableBase {
+public abstract class Subsystem {
   /**
    * Whether or not getDefaultCommand() was called.
    */
@@ -49,21 +49,21 @@ public abstract class Subsystem extends SendableBase {
    *
    * @param name the name of the subsystem
    */
-  public Subsystem(String name) {
-    setName(name, name);
-    Scheduler.getInstance().registerSubsystem(this);
-  }
+//  public Subsystem(String name) {
+//    setName(name, name);
+//    //Scheduler.getInstance().registerSubsystem(this);
+//  }
 
   /**
    * Creates a subsystem. This will set the name to the name of the class.
    */
-  public Subsystem() {
-    String name = getClass().getName();
-    name = name.substring(name.lastIndexOf('.') + 1);
-    setName(name, name);
-    Scheduler.getInstance().registerSubsystem(this);
-    m_currentCommandChanged = true;
-  }
+//  public Subsystem() {
+//    String name = getClass().getName();
+//    name = name.substring(name.lastIndexOf('.') + 1);
+//    //setName(name, name);
+//    //Scheduler.getInstance().registerSubsystem(this);
+//    m_currentCommandChanged = true;
+//  }
 
   /**
    * Initialize the default command for a subsystem By default subsystems have no default command,
@@ -89,16 +89,16 @@ public abstract class Subsystem extends SendableBase {
    * @param command the default command (or null if there should be none)
    * @throws IllegalUseOfCommandException if the command does not require the subsystem
    */
-  public void setDefaultCommand(Command command) {
-    if (command == null) {
-      m_defaultCommand = null;
-    } else {
-      if (!Collections.list(command.getRequirements()).contains(this)) {
-        throw new IllegalUseOfCommandException("A default command must require the subsystem");
-      }
-      m_defaultCommand = command;
-    }
-  }
+ public void setDefaultCommand(Command command) {
+   if (command == null) {
+     m_defaultCommand = null;
+   } else {
+     if (!Collections.list(command.getRequirements()).contains(this)) {
+       throw new IllegalUseOfCommandException("A default command must require the subsystem");
+     }
+     m_defaultCommand = command;
+   }
+ }
 
   /**
    * Returns the default command (or null if there is none).
@@ -118,14 +118,14 @@ public abstract class Subsystem extends SendableBase {
    *
    * @return the default command name
    */
-  public String getDefaultCommandName() {
-    Command defaultCommand = getDefaultCommand();
-    if (defaultCommand != null) {
-      return defaultCommand.getName();
-    } else {
-      return "";
-    }
-  }
+//  public String getDefaultCommandName() {
+//    Command defaultCommand = getDefaultCommand();
+//    if (defaultCommand != null) {
+//      return defaultCommand.getName();
+//    } else {
+//      return "";
+//    }
+//  }
 
   /**
    * Sets the current command.
@@ -162,14 +162,14 @@ public abstract class Subsystem extends SendableBase {
    *
    * @return the current command name
    */
-  public String getCurrentCommandName() {
-    Command currentCommand = getCurrentCommand();
-    if (currentCommand != null) {
-      return currentCommand.getName();
-    } else {
-      return "";
-    }
-  }
+//  public String getCurrentCommandName() {
+//    Command currentCommand = getCurrentCommand();
+//    if (currentCommand != null) {
+//      return currentCommand.getName();
+//    } else {
+//      return "";
+//    }
+//  }
 
   /**
    * Associate a {@link Sendable} with this Subsystem.
@@ -178,33 +178,33 @@ public abstract class Subsystem extends SendableBase {
    * @param name name to give child
    * @param child sendable
    */
-  public void addChild(String name, Sendable child) {
-    child.setName(getSubsystem(), name);
-    LiveWindow.add(child);
-  }
+//  public void addChild(String name, Sendable child) {
+//    child.setName(getSubsystem(), name);
+//    LiveWindow.add(child);
+//  }
 
   /**
    * Associate a {@link Sendable} with this Subsystem.
    *
    * @param child sendable
    */
-  public void addChild(Sendable child) {
-    child.setSubsystem(getSubsystem());
-    LiveWindow.add(child);
-  }
+//  public void addChild(Sendable child) {
+//    child.setSubsystem(getSubsystem());
+//    LiveWindow.add(child);
+//  }
 
-  @Override
-  public String toString() {
-    return getSubsystem();
-  }
+  //@Override
+//  public String toString() {
+//    return getSubsystem();
+//  }
 
-  @Override
-  public void initSendable(SendableBuilder builder) {
-    builder.setSmartDashboardType("Subsystem");
-
-    builder.addBooleanProperty(".hasDefault", () -> m_defaultCommand != null, null);
-    builder.addStringProperty(".default", this::getDefaultCommandName, null);
-    builder.addBooleanProperty(".hasCommand", () -> m_currentCommand != null, null);
-    builder.addStringProperty(".command", this::getCurrentCommandName, null);
-  }
-}
+  //@Override
+//  public void initSendable(SendableBuilder builder) {
+////    builder.setSmartDashboardType("Subsystem");
+////
+////    builder.addBooleanProperty(".hasDefault", () -> m_defaultCommand != null, null);
+////    builder.addStringProperty(".default", this::getDefaultCommandName, null);
+////    builder.addBooleanProperty(".hasCommand", () -> m_currentCommand != null, null);
+////    builder.addStringProperty(".command", this::getCurrentCommandName, null);
+//  }
+	}	

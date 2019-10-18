@@ -11,13 +11,13 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import edu.wpi.first.hal.FRCNetComm.tInstances;
-import edu.wpi.first.hal.FRCNetComm.tResourceType;
-import edu.wpi.first.hal.HAL;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.SendableBase;
-import edu.wpi.first.wpilibj.buttons.Trigger.ButtonScheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
+//import edu.wpi.first.hal.FRCNetComm.tInstances;
+//import edu.wpi.first.hal.FRCNetComm.tResourceType;
+//import edu.wpi.first.hal.HAL;
+//import edu.wpi.first.networktables.NetworkTableEntry;
+//import edu.wpi.first.wpilibj.SendableBase;
+//import edu.wpi.first.wpilibj.buttons.Trigger.ButtonScheduler;
+//import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 
 /**
  * The {@link Scheduler} is a singleton which holds the top-level running commands. It is in charge
@@ -31,7 +31,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
  *
  * @see Command
  */
-public final class Scheduler extends SendableBase {
+public final class Scheduler { //extends SendableBase 
   /**
    * The Singleton Instance.
    */
@@ -79,23 +79,23 @@ public final class Scheduler extends SendableBase {
    */
   @SuppressWarnings({"PMD.LooseCoupling", "PMD.UseArrayListInsteadOfVector"})
   private final Vector<Command> m_additions = new Vector<>();
-  private NetworkTableEntry m_namesEntry;
-  private NetworkTableEntry m_idsEntry;
-  private NetworkTableEntry m_cancelEntry;
+//  private NetworkTableEntry m_namesEntry;
+//  private NetworkTableEntry m_idsEntry;
+//  private NetworkTableEntry m_cancelEntry;
   /**
    * A list of all {@link edu.wpi.first.wpilibj.buttons.Trigger.ButtonScheduler Buttons}. It is
    * created lazily.
    */
   @SuppressWarnings("PMD.LooseCoupling")
-  private Vector<ButtonScheduler> m_buttons;
+  //private Vector<ButtonScheduler> m_buttons;
   private boolean m_runningCommandsChanged;
 
   /**
    * Instantiates a {@link Scheduler}.
    */
   private Scheduler() {
-    HAL.report(tResourceType.kResourceType_Command, tInstances.kCommand_Scheduler);
-    setName("Scheduler");
+   //HAL.report(tResourceType.kResourceType_Command, tInstances.kCommand_Scheduler);
+    //setName("Scheduler");
   }
 
   /**
@@ -120,13 +120,13 @@ public final class Scheduler extends SendableBase {
    *
    * @param button the button to add
    */
-  @SuppressWarnings("PMD.UseArrayListInsteadOfVector")
-  public void addButton(ButtonScheduler button) {
-    if (m_buttons == null) {
-      m_buttons = new Vector<>();
-    }
-    m_buttons.addElement(button);
-  }
+  //@SuppressWarnings("PMD.UseArrayListInsteadOfVector")
+//  public void addButton(ButtonScheduler button) {
+//    if (m_buttons == null) {
+//      m_buttons = new Vector<>();
+//    }
+//    m_buttons.addElement(button);
+//  }
 
   /**
    * Adds a command immediately to the {@link Scheduler}. This should only be called in the {@link
@@ -134,9 +134,10 @@ public final class Scheduler extends SendableBase {
    * uninterruptable. Giving <code>null</code> does nothing.
    *
    * @param command the {@link Command} to add
+ * @throws Exception 
    */
   @SuppressWarnings({"MethodName", "PMD.CyclomaticComplexity"})
-  private void _add(Command command) {
+  private void _add(Command command) throws Exception {
     if (command == null) {
       return;
     }
@@ -194,9 +195,10 @@ public final class Scheduler extends SendableBase {
    *
    * <ol> <li>Poll the Buttons</li> <li>Execute/Remove the Commands</li> <li>Send values to
    * SmartDashboard</li> <li>Add Commands</li> <li>Add Defaults</li> </ol>
+ * @throws Exception 
    */
   @SuppressWarnings({"PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
-  public void run() {
+  public void run() throws Exception {
     m_runningCommandsChanged = false;
 
     if (m_disabled) {
@@ -204,11 +206,11 @@ public final class Scheduler extends SendableBase {
     } // Don't run when m_disabled
 
     // Get button input (going backwards preserves button priority)
-    if (m_buttons != null) {
-      for (int i = m_buttons.size() - 1; i >= 0; i--) {
-        m_buttons.elementAt(i).execute();
-      }
-    }
+//    if (m_buttons != null) {
+//      for (int i = m_buttons.size() - 1; i >= 0; i--) {
+//        m_buttons.elementAt(i).execute();
+//      }
+//    }
 
     // Call every subsystem's periodic method
     Enumeration subsystems = m_subsystems.getElements();
@@ -309,45 +311,45 @@ public final class Scheduler extends SendableBase {
     m_disabled = false;
   }
 
-  @Override
-  public void initSendable(SendableBuilder builder) {
-    builder.setSmartDashboardType("Scheduler");
-    m_namesEntry = builder.getEntry("Names");
-    m_idsEntry = builder.getEntry("Ids");
-    m_cancelEntry = builder.getEntry("Cancel");
-    builder.setUpdateTable(() -> {
-      if (m_namesEntry != null && m_idsEntry != null && m_cancelEntry != null) {
-        // Get the commands to cancel
-        double[] toCancel = m_cancelEntry.getDoubleArray(new double[0]);
-        if (toCancel.length > 0) {
-          for (LinkedListElement e = m_firstCommand; e != null; e = e.getNext()) {
-            for (double d : toCancel) {
-              if (e.getData().hashCode() == d) {
-                e.getData().cancel();
-              }
-            }
-          }
-          m_cancelEntry.setDoubleArray(new double[0]);
-        }
-
-        if (m_runningCommandsChanged) {
-          // Set the the running commands
-          int number = 0;
-          for (LinkedListElement e = m_firstCommand; e != null; e = e.getNext()) {
-            number++;
-          }
-          String[] commands = new String[number];
-          double[] ids = new double[number];
-          number = 0;
-          for (LinkedListElement e = m_firstCommand; e != null; e = e.getNext()) {
-            commands[number] = e.getData().getName();
-            ids[number] = e.getData().hashCode();
-            number++;
-          }
-          m_namesEntry.setStringArray(commands);
-          m_idsEntry.setDoubleArray(ids);
-        }
-      }
-    });
-  }
+//  @Override
+//  public void initSendable(SendableBuilder builder) {
+//    builder.setSmartDashboardType("Scheduler");
+//    m_namesEntry = builder.getEntry("Names");
+//    m_idsEntry = builder.getEntry("Ids");
+//    m_cancelEntry = builder.getEntry("Cancel");
+//    builder.setUpdateTable(() -> {
+//      if (m_namesEntry != null && m_idsEntry != null && m_cancelEntry != null) {
+//        // Get the commands to cancel
+//        double[] toCancel = m_cancelEntry.getDoubleArray(new double[0]);
+//        if (toCancel.length > 0) {
+//          for (LinkedListElement e = m_firstCommand; e != null; e = e.getNext()) {
+//            for (double d : toCancel) {
+//              if (e.getData().hashCode() == d) {
+//                e.getData().cancel();
+//              }
+//            }
+//          }
+//          m_cancelEntry.setDoubleArray(new double[0]);
+//        }
+//
+//        if (m_runningCommandsChanged) {
+//          // Set the the running commands
+//          int number = 0;
+//          for (LinkedListElement e = m_firstCommand; e != null; e = e.getNext()) {
+//            number++;
+//          }
+//          String[] commands = new String[number];
+//          double[] ids = new double[number];
+//          number = 0;
+//          for (LinkedListElement e = m_firstCommand; e != null; e = e.getNext()) {
+//            commands[number] = e.getData().getName();
+//            ids[number] = e.getData().hashCode();
+//            number++;
+//          }
+//          m_namesEntry.setStringArray(commands);
+//          m_idsEntry.setDoubleArray(ids);
+//        }
+//      }
+//    });
+//  }
 }

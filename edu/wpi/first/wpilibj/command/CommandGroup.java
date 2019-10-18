@@ -79,11 +79,12 @@ public class CommandGroup extends Command {
    * <p> It is recommended that this method be called in the constructor. </p>
    *
    * @param command The {@link Command Command} to be added
+ * @throws Exception 
    * @throws IllegalUseOfCommandException if the group has been started before or been given to
    *                                      another group
    * @throws IllegalArgumentException     if command is null
    */
-  public final synchronized void addSequential(Command command) {
+  public final synchronized void addSequential(Command command) throws Exception {
     validate("Can not add new command to command group");
     if (command == null) {
       throw new IllegalArgumentException("Given null command");
@@ -113,12 +114,13 @@ public class CommandGroup extends Command {
    *
    * @param command The {@link Command Command} to be added
    * @param timeout The timeout (in seconds)
+ * @throws Exception 
    * @throws IllegalUseOfCommandException if the group has been started before or been given to
    *                                      another group or if the {@link Command Command} has been
    *                                      started before or been given to another group
    * @throws IllegalArgumentException     if command is null or timeout is negative
    */
-  public final synchronized void addSequential(Command command, double timeout) {
+  public final synchronized void addSequential(Command command, double timeout) throws Exception {
     validate("Can not add new command to command group");
     if (command == null) {
       throw new IllegalArgumentException("Given null command");
@@ -152,11 +154,12 @@ public class CommandGroup extends Command {
    * <p> It is recommended that this method be called in the constructor. </p>
    *
    * @param command The command to be added
+ * @throws Exception 
    * @throws IllegalUseOfCommandException if the group has been started before or been given to
    *                                      another command group
    * @throws IllegalArgumentException     if command is null
    */
-  public final synchronized void addParallel(Command command) {
+  public final synchronized void addParallel(Command command) throws Exception {
     requireNonNull(command, "Provided command was null");
     validate("Can not add new command to command group");
 
@@ -190,11 +193,12 @@ public class CommandGroup extends Command {
    *
    * @param command The command to be added
    * @param timeout The timeout (in seconds)
+ * @throws Exception 
    * @throws IllegalUseOfCommandException if the group has been started before or been given to
    *                                      another command group
    * @throws IllegalArgumentException     if command is null
    */
-  public final synchronized void addParallel(Command command, double timeout) {
+  public final synchronized void addParallel(Command command, double timeout) throws Exception {
     requireNonNull(command, "Provided command was null");
     if (timeout < 0) {
       throw new IllegalArgumentException("Can not be given a negative timeout");
@@ -217,7 +221,7 @@ public class CommandGroup extends Command {
 
   @Override
   @SuppressWarnings({"MethodName", "PMD.CyclomaticComplexity", "PMD.NPathComplexity"})
-  void _execute() {
+  void _execute() throws Exception {
     Entry entry = null;
     Command cmd = null;
     boolean firstRun = false;

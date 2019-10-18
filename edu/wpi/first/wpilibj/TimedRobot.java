@@ -24,7 +24,7 @@ public class TimedRobot extends IterativeRobotBase {
 
   // The C pointer to the notifier object. We don't use it directly, it is
   // just passed to the JNI bindings.
-  private final int m_notifier = NotifierJNI.initializeNotifier();
+  //private final int m_notifier = NotifierJNI.initializeNotifier();
 
   // The absolute expiration time
   private double m_expirationTime;
@@ -44,56 +44,67 @@ public class TimedRobot extends IterativeRobotBase {
   protected TimedRobot(double period) {
     super(period);
 
-    HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_Timed);
+    //HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_Timed);
   }
 
   @Override
   @SuppressWarnings("NoFinalizer")
   protected void finalize() {
-    NotifierJNI.stopNotifier(m_notifier);
-    NotifierJNI.cleanNotifier(m_notifier);
+//    NotifierJNI.stopNotifier(m_notifier);
+//    NotifierJNI.cleanNotifier(m_notifier);
   }
 
   /**
    * Provide an alternate "main loop" via startCompetition().
+ * @throws Exception 
    */
   @Override
   @SuppressWarnings("UnsafeFinalization")
-  public void startCompetition() {
+  public void startCompetition() throws Exception {
     robotInit();
 
     // Tell the DS that the robot is ready to be enabled
-    HAL.observeUserProgramStarting();
+//    HAL.observeUserProgramStarting();
+//
+//    m_expirationTime = RobotController.getFPGATime() * 1e-6 + m_period;
+//    updateAlarm();
+//
 
-    m_expirationTime = RobotController.getFPGATime() * 1e-6 + m_period;
-    updateAlarm();
-
+    // using currentTime/nextTime to replace the NotifierJNI - we could probably get NotifierJNI to work if it ever mattered
+    long millisToNextTime = (long)(1000.0 * m_period);
+    long nextTime = System.currentTimeMillis() + millisToNextTime;
     // Loop forever, calling the appropriate mode-dependent function
     while (true) {
-      long curTime = NotifierJNI.waitForNotifierAlarm(m_notifier);
-      if (curTime == 0) {
-        break;
+//      long curTime = NotifierJNI.waitForNotifierAlarm(m_notifier);
+//      if (curTime == 0) {
+//        break;
+//      }
+//
+//      m_expirationTime += m_period;
+//      updateAlarm();
+
+      long currentTime = System.currentTimeMillis();
+      while (currentTime < nextTime) {
+        Thread.sleep(nextTime - currentTime);
+        currentTime = System.currentTimeMillis();
       }
-
-      m_expirationTime += m_period;
-      updateAlarm();
-
       loopFunc();
+      nextTime = currentTime + millisToNextTime;
     }
   }
 
   /**
    * Get time period between calls to Periodic() functions.
    */
-  public double getPeriod() {
-    return m_period;
-  }
+//  public double getPeriod() {
+//    return m_period;
+//  }
 
   /**
    * Update the alarm hardware to reflect the next alarm.
    */
-  @SuppressWarnings("UnsafeFinalization")
-  private void updateAlarm() {
-    NotifierJNI.updateNotifierAlarm(m_notifier, (long) (m_expirationTime * 1e6));
-  }
+//  @SuppressWarnings("UnsafeFinalization")
+//  private void updateAlarm() {
+//   // NotifierJNI.updateNotifierAlarm(m_notifier, (long) (m_expirationTime * 1e6));
+//  }
 }

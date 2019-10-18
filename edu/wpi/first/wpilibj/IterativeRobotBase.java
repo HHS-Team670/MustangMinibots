@@ -55,7 +55,7 @@ public abstract class IterativeRobotBase extends RobotBase {
   }
 
   private Mode m_lastMode = Mode.kNone;
-  private final Watchdog m_watchdog;
+  //private final Watchdog m_watchdog;
 
   /**
    * Constructor for IterativeRobotBase.
@@ -64,14 +64,14 @@ public abstract class IterativeRobotBase extends RobotBase {
    */
   protected IterativeRobotBase(double period) {
     m_period = period;
-    m_watchdog = new Watchdog(period, this::printLoopOverrunMessage);
+   // m_watchdog = new Watchdog(period, this::printLoopOverrunMessage);
   }
 
   /**
    * Provide an alternate "main loop" via startCompetition().
    */
   @Override
-  public abstract void startCompetition();
+  public abstract void startCompetition() throws Exception;
 
   /* ----------- Overridable initialization code ----------------- */
 
@@ -149,7 +149,7 @@ public abstract class IterativeRobotBase extends RobotBase {
   /**
    * Periodic code for disabled mode should go here.
    */
-  public void disabledPeriodic() {
+  public void disabledPeriodic() throws Exception{
     if (m_dpFirstRun) {
       System.out.println("Default disabledPeriodic() method... Override me!");
       m_dpFirstRun = false;
@@ -173,7 +173,7 @@ public abstract class IterativeRobotBase extends RobotBase {
   /**
    * Periodic code for teleop mode should go here.
    */
-  public void teleopPeriodic() {
+  public void teleopPeriodic() throws Exception{
     if (m_tpFirstRun) {
       System.out.println("Default teleopPeriodic() method... Override me!");
       m_tpFirstRun = false;
@@ -193,86 +193,91 @@ public abstract class IterativeRobotBase extends RobotBase {
     }
   }
 
-  protected void loopFunc() {
-    m_watchdog.reset();
-
-    // Call the appropriate function depending upon the current robot mode
-    if (isDisabled()) {
-      // Call DisabledInit() if we are now just entering disabled mode from either a different mode
-      // or from power-on.
-      if (m_lastMode != Mode.kDisabled) {
-        LiveWindow.setEnabled(false);
-        Shuffleboard.disableActuatorWidgets();
-        disabledInit();
-        m_watchdog.addEpoch("disabledInit()");
-        m_lastMode = Mode.kDisabled;
-      }
-
-      HAL.observeUserProgramDisabled();
-      disabledPeriodic();
-      m_watchdog.addEpoch("disablePeriodic()");
-    } else if (isAutonomous()) {
-      // Call AutonomousInit() if we are now just entering autonomous mode from either a different
-      // mode or from power-on.
-      if (m_lastMode != Mode.kAutonomous) {
-        LiveWindow.setEnabled(false);
-        Shuffleboard.disableActuatorWidgets();
-        autonomousInit();
-        m_watchdog.addEpoch("autonomousInit()");
-        m_lastMode = Mode.kAutonomous;
-      }
-
-      HAL.observeUserProgramAutonomous();
-      autonomousPeriodic();
-      m_watchdog.addEpoch("autonomousPeriodic()");
-    } else if (isOperatorControl()) {
-      // Call TeleopInit() if we are now just entering teleop mode from either a different mode or
-      // from power-on.
-      if (m_lastMode != Mode.kTeleop) {
-        LiveWindow.setEnabled(false);
-        Shuffleboard.disableActuatorWidgets();
-        teleopInit();
-        m_watchdog.addEpoch("teleopInit()");
-        m_lastMode = Mode.kTeleop;
-      }
-
-      HAL.observeUserProgramTeleop();
+  protected void loopFunc() throws Exception {
+//    m_watchdog.reset();
+//
+//    // Call the appropriate function depending upon the current robot mode
+//    if (isDisabled()) {
+//      // Call DisabledInit() if we are now just entering disabled mode from either a different mode
+//      // or from power-on.
+//      if (m_lastMode != Mode.kDisabled) {
+//        LiveWindow.setEnabled(false);
+//        Shuffleboard.disableActuatorWidgets();
+//        disabledInit();
+//        m_watchdog.addEpoch("disabledInit()");
+//        m_lastMode = Mode.kDisabled;
+//      }
+//
+//      HAL.observeUserProgramDisabled();
+//      disabledPeriodic();
+//      m_watchdog.addEpoch("disablePeriodic()");
+//    } else if (isAutonomous()) {
+//      // Call AutonomousInit() if we are now just entering autonomous mode from either a different
+//      // mode or from power-on.
+//      if (m_lastMode != Mode.kAutonomous) {
+//        LiveWindow.setEnabled(false);
+//        Shuffleboard.disableActuatorWidgets();
+//        autonomousInit();
+//        m_watchdog.addEpoch("autonomousInit()");
+//        m_lastMode = Mode.kAutonomous;
+//      }
+//
+//      HAL.observeUserProgramAutonomous();
+//      autonomousPeriodic();
+//      m_watchdog.addEpoch("autonomousPeriodic()");
+//    } else if (isOperatorControl()) {
+//      // Call TeleopInit() if we are now just entering teleop mode from either a different mode or
+//      // from power-on.
+//      if (m_lastMode != Mode.kTeleop) {
+//        LiveWindow.setEnabled(false);
+//        Shuffleboard.disableActuatorWidgets();
+//        teleopInit();
+//        m_watchdog.addEpoch("teleopInit()");
+//        m_lastMode = Mode.kTeleop;
+//      }
+//
+//      HAL.observeUserProgramTeleop();
+	  if(isDisabled()) {
+		  // TODO shut down motors here
+	  }
+	  else {  
       teleopPeriodic();
-      m_watchdog.addEpoch("teleopPeriodic()");
-    } else {
-      // Call TestInit() if we are now just entering test mode from either a different mode or from
-      // power-on.
-      if (m_lastMode != Mode.kTest) {
-        LiveWindow.setEnabled(true);
-        Shuffleboard.enableActuatorWidgets();
-        testInit();
-        m_watchdog.addEpoch("testInit()");
-        m_lastMode = Mode.kTest;
-      }
-
-      HAL.observeUserProgramTest();
-      testPeriodic();
-      m_watchdog.addEpoch("testPeriodic()");
-    }
-
-    robotPeriodic();
-    m_watchdog.addEpoch("robotPeriodic()");
-
-    SmartDashboard.updateValues();
-    m_watchdog.addEpoch("SmartDashboard.updateValues()");
-    LiveWindow.updateValues();
-    m_watchdog.addEpoch("LiveWindow.updateValues()");
-    Shuffleboard.update();
-    m_watchdog.addEpoch("Shuffleboard.update()");
-    m_watchdog.disable();
-
-    // Warn on loop time overruns
-    if (m_watchdog.isExpired()) {
-      m_watchdog.printEpochs();
-    }
+	  }
+     // m_watchdog.addEpoch("teleopPeriodic()");
+//    } else {
+//      // Call TestInit() if we are now just entering test mode from either a different mode or from
+//      // power-on.
+//      if (m_lastMode != Mode.kTest) {
+//        LiveWindow.setEnabled(true);
+//        Shuffleboard.enableActuatorWidgets();
+//        testInit();
+//        m_watchdog.addEpoch("testInit()");
+//        m_lastMode = Mode.kTest;
+//      }
+//
+//      HAL.observeUserProgramTest();
+//      testPeriodic();
+//      m_watchdog.addEpoch("testPeriodic()");
+//    }
+//
+//    robotPeriodic();
+//    m_watchdog.addEpoch("robotPeriodic()");
+//
+//    SmartDashboard.updateValues();
+//    m_watchdog.addEpoch("SmartDashboard.updateValues()");
+//    LiveWindow.updateValues();
+//    m_watchdog.addEpoch("LiveWindow.updateValues()");
+//    Shuffleboard.update();
+//    m_watchdog.addEpoch("Shuffleboard.update()");
+//    m_watchdog.disable();
+//
+//    // Warn on loop time overruns
+//    if (m_watchdog.isExpired()) {
+//      m_watchdog.printEpochs();
+//    }
   }
 
   private void printLoopOverrunMessage() {
-    DriverStation.reportWarning("Loop time of " + m_period + "s overrun\n", false);
+    //DriverStation.reportWarning("Loop time of " + m_period + "s overrun\n", false);
   }
 }

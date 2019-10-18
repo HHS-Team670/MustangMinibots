@@ -8,7 +8,6 @@
 package frc.team670.robot;
 
 //import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.command.Command;
 //import edu.wpi.first.wpilibj.command.InstantCommand;
 //import edu.wpi.first.wpilibj.command.Scheduler;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -78,9 +77,9 @@ public class OI {
    * @param power The desired power of the rumble [0, 1]
    * @param time The time to rumble for in seconds
    */
-  public void rumbleDriverController(double power, double time) {
-    rumbleController(driverController, power, time);
-  }
+//  public void rumbleDriverController(double power, double time) {
+//    //rumbleController(driverController, power, time);
+//  }
 
   /**
    * Sets the rumble on the operator controller
@@ -88,28 +87,28 @@ public class OI {
    * @param power The desired power of the rumble [0, 1]
    * @param time The time to rumble for in seconds
    */
-  public void rumbleOperatorController(double power, double time) {
-    // rumbleController(operatorController, power, time);
-  }
+//  public void rumbleOperatorController(double power, double time) {
+//    // rumbleController(operatorController, power, time);
+//  }
+//
+//  private void rumbleController(MustangController controller, double power, double time) {
+//    controller.rumble(power, time);
+//  }
 
-  private void rumbleController(MustangController controller, double power, double time) {
-    controller.rumble(power, time);
-  }
-
-  public MustangController getDriverController() {
-    return driverController;
-  }
-
-  // public MustangController getOperatorController() {
-  //   return operatorController;
-  // }
-
-  public boolean isQuickTurnPressed() {
-    return driverController.getRightBumper();
-  }
-
-  public Command getSelectedAutonCommand() {
-    SmartDashboard.putBoolean("auto-command", xkeys.getAutonCommand() == null);
-    return xkeys.getAutonCommand();
-  }
+//  public MustangController getDriverController() {
+//    return driverController;
+//  }
+//
+//  // public MustangController getOperatorController() {
+//  //   return operatorController;
+//  // }
+//
+//  public boolean isQuickTurnPressed() {
+//    return driverController.getRightBumper();
+//  }
+//
+//  public Command getSelectedAutonCommand() {
+//    SmartDashboard.putBoolean("auto-command", xkeys.getAutonCommand() == null);
+//    return xkeys.getAutonCommand();
+//  }
 }

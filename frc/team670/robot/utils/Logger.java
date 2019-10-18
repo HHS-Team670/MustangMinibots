@@ -14,7 +14,6 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
-import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * Implements a logging system for the robot. Code taken from
@@ -82,10 +81,10 @@ public class Logger {
             
             //if (true) throw new IOException("Test Exception");
             
-            DriverStation ds = DriverStation.getInstance();
+            //DriverStation ds = DriverStation.getInstance();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss");
 	        Date date = new Date();
-            fileTxt = new FileHandler(String.format("/home/lvuser/Log_%s_%s_%s.txt", ds.getEventName(), ds.getMatchNumber(), dateFormat.format(date)));    
+            fileTxt = new FileHandler(String.format("/tmp/Log_%s_%s_%s.txt", "MiniBot tests", 0, dateFormat.format(date)));    
             
             fileTxt.setFormatter(logFormatter);
 
@@ -227,7 +226,7 @@ public class Logger {
     public static void consoleLog(String message, Object... parameters)
     {
         // logs to the console as well as our log file on RR disk.
-        LOGGER.log(Level.INFO, String.format("robot: MatchTime:%s: %s: %s", DriverStation.getInstance().getMatchTime(), currentMethod(2), String.format(message, parameters)));
+        LOGGER.log(Level.INFO, String.format("robot: MatchTime:%s: %s: %s", 0, currentMethod(2), String.format(message, parameters)));
     }
     
     /**
@@ -236,7 +235,7 @@ public class Logger {
     public static void consoleLog()
     {
         // logs to the console as well as our log file on RR disk.
-        LOGGER.log(Level.INFO, String.format("robot: MatchTime:%s: %s", DriverStation.getInstance().getMatchTime(), currentMethod(2)));
+        LOGGER.log(Level.INFO, String.format("robot: MatchTime:%s: %s", 0, currentMethod(2)));
     }
 
     /**
@@ -246,7 +245,6 @@ public class Logger {
      */
     public static void logException(Throwable e)
     {
-        DriverStation.reportError(e.toString(), false);
                 
         e.printStackTrace(Logger.LOG_PRINT_STREAM);
     }

@@ -10,9 +10,9 @@ package edu.wpi.first.wpilibj.command;
 import java.util.Enumeration;
 
 import edu.wpi.first.wpilibj.RobotState;
-import edu.wpi.first.wpilibj.SendableBase;
+//import edu.wpi.first.wpilibj.SendableBase;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
+//import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 
 /**
  * The Command class is at the very core of the entire command framework. Every command can be
@@ -39,8 +39,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
  * @see CommandGroup
  * @see IllegalUseOfCommandException
  */
-@SuppressWarnings("PMD.TooManyMethods")
-public abstract class Command extends SendableBase {
+//@SuppressWarnings("PMD.TooManyMethods")
+public abstract class Command {
   /**
    * The time since this command was initialized.
    */
@@ -94,15 +94,15 @@ public abstract class Command extends SendableBase {
   /**
    * The {@link CommandGroup} this is in.
    */
-  private CommandGroup m_parent;
+ private CommandGroup m_parent;
 
   /**
    * Creates a new command. The name of this command will be set to its class name.
    */
   public Command() {
-    super(false);
+    //super(false);
     String name = getClass().getName();
-    setName(name.substring(name.lastIndexOf('.') + 1));
+    //setName(name.substring(name.lastIndexOf('.') + 1));
   }
 
   /**
@@ -112,11 +112,11 @@ public abstract class Command extends SendableBase {
    * @throws IllegalArgumentException if name is null
    */
   public Command(String name) {
-    super(false);
+    //super(false);
     if (name == null) {
       throw new IllegalArgumentException("Name must not be null.");
     }
-    setName(name);
+   // setName(name);
   }
 
   /**
@@ -226,7 +226,7 @@ public abstract class Command extends SendableBase {
    * @return the time since this command was initialized (in seconds).
    */
   public final synchronized double timeSinceInitialized() {
-    return m_startTime < 0 ? 0 : Timer.getFPGATimestamp() - m_startTime;
+    return m_startTime < 0 ? 0 : (System.currentTimeMillis() - m_startTime) / 1000.0;
   }
 
   /**
@@ -236,18 +236,23 @@ public abstract class Command extends SendableBase {
    * <p>Note that the recommended way to call this method is in the constructor.
    *
    * @param subsystem the {@link Subsystem} required
+   * @throws Exception 
    * @throws IllegalArgumentException     if subsystem is null
    * @throws IllegalUseOfCommandException if this command has started before or if it has been given
    *                                      to a {@link CommandGroup}
    * @see Subsystem
    */
   protected synchronized void requires(Subsystem subsystem) {
-    validate("Can not add new requirement to command");
-    if (subsystem != null) {
-      m_requirements.add(subsystem);
-    } else {
-      throw new IllegalArgumentException("Subsystem must not be null.");
-    }
+	 if(!m_locked) {
+		  if (subsystem != null) {
+		      m_requirements.add(subsystem);
+		   } else {
+		      throw new IllegalArgumentException("Subsystem must not be null.");
+		   } 
+	  }
+	 else {
+		 throw new IllegalUseOfCommandException("Command should not be lock");
+	 }
   }
 
   /**
@@ -274,8 +279,9 @@ public abstract class Command extends SendableBase {
    * The run method is used internally to actually run the commands.
    *
    * @return whether or not the command should stay within the {@link Scheduler}.
+ * @throws Exception 
    */
-  synchronized boolean run() {
+  synchronized boolean run() throws Exception {
     if (!m_runWhenDisabled && m_parent == null && RobotState.isDisabled()) {
       cancel();
     }
@@ -296,13 +302,16 @@ public abstract class Command extends SendableBase {
   /**
    * The initialize method is called the first time this Command is run after being started.
    */
-  protected void initialize() {}
+  protected void initialize() {
+	 
+  }
 
   /**
    * A shadow method called before {@link Command#initialize() initialize()}.
    */
   @SuppressWarnings("MethodName")
   void _initialize() {
+	  m_startTime = System.currentTimeMillis();
   }
 
   /**
@@ -315,7 +324,7 @@ public abstract class Command extends SendableBase {
    * A shadow method called before {@link Command#execute() execute()}.
    */
   @SuppressWarnings("MethodName")
-  void _execute() {
+  void _execute() throws Exception{
   }
 
   /**
@@ -409,11 +418,11 @@ public abstract class Command extends SendableBase {
    * If changes are locked, then this will throw an {@link IllegalUseOfCommandException}.
    *
    * @param message the message to say (it is appended by a default message)
+ * @throws Exception 
    */
-  synchronized void validate(String message) {
+  synchronized void validate(String message) throws Exception {
     if (m_locked) {
-      throw new IllegalUseOfCommandException(message
-          + " after being started or being added to a command group");
+      throw new Exception(message  + " after being started or being added to a command group");
     }
   }
 
@@ -421,11 +430,12 @@ public abstract class Command extends SendableBase {
    * Sets the parent of this command. No actual change is made to the group.
    *
    * @param parent the parent
+ * @throws Exception 
    * @throws IllegalUseOfCommandException if this {@link Command} already is already in a group
    */
-  synchronized void setParent(CommandGroup parent) {
+  synchronized void setParent(CommandGroup parent) throws Exception {
     if (m_parent != null) {
-      throw new IllegalUseOfCommandException(
+      throw new Exception(
           "Can not give command to a command group after already being put in a command group");
     }
     lockChanges();
@@ -446,24 +456,25 @@ public abstract class Command extends SendableBase {
    * {@link ConditionalCommand} so cancelling the chosen command works properly
    * in {@link CommandGroup}.
    */
-  protected void clearRequirements() {
-    m_requirements.clear();
-  }
+//  protected void clearRequirements() {
+//    m_requirements.clear();
+//  }
 
   /**
    * Starts up the command. Gets the command ready to start. <p> Note that the command will
    * eventually start, however it will not necessarily do so immediately, and may in fact be
    * canceled before initialize is even called. </p>
+ * @throws Exception 
    *
    * @throws IllegalUseOfCommandException if the command is a part of a CommandGroup
    */
-  public synchronized void start() {
+  public synchronized void start() throws Exception {
     lockChanges();
     if (m_parent != null) {
-      throw new IllegalUseOfCommandException(
+      throw new Exception(
           "Can not start a command that is a part of a command group");
     }
-    Scheduler.getInstance().add(this);
+   // Scheduler.getInstance().add(this);
     m_completed = false;
   }
 
@@ -497,13 +508,13 @@ public abstract class Command extends SendableBase {
    * command is running though, then the command will be marked as canceled and eventually removed.
    * </p> <p> A command can not be canceled if it is a part of a command group, you must cancel the
    * command group instead. </p>
+ * @throws Exception 
    *
    * @throws IllegalUseOfCommandException if this command is a part of a command group
    */
-  public synchronized void cancel() {
+  public synchronized void cancel() throws Exception {
     if (m_parent != null) {
-      throw new IllegalUseOfCommandException("Can not manually cancel a command in a command "
-          + "group");
+      throw new Exception("Can not manually cancel a command in a command " + "group");
     }
     _cancel();
   }
@@ -571,9 +582,9 @@ public abstract class Command extends SendableBase {
    *
    * @return the {@link CommandGroup} that this command is a part of (or null if not in group)
    */
-  public synchronized CommandGroup getGroup() {
-    return m_parent;
-  }
+//  public synchronized CommandGroup getGroup() {
+//    return m_parent;
+//  }
 
   /**
    * Sets whether or not this {@link Command} should run when the robot is disabled.
@@ -601,26 +612,26 @@ public abstract class Command extends SendableBase {
    *
    * @return the string representation of this object
    */
-  @Override
-  public String toString() {
-    return getName();
-  }
+ // @Override
+//  public String toString() {
+//    return getName();
+//  }
 
-  @Override
-  public void initSendable(SendableBuilder builder) {
-    builder.setSmartDashboardType("Command");
-    builder.addStringProperty(".name", this::getName, null);
-    builder.addBooleanProperty("running", this::isRunning, value -> {
-      if (value) {
-        if (!isRunning()) {
-          start();
-        }
-      } else {
-        if (isRunning()) {
-          cancel();
-        }
-      }
-    });
-    builder.addBooleanProperty(".isParented", this::isParented, null);
-  }
+  //@Override
+//  public void initSendable(SendableBuilder builder) {
+//    builder.setSmartDashboardType("Command");
+//    builder.addStringProperty(".name", this::getName, null);
+//    builder.addBooleanProperty("running", this::isRunning, value -> {
+//      if (value) {
+//        if (!isRunning()) {
+//          start();
+//        }
+//      } else {
+//        if (isRunning()) {
+//          cancel();
+//        }
+//      }
+//    });
+//    builder.addBooleanProperty(".isParented", this::isParented, null);
+//  }
 }
