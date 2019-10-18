@@ -274,6 +274,8 @@ public abstract class RobotBase  { //implements AutoCloseable
       if (cause != null) {
         throwable = cause;
       }
+      System.out.println("Unhandled exception: " + throwable.toString());
+      throwable.printStackTrace();
      // DriverStation.reportError("Unhandled exception: " + throwable.toString(),
           //throwable.getStackTrace());
       errorOnExit = true;
