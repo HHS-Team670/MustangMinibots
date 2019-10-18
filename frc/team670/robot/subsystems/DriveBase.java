@@ -11,18 +11,35 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.RaspiPin;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.team670.robot.commands.drive.TimeDrive;
+import pi.Motor;
 
 /**
  * Represents a tank drive base.
  * 
- * @author lakshbhambhani
+ * @author lakshbhambhani, ctychen
  */
 public class DriveBase extends Subsystem {  
 
+	private static int MOTOR_1_PIN_A = 4;
+	private static int MOTOR_1_PIN_B = 5;
+	private static int MOTOR_2_PIN_A = 0;
+	private static int MOTOR_2_PIN_B = 1;
+	
+	Motor m1;
+	Motor m2;
+
 	public DriveBase() {
-		
+		// get a handle to the GPIO controller
+		final GpioController gpio = GpioFactory.getInstance();
+		// initialize your motors
+		Motor left = new Motor(MOTOR_1_PIN_A, MOTOR_1_PIN_B, RaspiPin.GPIO_06);
+		Motor right = new Motor(MOTOR_2_PIN_A, MOTOR_2_PIN_B, RaspiPin.GPIO_03);
 	}
 
   /**
@@ -34,8 +51,9 @@ public class DriveBase extends Subsystem {
    *                   squares this value to linearize it.
    * @param rightSpeed Speed for right side of drive base [-1, 1]. Automatically
    *                   squares this value to linearize it.
+ * @throws InterruptedException 
    */
-  public void tankDrive(double leftSpeed, double rightSpeed) {
+  public void tankDrive(double leftSpeed, double rightSpeed){
     tankDrive(leftSpeed, rightSpeed, false);
   }
 
@@ -50,9 +68,12 @@ public class DriveBase extends Subsystem {
    * @param leftSpeed     Speed for left side of drive base [-1, 1]
    * @param rightSpeed    Speed for right side of drive base [-1, 1]
    * @param squaredInputs If true, decreases sensitivity at lower inputs
+ * @throws InterruptedException 
    */
-  public void tankDrive(double leftSpeed, double rightSpeed, boolean squaredInputs) {
+  public void tankDrive(double leftSpeed, double rightSpeed, boolean squaredInputs){
    // driveTrain.tankDrive(leftSpeed, rightSpeed, squaredInputs);
+	  m1.set(leftSpeed);
+	  m2.set(rightSpeed);
   }
 
   /**
