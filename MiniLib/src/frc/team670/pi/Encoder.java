@@ -11,15 +11,14 @@ import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import com.pi4j.io.gpio.PinState;
 
-<<<<<<< HEAD
+
 public class Encoder {
 	
 	private GpioPinDigitalInput leftPin, rightPin; 
 	
 	private PinState leftPinState = PinState.LOW;
 	private PinState rightPinState;
-	
-=======
+
 /**
  * Represents an encoder connected to the pi
  * ________ _______    ______   _______  _ 
@@ -42,7 +41,7 @@ public class Encoder {
 
 	private boolean inverted;
 
->>>>>>> a1568608da67db493f88a24995992e6288c5576e
+
 	private final GpioController gpio = GpioFactory.getInstance();
 	
 	public Encoder(Pin leftP, Pin rightP) {
@@ -61,10 +60,10 @@ public class Encoder {
 	        	leftPinState = event.getState();
 	        }
 
-<<<<<<< HEAD
+
 	    });
 		return leftPinState;
-=======
+
 	/**
 	 * @param a GPIO pin number of Motor Pin A
 	 * @param b GPIO pin number of Motor Pin B
@@ -151,6 +150,7 @@ public class Encoder {
 	 */
 	public void setMaxPeriod(double maxPeriod) {
 		// EncoderJNI.setEncoderMaxPeriod(m_encoder, maxPeriod);
+
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class Encoder {
 	public boolean getStopped() {
 		return false;
 		// return EncoderJNI.getEncoderStopped(m_encoder);
->>>>>>> a1568608da67db493f88a24995992e6288c5576e
+
 	}
 	
 	public PinState getRightState() {
@@ -176,7 +176,7 @@ public class Encoder {
 	        	rightPinState = event.getState();
 	        }
 
-<<<<<<< HEAD
+
 	    });
 		return rightPinState;
 	}
@@ -185,8 +185,26 @@ public class Encoder {
 	
 	
 
-=======
+
 	/**
+=======
+	}
+
+	/**
+	 * Determine if the encoder is stopped. Using the MaxPeriod value, a boolean is
+	 * returned that is true if the encoder is considered stopped and false if it is
+	 * still moving. A stopped encoder is one where the most recent pulse width
+	 * exceeds the MaxPeriod.
+	 *
+	 * @return True if the encoder is considered stopped.
+	 */
+	public boolean getStopped() {
+		return false;
+		// return EncoderJNI.getEncoderStopped(m_encoder);
+	}
+
+	/**
+>>>>>>> a1568608da67db493f88a24995992e6288c5576e
 	 * The last direction the encoder value changed.
 	 *
 	 * @return The last direction the encoder value changed.
@@ -306,5 +324,5 @@ public class Encoder {
 	public double pidGet() {
 		return 0;
 	}
->>>>>>> a1568608da67db493f88a24995992e6288c5576e
-}
+
+	}}
