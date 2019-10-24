@@ -64,9 +64,22 @@ public static void main(String args[]) throws InterruptedException {
     Motor left = new Motor(MOTOR_1_PIN_A, MOTOR_1_PIN_B, RaspiPin.GPIO_06);
 	Motor right = new Motor(MOTOR_2_PIN_A, MOTOR_2_PIN_B, RaspiPin.GPIO_03);
 	
-	Encoder e = new Encoder(RaspiPin.GPIO_21, RaspiPin.GPIO_22);
-	left.set(1.0);
-	right.set(-1.0);
+	Encoder lEncoder = new Encoder(RaspiPin.GPIO_07, RaspiPin.GPIO_01);
+	Encoder rEncoder = new Encoder(RaspiPin.GPIO_21, RaspiPin.GPIO_22);
+
+//	left.set(0.4);
+//	right.set(0.4);
+//	
+//	Thread.sleep(350);
+//	left.set(0);
+//	right.set(0);
+//	
+//	left.close();
+//	right.close();
+	while(true) {
+		System.out.println(lEncoder.count + " " +  rEncoder.count);
+		Thread.sleep(1);
+	}
 	// wait 3 seconds
 	
 	
@@ -84,10 +97,7 @@ public static void main(String args[]) throws InterruptedException {
 //    System.out.println(" ... complete the GPIO #02 circuit and see the listener feedback here in the console.");
 
     // keep program running until user aborts (CTRL-C)
-    while(true) {
-    	System.out.println(e.getLeftState());
-        Thread.sleep(500);
-    }
+   
     
     
 
