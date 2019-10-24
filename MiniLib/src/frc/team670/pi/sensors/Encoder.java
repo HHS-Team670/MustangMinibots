@@ -9,7 +9,6 @@ import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
-import com.sun.glass.ui.Robot;
 import com.pi4j.io.gpio.PinState;
 
 import edu.wpi.first.wpilibj.RobotState;
@@ -122,7 +121,7 @@ public class Encoder extends Thread{
 	/**
 	 * Calculates and returns the distance for which the motors have rotated
 	 * @param diameter
-	 * @return
+	 * @return distance traveled in centimeters
 	 */
 	public double getDistance(double diameter) {
 		return (2 * Math.PI * (diameter/2) * getRotations());

@@ -17,6 +17,7 @@ import com.pi4j.io.gpio.RaspiPin;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.team670.pi.Motor;
+import frc.team670.pi.sensors.Encoder;
 import frc.team670.robot.commands.drive.TimeDrive;
 
 /**
@@ -31,6 +32,10 @@ public class DriveBase extends Subsystem {
 	private static int MOTOR_2_PIN_A = 0;
 	private static int MOTOR_2_PIN_B = 1;
 	
+
+	
+	private static Encoder le, re;
+	
 	Motor left;
 	Motor right;
 
@@ -40,6 +45,8 @@ public class DriveBase extends Subsystem {
 		// initialize your motors
 		left = new Motor(MOTOR_1_PIN_A, MOTOR_1_PIN_B, RaspiPin.GPIO_06);
 		right = new Motor(MOTOR_2_PIN_A, MOTOR_2_PIN_B, RaspiPin.GPIO_03);
+		le = new Encoder(RaspiPin.GPIO_07, RaspiPin.GPIO_01);
+		re = new Encoder(RaspiPin.GPIO_21, RaspiPin.GPIO_22);
 	}
 
   /**
@@ -55,6 +62,20 @@ public class DriveBase extends Subsystem {
    */
   public void tankDrive(double leftSpeed, double rightSpeed){
     tankDrive(leftSpeed, rightSpeed, false);
+  }
+  
+  
+  public void correct() {
+	  /*
+	   * error = left-right readings
+	   * if e+: left>right, slow left
+	   * if e-: left<right, slow right
+	   * while !==, adjust until equal
+	   */
+//	  drive_straight_enc(power):
+//		    error = left_encoder - right_encoder
+//		    turn_power = kP * error
+//		    drive.arcadeDrive(power, turn_power, squaredInputs=False)
   }
 
 //  public void initBrakeMode() {
