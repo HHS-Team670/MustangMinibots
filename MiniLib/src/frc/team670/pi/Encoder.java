@@ -16,15 +16,6 @@ import edu.wpi.first.wpilibj.RobotState;
 
 /**
  * Represents an encoder connected to the pi
- * ________ _______    ______   _______  _ 
-\__   __/(  ___  )  (  __  \ (  ___  )( )
-   ) (   | (   ) |  | (  \  )| (   ) || |
-   | |   | |   | |  | |   ) || |   | || |
-   | |   | |   | |  | |   | || |   | || |
-   | |   | |   | |  | |   ) || |   | |(_)
-   | |   | (___) |  | (__/  )| (___) | _ 
-   )_(   (_______)  (______/ (_______)(_)
-                                         
  * @author ctychen, lakshbhambhani
  *
  */
@@ -36,7 +27,6 @@ public class Encoder extends Thread{
 	private PinState rightPinState;
 	
 	public int count;
-	private final int DIAMETER =  0;
 
 	private final GpioController gpio = GpioFactory.getInstance();
 	
@@ -44,6 +34,9 @@ public class Encoder extends Thread{
 	
 	int last_AB = 0;
 	
+	/**
+	 * Runs the encoder counting in another thread
+	 */
 	public void run(){
 		while(RobotState.isEnabled()) {
 			int A = getLeftState();
@@ -52,15 +45,14 @@ public class Encoder extends Thread{
 			int position = (last_AB << 2) | current_AB;
 			count += outcome[position];
 			last_AB = current_AB;
-//			try {
-//				Thread.sleep(0, );
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
 		}
 	}
 	
+	/**
+	 * Creates an encoder on 2 pins which can be used to get data from the motor
+	 * @param leftP Pin for the left sensor on the encoder
+	 * @param rightP Pin for the right sensor on the encoder
+	 */
 	public Encoder(Pin leftP, Pin rightP) {
 		 count = 0;
 		 leftPin = gpio.provisionDigitalInputPin(leftP);
@@ -90,7 +82,7 @@ public class Encoder extends Thread{
 		 start();
 	}
 	
-	public int getLeftState() {
+	private int getLeftState() {
 		leftPinState = leftPin.getState();
 		if(leftPinState == PinState.HIGH) {
 			return 1;
@@ -100,7 +92,7 @@ public class Encoder extends Thread{
 		}
 	}
 	
-	public int getRightState() {
+	private int getRightState() {
 		rightPinState = rightPin.getState();
 
 		if(rightPinState == PinState.HIGH) {
@@ -111,10 +103,32 @@ public class Encoder extends Thread{
 		}
 	}
 	
-//	public double getDistanceRotated() {
-//		return DIAMETER * rotations;
-//	}
+	/**
+	 * Returns number of ticks the encoder has gone through
+	 * @return int Ticks - the number of ticks
+	 */
+	public int getTicks() {
+		return this.count;
+	}
 	
+	/**
+	 * Calculates and returns the number of rotations the wheel has gone through
+	 * @return Double rotations - the number of rotations the wheel has gone through
+	 */
+	public double getRotations() {
+		return getTicks()/800;
+	}
+	
+	/**
+	 * Calculates and returns the distance for which the motors have rotated
+	 * @param diameter
+	 * @return
+	 */
+	public double getDistance(double diameter) {
+		return (2 * Math.PI * (diameter/2) * getRotations());
+	}
+	
+
 	
 	
 	

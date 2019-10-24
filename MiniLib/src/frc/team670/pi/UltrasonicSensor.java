@@ -6,6 +6,8 @@ import com.pi4j.io.gpio.GpioPinDigitalInput;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinState;
+import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 /**
  * Represents an ultrasonic sensor connected to the pi motor shield
@@ -16,51 +18,65 @@ import com.pi4j.io.gpio.PinState;
 public class UltrasonicSensor extends Thread {
 
 	private GpioPinDigitalInput echo;
-	private GpioPinDigitalOutput trigger;
+	private GpioPinDigitalOutput trig;
 	private final GpioController gpio = GpioFactory.getInstance();
-	private int boundary;
-	private long lastRead, startTime, endTime, elapsed, measure;
-
+	private double boundary;
+	private double lastRead;
+	
 	/**
 	 * 
-	 * @param trig     Trigger pin for sending signal to put sensor in detecting
+	 * @param trig     trig pin for sending signal to put sensor in detecting
 	 *                 mode
 	 * @param echo     Pin that sends signals back
 	 * @param boundary an integer specifying the minimum distance at which the
-	 *                 sensor will return a Triggered response of True.
+	 *                 sensor will return a triged response of True.
 	 */
 	public UltrasonicSensor(Pin trig, Pin echo, int boundary) {
-		this.trigger = gpio.provisionDigitalOutputPin(trig);
-		this.trigger.setShutdownOptions(true);
+		this.trig = gpio.provisionDigitalOutputPin(trig);
+		this.trig.setShutdownOptions(true);
 		this.echo = gpio.provisionDigitalInputPin(echo);
 		this.echo.setShutdownOptions(true);
 		this.boundary = boundary;
 		lastRead = 0;
-		start();
 	}
 
 	public void run() {
 		System.out.println("Ultrasonic started");
-		if (echo.getState() == PinState.LOW) {
-			startTime = System.currentTimeMillis();
-		}
-		if (echo.getState() == PinState.HIGH) {
-			endTime = System.currentTimeMillis();
-		}
-		elapsed = endTime - startTime;
-		measure = (elapsed * 34300) / 2;
-		this.lastRead = measure;
-		if (this.boundary > measure) {
-			System.out.println("Boundary breached: " + this.boundary + "Measure: " + this.measure);
-			this.trigger.setState(PinState.HIGH);
-		} else {
-			this.trigger.setState(PinState.LOW);
-		}
-
+		//while(true){
+			try {
+			//Thread.sleep(2000);
+			trig.high(); // Make trigger pin HIGH
+			Thread.sleep((long) 0.01);// Delay for 10 microseconds
+			trig.low(); //Make trigger pin LOW
+		
+			while(echo.isLow()){ //Wait until the ECHO pin gets HIGH
+				
+			}
+			long startTime= System.nanoTime(); // Store the surrent time to calculate ECHO pin HIGH time.
+			while(echo.isHigh()){ //Wait until the ECHO pin gets LOW
+				
+			}
+			long endTime= System.nanoTime(); // Store the echo pin HIGH end time to calculate ECHO pin HIGH time.
+			lastRead = ((((endTime-startTime)/1e3)/2) / 29.1);
+			//System.out.println("Distance :"+((((endTime-startTime)/1e3)/2) / 29.1) +" cm"); //Printing out the distance in cm  			
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			}
+			stop();
+		//}
+	}
+	
+	public double getDist() {
+		start();
+		return lastRead;
 	}
 
 	public boolean isTriggered() {
-		return (trigger.getState() == PinState.HIGH);
+		return (lastRead <= boundary);
+	}
+	
+	public void setBoundary(double boundary) {
+		this.boundary =  boundary;
 	}
 
 }
