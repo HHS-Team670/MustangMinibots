@@ -1,4 +1,4 @@
-package pi.testing;
+package frc.team670.pi.tests;
 
 import java.io.BufferedReader;
 import java.io.IOException;

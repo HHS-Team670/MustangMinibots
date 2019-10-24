@@ -1,4 +1,4 @@
-package pi.testing;
+package frc.team670.pi.tests;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
