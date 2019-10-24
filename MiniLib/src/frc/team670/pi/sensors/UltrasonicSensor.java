@@ -1,4 +1,4 @@
-package frc.team670.pi;
+package frc.team670.pi.sensors;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
@@ -24,9 +24,8 @@ public class UltrasonicSensor extends Thread {
 	private double lastRead;
 	
 	/**
-	 * 
-	 * @param trig     trig pin for sending signal to put sensor in detecting
-	 *                 mode
+	 * Creates an ultrasonic sensor that could measure distance and check if its triggered based on a boundary
+	 * @param trig     trig pin for sending signal to put sensor in detecting mode
 	 * @param echo     Pin that sends signals back
 	 * @param boundary an integer specifying the minimum distance at which the
 	 *                 sensor will return a triged response of True.
@@ -66,15 +65,28 @@ public class UltrasonicSensor extends Thread {
 		//}
 	}
 	
+	/**
+	 * Calculates and returns the distance
+	 * @return Double distance - The distance sensed by the us sensor
+	 * @post creates a new thread and kills it to do this
+	 */
 	public double getDist() {
 		start();
 		return lastRead;
 	}
 
+	/**
+	 * Checks if the measured distance is less than the boundary
+	 * @return Boolean triggered based on whether its within the boundary
+	 */
 	public boolean isTriggered() {
 		return (lastRead <= boundary);
 	}
 	
+	/**
+	 * Sets a new boundary for the sensor
+	 * @param boundary The new value for the boundary
+	 */
 	public void setBoundary(double boundary) {
 		this.boundary =  boundary;
 	}

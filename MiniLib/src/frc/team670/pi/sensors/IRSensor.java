@@ -1,4 +1,4 @@
-package frc.team670.pi;
+package frc.team670.pi.sensors;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;

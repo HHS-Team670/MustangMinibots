@@ -10,8 +10,8 @@ import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.wiringpi.SoftPwm;
 
-import frc.team670.pi.Encoder;
 import frc.team670.pi.Motor;
+import frc.team670.pi.sensors.Encoder;
 
 /**
  * Represents a DC motor which can be controlled with the pi motorshield.
