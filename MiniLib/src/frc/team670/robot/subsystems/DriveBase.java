@@ -25,19 +25,20 @@ import frc.team670.robot.commands.drive.TimeDrive;
  * 
  * @author lakshbhambhani, ctychen
  */
-public class DriveBase extends Subsystem {  
+public class DriveBase extends Subsystem {
 
 	private static int MOTOR_1_PIN_A = 4;
 	private static int MOTOR_1_PIN_B = 5;
 	private static int MOTOR_2_PIN_A = 0;
 	private static int MOTOR_2_PIN_B = 1;
-	
 
-	
 	private static Encoder le, re;
-	
+
 	Motor left;
 	Motor right;
+
+	double leftSpeed;
+	double rightSpeed;
 
 	public DriveBase() {
 		// get a handle to the GPIO controller
@@ -49,60 +50,70 @@ public class DriveBase extends Subsystem {
 		re = new Encoder(RaspiPin.GPIO_21, RaspiPin.GPIO_22);
 	}
 
-  /**
-   * 
-   * Drives the Robot using a tank drive configuration (two joysticks, or auton).
-   * Squares inputs to linearize them.
-   * 
-   * @param leftSpeed  Speed for left side of drive base [-1, 1]. Automatically
-   *                   squares this value to linearize it.
-   * @param rightSpeed Speed for right side of drive base [-1, 1]. Automatically
-   *                   squares this value to linearize it.
- * @throws InterruptedException 
-   */
-  public void tankDrive(double leftSpeed, double rightSpeed){
-    tankDrive(leftSpeed, rightSpeed, false);
-  }
-  
-  
-  public void correct() {
-	  /*
-	   * error = left-right readings
-	   * if e+: left>right, slow left
-	   * if e-: left<right, slow right
-	   * while !==, adjust until equal
-	   */
+	/**
+	 * 
+	 * Drives the Robot using a tank drive configuration (two joysticks, or auton).
+	 * Squares inputs to linearize them.
+	 * 
+	 * @param leftSpeed  Speed for left side of drive base [-1, 1]. Automatically
+	 *                   squares this value to linearize it.
+	 * @param rightSpeed Speed for right side of drive base [-1, 1]. Automatically
+	 *                   squares this value to linearize it.
+	 * @throws InterruptedException
+	 */
+	public void tankDrive(double leftSpeed, double rightSpeed) {
+		this.leftSpeed = leftSpeed;
+		this.rightSpeed = rightSpeed;
+		tankDrive(this.leftSpeed, this.rightSpeed, false);
+	}
+
+	public void correct() {
+		double error = Math.abs(this.le.getTicks()) - Math.abs(this.re.getTicks());
+		while (Math.abs(error) > 5) {
+			if (error > 0)
+				this.leftSpeed -= 0.05;
+			if (error < 0)
+				this.rightSpeed -= 0.05;
+			System.out.println(le.getTicks() + " " + re.getTicks());
+		}
+		/*
+		 * error = left-right readings if e+: left>right, slow left if e-: left<right,
+		 * slow right while !==, adjust until equal
+		 */
 //	  drive_straight_enc(power):
 //		    error = left_encoder - right_encoder
 //		    turn_power = kP * error
 //		    drive.arcadeDrive(power, turn_power, squaredInputs=False)
-  }
+	}
 
 //  public void initBrakeMode() {
 //    setMotorsBrakeMode(allMotors, IdleMode.kBrake);
 //  }
 
-  /**
-   * 
-   * Drives the Robot using a tank drive configuration (two joysticks, or auton)
-   * 
-   * @param leftSpeed     Speed for left side of drive base [-1, 1]
-   * @param rightSpeed    Speed for right side of drive base [-1, 1]
-   * @param squaredInputs If true, decreases sensitivity at lower inputs
- * @throws InterruptedException 
-   */
-  public void tankDrive(double leftSpeed, double rightSpeed, boolean squaredInputs){
-   // driveTrain.tankDrive(leftSpeed, rightSpeed, squaredInputs);
-	  left.set(leftSpeed);
-	  right.set(rightSpeed);
-  }
+	/**
+	 * 
+	 * Drives the Robot using a tank drive configuration (two joysticks, or auton)
+	 * 
+	 * @param leftSpeed     Speed for left side of drive base [-1, 1]
+	 * @param rightSpeed    Speed for right side of drive base [-1, 1]
+	 * @param squaredInputs If true, decreases sensitivity at lower inputs
+	 * @throws InterruptedException
+	 */
+	public void tankDrive(double leftSpeed, double rightSpeed, boolean squaredInputs) {
+		this.leftSpeed = leftSpeed;
+		this.rightSpeed = rightSpeed;
+		correct();
+		left.set(this.leftSpeed);
+		right.set(this.rightSpeed);
+	}
 
-  /**
-   * Stops the motors on the drive base (sets them to 0).
-   */
-  public void stop() {
-    tankDrive(0, 0);
-  }
+	/**
+	 * Stops the motors on the drive base (sets them to 0).
+	 */
+	public void stop() {
+		left.set(0);
+		right.set(0);
+	}
 
 //  public void sendEncoderDataToDashboard() {
 //    // if (leftDIOEncoder != null) {
@@ -131,8 +142,17 @@ public class DriveBase extends Subsystem {
 //    }
 //  }
 
-  @Override
-  public void initDefaultCommand() {
-    setDefaultCommand(null);
-  }
+	@Override
+	public void initDefaultCommand() {
+		setDefaultCommand(null);
+	}
+
+	public Encoder getLeftEncoder() {
+		// TODO Auto-generated method stub
+		return this.le;
+	}
+
+	public Encoder getRightEncoder() {
+		return this.re;
+	}
 }

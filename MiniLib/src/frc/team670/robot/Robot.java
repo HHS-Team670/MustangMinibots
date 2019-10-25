@@ -10,7 +10,7 @@ package frc.team670.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import frc.team670.robot.commands.drive.TimeDrive;
+import frc.team670.robot.commands.drive.*;
 import frc.team670.robot.subsystems.DriveBase;
 import frc.team670.robot.utils.Logger;
 
@@ -53,7 +53,8 @@ public class Robot extends TimedRobot {
     Logger.consoleLog();
 
     // The command we want to test goes here
-    Scheduler.getInstance().add(new TimeDrive(5, 0.2));
+    Scheduler.getInstance().add(new TimeDrive(5, 1.0));
+   // Scheduler.getInstance().add(new DistanceDrive(10, 1.0));
   }
 
   /**

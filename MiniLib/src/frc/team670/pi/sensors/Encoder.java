@@ -12,6 +12,7 @@ import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import com.pi4j.io.gpio.PinState;
 
 import edu.wpi.first.wpilibj.RobotState;
+import frc.team670.robot.RobotConstants;
 
 /**
  * Represents an encoder connected to the pi
@@ -120,19 +121,19 @@ public class Encoder extends Thread{
 	
 	/**
 	 * Calculates and returns the distance for which the motors have rotated
-	 * @param diameter
 	 * @return distance traveled in centimeters
 	 */
-	public double getDistance(double diameter) {
-		return (2 * Math.PI * (diameter/2) * getRotations());
+	public double getDistance() {
+		return (2 * Math.PI * (RobotConstants.DRIVE_BASE_WHEEL_DIAMETER/2) * getRotations());
 	}
 	
 
+//	public double getVelocityCm() {
+//		return (RobotConstants.ENCODER_TICKS_PER_ROTATION*)
+//	}
+//	
+//	public double getVelocityTicks() {
+//		
+//	}
 	
-	
-	
-	
-	
-
-
 }

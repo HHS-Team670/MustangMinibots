@@ -10,13 +10,13 @@ public class DistanceDrive extends Command{
 	public DistanceDrive(double target, double speed) {
     this.speed = speed;
     this.target = target;
-    this.traveled = 0;
     requires(Robot.driveBase);
   }
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		this.traveled = 0;
 		Logger.consoleLog("Speed: %s Distance traveled: %s", speed, traveled);
 	}
 
@@ -24,6 +24,8 @@ public class DistanceDrive extends Command{
 	@Override
 	protected void execute() {
 		Logger.consoleLog();
+		this.traveled = Robot.driveBase.getLeftEncoder().getDistance();
+		System.out.println(this.traveled + " " + this.target);
 		Robot.driveBase.tankDrive(speed, speed, false);
 		// Logger.consoleLog();
 	}
@@ -31,7 +33,7 @@ public class DistanceDrive extends Command{
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-		return ((Math.abs(this.traveled - this.target)) < 0.1);
+		return ((Math.abs(this.traveled - this.target)) < 1);
 	}
 
 	// Called once after isFinished returns true
