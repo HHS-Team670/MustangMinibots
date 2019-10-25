@@ -71,7 +71,7 @@ public class UltrasonicSensor extends Thread {
 	 * @post creates a new thread and kills it to do this
 	 */
 	public double getDist() {
-		start();
+		run();
 		return lastRead;
 	}
 
