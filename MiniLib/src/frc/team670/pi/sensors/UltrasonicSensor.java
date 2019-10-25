@@ -40,7 +40,7 @@ public class UltrasonicSensor extends Thread {
 	}
 
 	public void run() {
-		System.out.println("Ultrasonic started");
+		//System.out.println("Ultrasonic started");
 		//while(true){
 			try {
 			//Thread.sleep(2000);
