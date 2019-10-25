@@ -80,7 +80,6 @@ public static void main(String args[]) throws InterruptedException {
 //	left.close();
 //	right.close();
 	while(true) {
-		s.run();
 		System.out.println(s.getDist());
 		Thread.sleep(1);
 	}
