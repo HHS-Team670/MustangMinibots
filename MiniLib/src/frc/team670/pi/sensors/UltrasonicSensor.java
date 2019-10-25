@@ -37,11 +37,12 @@ public class UltrasonicSensor extends Thread {
 		this.echo.setShutdownOptions(true);
 		this.boundary = boundary;
 		lastRead = 0;
+		start();
 	}
 
 	public void run() {
 		//System.out.println("Ultrasonic started");
-		//while(true){
+		while(true){
 			try {
 			//Thread.sleep(2000);
 			trig.high(); // Make trigger pin HIGH
@@ -61,8 +62,7 @@ public class UltrasonicSensor extends Thread {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			}
-			stop();
-		//}
+		}
 	}
 	
 	/**
@@ -71,7 +71,6 @@ public class UltrasonicSensor extends Thread {
 	 * @post creates a new thread and kills it to do this
 	 */
 	public double getDist() {
-		run();
 		return lastRead;
 	}
 
