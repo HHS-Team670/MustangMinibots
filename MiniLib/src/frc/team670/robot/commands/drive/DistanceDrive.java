@@ -1,16 +1,21 @@
 package frc.team670.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.team670.pi.sensors.Encoder;
 import frc.team670.robot.Robot;
 import frc.team670.robot.utils.Logger;
 
 public class DistanceDrive extends Command{
 	private double speed, target, traveled;
+	private Encoder leftEncoder, rightEncoder;
+	private int leftTickCount, rightTickCount;
 
 	public DistanceDrive(double target, double speed) {
     this.speed = speed;
     this.target = target;
     requires(Robot.driveBase);
+	leftEncoder = Robot.driveBase.getLeftEncoder();
+	rightEncoder = Robot.driveBase.getRightEncoder();
   }
 
 	// Called just before this Command runs the first time
@@ -23,11 +28,18 @@ public class DistanceDrive extends Command{
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		leftTickCount = leftEncoder.getTicks();
+		rightTickCount = rightEncoder.getTicks();
+		this.traveled = leftEncoder.getDistance();
+		if (leftTickCount < rightTickCount) {
+			Robot.driveBase.tankDrive(speed, speed * 0.9, false);
+		} else if (rightTickCount < leftTickCount) {
+			Robot.driveBase.tankDrive(speed * 0.9, speed, false);
+		} else {
+			Robot.driveBase.tankDrive(speed, speed, false);
+		}
+
 		Logger.consoleLog();
-		this.traveled = Robot.driveBase.getLeftEncoder().getDistance();
-		System.out.println(this.traveled + " " + this.target);
-		Robot.driveBase.tankDrive(speed, speed, false);
-		// Logger.consoleLog();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
