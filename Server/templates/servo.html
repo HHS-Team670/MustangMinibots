@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+   <title>Humanoid Status</title>
+</head>
+
+<body>
+
+   <h1>Humanoid Control</h1>
+    <form>
+        Left Ankle:
+        <input type="text" id="leftAnkle" value="90">
+        <a href='/leftAnkle?value='+document.getElementById("leftAnkle").value>Load</a>
+        <input type="submit" value="Load">
+    </form>
+    <form action="/leftKnee" method="POST" target"_blank">
+        Left Knee:
+        <input type="text" name="leftKnee">
+        <input type="submit" value="Load">
+    </form>
+    <form action="/leftThigh" method="POST" target"_blank">
+        Left Thigh:
+        <input type="text" name="leftThigh">
+        <input type="submit" value="Load">
+    </form>
+    <form action="/rightAnkle" method="POST" target"_blank">
+        Right Ankle:
+        <input type="text" name="rightAnkle">
+        <input type="submit" value="Load">
+    </form>
+    <form action="/rightKnee" method="POST" target"_blank">
+        Right Knee:
+        <input type="text" name="rightKnee">
+        <input type="submit" value="Load">
+    </form>
+    <form action="/rightThigh" method="POST" target"_blank">
+        Right Thigh:
+        <input type="text" name="rightThigh">
+        <input type="submit" value="Load">
+    </form>
+    
+    
+   
+    
+   
+
+
+ 
+   
+
+   {% if message %}
+   <h2>Current Command: </h2>
+   <h2>{{ message }}</h2>
+   {% endif %}
+
+</body>
+</html>
