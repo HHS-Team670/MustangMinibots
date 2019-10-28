@@ -3,6 +3,7 @@ import threading
 import subprocess
 
 app = Flask(__name__)
+p = 0
 
 @app.route('/')
 def index():
@@ -31,13 +32,13 @@ def action1(action1):
       message = "enabled"
       # thread = threading.Thread(target=walkForward)
       # thread.start()
-      p = subprocess.Popen(['java', '-jar', '../t.jar'])
+      p = subprocess.Popen(['java', '-jar', '../BalancedTest.jar']).pid
       return message 
    elif action1 == "disable":
       message = "disabled"
       # thread = threading.Thread(target=turnLeft)
       # thread.start()
-      p.kill()
+      subprocess.kill(p)
       return message
    else:
       message = ""
