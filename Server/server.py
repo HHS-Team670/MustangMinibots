@@ -3,7 +3,6 @@ import threading
 import subprocess
 
 app = Flask(__name__)
-p = subprocess()
 
 @app.route('/')
 def index():
