@@ -32,7 +32,7 @@ def action1(action1):
       message = "enabled"
       # thread = threading.Thread(target=walkForward)
       # thread.start()
-      p = subprocess.Popen(['java', '-jar', '../BalancedTest.jar']).pid
+      p = subprocess.Popen(['java', '-jar', '../../t.jar']).pid
       return message 
    elif action1 == "disable":
       message = "disabled"
