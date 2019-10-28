@@ -31,7 +31,7 @@ def action1(action1):
       message = "enabled"
       # thread = threading.Thread(target=walkForward)
       # thread.start()
-      p = subprocess.Popen(['java', '-jar', 'Blender.jar'])
+      p = subprocess.Popen(['java', '-jar', '../t.jar'])
       return message 
    elif action1 == "disable":
       message = "disabled"
