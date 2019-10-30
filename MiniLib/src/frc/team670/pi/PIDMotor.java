@@ -20,7 +20,11 @@ public class PIDMotor {
 		this.rampBand = rampBand;
 	}
 
-	public void pidWrite(double pidInput) {
+	/**
+	 * Sets motor output using input value from PID controller
+	 * @param pidInput 
+	 */
+	public void write(double pidInput) {
 		/*
 		 * If the change is greater than what we want, set the output to be the previous
 		 * output, but adjusted to be in the tolerable range + keeping the sign
@@ -31,7 +35,7 @@ public class PIDMotor {
 		} else {
 			output = pidInput;
 		}
-		motor.set(output*100);
+		motor.set(output);
 		previousOutput = output;
 	}
 }
