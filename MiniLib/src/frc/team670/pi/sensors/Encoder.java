@@ -108,7 +108,7 @@ public class Encoder extends Thread{
 	 * @return int Ticks - the number of ticks
 	 */
 	public int getTicks() {
-		return this.count;
+		return Math.abs(this.count);
 	}
 	
 	/**
@@ -116,7 +116,7 @@ public class Encoder extends Thread{
 	 * @return Double rotations - the number of rotations the wheel has gone through
 	 */
 	public double getRotations() {
-		return getTicks()/800;
+		return getTicks()/800.0;
 	}
 	
 	/**
