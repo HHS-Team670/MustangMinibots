@@ -12,6 +12,7 @@ import com.pi4j.wiringpi.SoftPwm;
 
 import frc.team670.pi.Motor;
 import frc.team670.pi.sensors.Encoder;
+import jpigpio.PigpioException;
 
 /**
  * Represents a DC motor which can be controlled with the pi motorshield.
@@ -37,6 +38,7 @@ public class EncoderTest {
 	 * @param a GPIO pin number of Motor Pin A
 	 * @param b GPIO pin number of Motor Pin B
 	 * @param e GPIO pin (example: RaspiPin.GPIO_06) of digital output
+	 * @throws PigpioException 
 	 */
 //	public Encoder(int pin) {
 //		gpio.provisionDigitalInputPin(RaspiPin.GPIO_12);          
@@ -49,7 +51,7 @@ public class EncoderTest {
 //		}
 //	}
 
-public static void main(String args[]) throws InterruptedException {
+public static void main(String args[]) throws InterruptedException, PigpioException {
     System.out.println("<--Pi4J--> GPIO Listen Example ... started.");
 
     // create gpio controller
@@ -64,8 +66,8 @@ public static void main(String args[]) throws InterruptedException {
     Motor left = new Motor(MOTOR_1_PIN_A, MOTOR_1_PIN_B, RaspiPin.GPIO_06);
 	Motor right = new Motor(MOTOR_2_PIN_A, MOTOR_2_PIN_B, RaspiPin.GPIO_03);
 	
-	Encoder lEncoder = new Encoder(RaspiPin.GPIO_07, RaspiPin.GPIO_01);
-	Encoder rEncoder = new Encoder(RaspiPin.GPIO_21, RaspiPin.GPIO_22);
+	Encoder lEncoder = new Encoder(5, 6);//RaspiPin.GPIO_07
+	Encoder rEncoder = new Encoder(4, 18);//RaspiPin.GPIO_21
 
 //	left.set(0.4);
 //	right.set(0.4);

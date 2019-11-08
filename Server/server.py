@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for
 import threading
 import subprocess
+import psutil
 
 app = Flask(__name__)
-p = 0
 
 @app.route('/')
 def index():
@@ -17,12 +17,17 @@ def main():
    # Pass the template data into the template main.html and return it to the user
    return message
   
-# def walkForward():
-#    humanoid.walkForward()
+def run():
+   global p 
+   p = subprocess.Popen(['java', '-jar', '../../t.jar']).pid
 
-# def turnLeft():
-#    humanoid.turnLeft()
+def kill(proc_pid):
+   process = psutil.Process(proc_pid)
+   for proc in process.children(recursive=True):
+      proc.kill()
+   process.kill()
 
+thread = threading.Thread(target=run)
 
 @app.route("/<action1>")
 def action1(action1):
@@ -30,15 +35,11 @@ def action1(action1):
    global message
    if action1 == "enable":
       message = "enabled"
-      # thread = threading.Thread(target=walkForward)
-      # thread.start()
-      p = subprocess.Popen(['java', '-jar', '../../t.jar']).pid
-      return p 
+      thread.start()
+      return message
    elif action1 == "disable":
       message = "disabled"
-      # thread = threading.Thread(target=turnLeft)
-      # thread.start()
-      subprocess.kill(p)
+      kill(p)
       return message
    else:
       message = ""

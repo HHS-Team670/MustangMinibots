@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.team670.pi.Motor;
 import frc.team670.pi.sensors.Encoder;
 import frc.team670.robot.commands.drive.TimeDrive;
+import jpigpio.PigpioException;
 
 /**
  * Represents a tank drive base.
@@ -46,8 +47,18 @@ public class DriveBase extends Subsystem {
 		// initialize your motors
 		left = new Motor(MOTOR_1_PIN_A, MOTOR_1_PIN_B, RaspiPin.GPIO_06);
 		right = new Motor(MOTOR_2_PIN_A, MOTOR_2_PIN_B, RaspiPin.GPIO_03);
-		le = new Encoder(RaspiPin.GPIO_07, RaspiPin.GPIO_01);
-		re = new Encoder(RaspiPin.GPIO_21, RaspiPin.GPIO_22);
+		try {
+			le = new Encoder(5, 6);
+		} catch (PigpioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			re = new Encoder(4, 18);
+		} catch (PigpioException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -102,7 +113,7 @@ public class DriveBase extends Subsystem {
 	public void tankDrive(double leftSpeed, double rightSpeed, boolean squaredInputs) {
 		this.leftSpeed = leftSpeed;
 		this.rightSpeed = rightSpeed;
-		correct();
+		//correct();
 		left.set(this.leftSpeed);
 		right.set(this.rightSpeed);
 	}
