@@ -29,6 +29,8 @@ public class Encoder {
 
 	private int leftPinState;
 	private int rightPinState;
+	
+	private boolean reversed;
 
 	public int count;
 
@@ -61,8 +63,9 @@ public class Encoder {
 	 * @param rightP Pin for the right sensor on the encoder
 	 * @throws PigpioException
 	 */
-	public Encoder(int leftP, int rightP) throws PigpioException {
+	public Encoder(int leftP, int rightP, boolean reversed) throws PigpioException {
 		count = 0;
+		this.reversed = reversed;
 
 //		 leftPin = gpio.provisionDigitalInputPin(leftP);
 //		 leftPin.setShutdownOptions(true);
@@ -97,7 +100,12 @@ public class Encoder {
 	 * @return int Ticks - the number of ticks
 	 */
 	public int getTicks() {
-		return this.count;
+		if(reversed) {
+			return -1 * this.count;
+		}
+		else {
+			return this.count;
+		}
 	}
 
 	/**
