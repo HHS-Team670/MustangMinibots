@@ -24,8 +24,8 @@ public class CurveStraightDrive extends Command {
 		this.speedR = rspeed;
 		this.time = dist;
 		this.dist = secs;
-		lEncoder = new Encoder(7, 1);
-		rEncoder = new Encoder(22, 21);
+		lEncoder = Robot.driveBase.getLeftEncoder();
+		rEncoder = Robot.driveBase.getRightEncoder();
 		requires(drivebase);
 	}
 

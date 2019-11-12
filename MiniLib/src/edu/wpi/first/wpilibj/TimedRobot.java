@@ -85,7 +85,7 @@ public class TimedRobot extends IterativeRobotBase {
 
       long currentTime = System.currentTimeMillis();
       while (currentTime < nextTime) {
-        Thread.sleep((nextTime*(long)1.5) - currentTime);
+        Thread.sleep(nextTime - currentTime);
         currentTime = System.currentTimeMillis();
       }
       loopFunc();

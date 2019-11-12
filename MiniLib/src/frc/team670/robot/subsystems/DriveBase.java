@@ -48,13 +48,13 @@ public class DriveBase extends Subsystem {
 		left = new Motor(MOTOR_1_PIN_A, MOTOR_1_PIN_B, RaspiPin.GPIO_06);
 		right = new Motor(MOTOR_2_PIN_A, MOTOR_2_PIN_B, RaspiPin.GPIO_03);
 		try {
-			le = new Encoder(5, 6);
+			le = new Encoder(5, 6, false); //TODO  modify this based on motor direction
 		} catch (PigpioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			re = new Encoder(4, 18);
+			re = new Encoder(4, 18, false); //TODO  modify this based on motor direction
 		} catch (PigpioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
