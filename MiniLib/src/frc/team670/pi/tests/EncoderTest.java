@@ -66,8 +66,8 @@ public static void main(String args[]) throws InterruptedException, PigpioExcept
     Motor left = new Motor(MOTOR_1_PIN_A, MOTOR_1_PIN_B, RaspiPin.GPIO_06);
 	Motor right = new Motor(MOTOR_2_PIN_A, MOTOR_2_PIN_B, RaspiPin.GPIO_03);
 	
-	Encoder lEncoder = new Encoder(5, 6);//RaspiPin.GPIO_07
-	Encoder rEncoder = new Encoder(4, 18);//RaspiPin.GPIO_21
+	Encoder lEncoder = new Encoder(5, 6, false);//RaspiPin.GPIO_07
+	Encoder rEncoder = new Encoder(4, 18, false);//RaspiPin.GPIO_21
 
 //	left.set(0.4);
 //	right.set(0.4);
