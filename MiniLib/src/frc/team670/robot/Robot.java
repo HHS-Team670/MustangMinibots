@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
     Logger.consoleLog();
 
     // The command we want to test goes here
-    Scheduler.getInstance().add(new DistanceD(50, 1.0, 1.0));
+    Scheduler.getInstance().add(new PIDDistanceTest(50));
    // Scheduler.getInstance().add(new DistanceDrive(10, 1.0));
   }
 
