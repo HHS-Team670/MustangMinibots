@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.team670.robot.Robot;
 import frc.team670.robot.utils.Logger;
 
-public class DistanceD extends Command {
+public class DistanceDrive extends Command {
 	
 	private double speedL, speedR, dist;
 	
-	public DistanceD(double distance_cm, double lspeed, double rspeed) {
+	public DistanceDrive(double distance_cm, double lspeed, double rspeed) {
 		this.speedL = lspeed;
 		this.speedR = rspeed;
 		//this.seconds = seconds;
