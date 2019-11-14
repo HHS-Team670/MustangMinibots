@@ -32,24 +32,28 @@ public class PIDDistanceDrive extends Command {
 	public PIDDistanceDrive(double targetInches) {
 		m_targetInches = targetInches;
 		m_leftController = new PIDController(kP, kI, kD);
-		m_leftController.setTolerance(MathUtils.convertInchesToEncoderTicks(TOLERANCE_INCHES));
+		double toleranceTicks = MathUtils.convertInchesToEncoderTicks(TOLERANCE_INCHES);
+		m_leftController.setTolerance(toleranceTicks);
 		m_rightController = new PIDController(kP, kI, kD);
-		m_rightController.setTolerance(MathUtils.convertInchesToEncoderTicks(TOLERANCE_INCHES));
+		m_rightController.setTolerance(toleranceTicks);
 		requires(Robot.driveBase);
 	}
 
 	public void initialize() {
-		m_leftController.setSetpoint(MathUtils.convertInchesToEncoderTicks(m_targetInches));
-		m_rightController.setSetpoint(MathUtils.convertInchesToEncoderTicks(m_targetInches));
+	    double numTicks = MathUtils.convertInchesToEncoderTicks(m_targetInches);
+		m_leftController.setSetpoint(numTicks);
+		m_rightController.setSetpoint(numTicks);
 		Logger.consoleLog("Target ticks: %s TicksL: %s TicksR: %s", m_leftController.getSetpoint(),
 				Robot.driveBase.getLeftEncoder().getTicks(), Robot.driveBase.getRightEncoder().getTicks());
 	}
 
 	public void execute() {
-		Logger.consoleLog("TicksL: %s TicksR: %s", Robot.driveBase.getLeftEncoder().getTicks(),
-				Robot.driveBase.getRightEncoder().getTicks());
-		Robot.driveBase.tankDrive(m_leftController.calculate(Robot.driveBase.getLeftEncoder().getTicks()),
-				m_rightController.calculate(Robot.driveBase.getRightEncoder().getTicks()));
+	    int leftTicks = Robot.driveBase.getLeftEncoder().getTicks();
+		int rightTicks = Robot.driveBase.getRightEncoder().getTicks();
+		double leftSpeed = m_leftController.calculate(leftTicks);
+		double rightSpeed = m_leftController.calculate(rightTicks);
+		Logger.consoleLog("TicksL: %s TicksR: %s, SpeedL: %s SpeedR: %s", leftTicks, rightTicks, leftSpeed, rightSpeed);
+		Robot.driveBase.tankDrive(leftSpeed, rightSpeed);
 	}
 
 	public boolean isFinished() {

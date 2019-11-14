@@ -7,6 +7,8 @@ import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.wiringpi.SoftPwm;
 
+import frc.team670.robot.utils.Logger;
+
 /**
  * Represents a DC motor which can be controlled with the pi motorshield.
  * 
@@ -45,13 +47,16 @@ public class Motor {
 	 */
 	public void set(double s) {
 		if (s <= 1.0 && s >= -1.0) {
-			this.speed = ((int) ((Math.abs(s)) * 100));
-			if (s > 0)
+		    this.speed = ((int) ((Math.abs(s)) * 100));
+		    if (s > 0) {
 				forward();
-			else if (s < 0)
+		    } else if (s < 0) {
 				reverse();
-			else
+		    } else {
 				stop();
+		    }
+		} else {
+		    Logger.consoleLog("Invalid motor speed: %s. Values must be between -1.0 and 1.0", s);
 		}
 	}
 
@@ -68,7 +73,6 @@ public class Motor {
 	 */
 	private void forward() {
 		if(!inverted) {
-			System.out.println("...Motor Forward...");
 			SoftPwm.softPwmWrite(mpinA, this.speed);
 			SoftPwm.softPwmWrite(mpinB, 0);
 		}
@@ -82,7 +86,6 @@ public class Motor {
 	 */
 	private void reverse() {
 		if(inverted) {
-			System.out.println("...Motor Reverse...");
 			SoftPwm.softPwmWrite(mpinA, 0);
 			SoftPwm.softPwmWrite(mpinB, this.speed);
 		}
@@ -95,7 +98,6 @@ public class Motor {
 	 * Stops the motor
 	 */
 	private void stop() {
-		System.out.println("...Motor Stopping...");
 		SoftPwm.softPwmWrite(mpinA, 0);
 		SoftPwm.softPwmWrite(mpinB, 0);
 	}
