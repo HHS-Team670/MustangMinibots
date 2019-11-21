@@ -51,16 +51,21 @@ public class PIDDistanceDrive extends Command {
 	    int leftTicks = Robot.driveBase.getLeftEncoder().getTicks();
 		int rightTicks = Robot.driveBase.getRightEncoder().getTicks();
 		double leftSpeed = m_leftController.calculate(leftTicks);
-		double rightSpeed = m_leftController.calculate(rightTicks);
+		double rightSpeed = m_rightController.calculate(rightTicks);
+		Logger.consoleLog("L setpoint: %s", m_leftController.getSetpoint());
+		Logger.consoleLog("R setpoint: %s", m_rightController.getSetpoint());
 		Logger.consoleLog("TicksL: %s TicksR: %s, SpeedL: %s SpeedR: %s", leftTicks, rightTicks, leftSpeed, rightSpeed);
 		Robot.driveBase.tankDrive(leftSpeed, rightSpeed);
 	}
 
 	public boolean isFinished() {
-		return m_leftController.atSetpoint() || m_rightController.atSetpoint();
+		Logger.consoleLog("L setpoint: %s, L at: %s", m_leftController.getSetpoint(), m_leftController.atSetpoint());
+		Logger.consoleLog("R setpoint: %s, R at: %s", m_rightController.getSetpoint(), m_rightController.atSetpoint());
+		return (m_leftController.atSetpoint() || m_rightController.atSetpoint());
 	}
 
 	public void end() {
+		Logger.consoleLog("Is finished", m_leftController.getSetpoint());
 		Robot.driveBase.stop();
 	}
 }

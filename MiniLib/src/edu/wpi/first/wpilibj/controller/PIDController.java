@@ -78,7 +78,7 @@ public class PIDController { // implements Sendable {
    */
   @SuppressWarnings("ParameterName")
   public PIDController(double Kp, double Ki, double Kd) {
-    this(Kp, Ki, Kd, 0.02);
+    this(Kp, Ki, Kd, 0.2);
   }
 
   /**
@@ -96,12 +96,16 @@ public class PIDController { // implements Sendable {
     m_Kd = Kd;
 
     m_period = period;
+    
+    m_minimumInput = Double.MIN_VALUE;
+    m_maximumInput = Double.MAX_VALUE;
 
     instances++;
     // SendableRegistry.addLW(this, "PIDController", instances);
 
     // HAL.report(tResourceType.kResourceType_PIDController, instances);
   }
+
 
   /**
    * Sets the PID Controller gain parameters.
@@ -363,7 +367,8 @@ public class PIDController { // implements Sendable {
   /**
    * Sets the minimum and maximum values expected from the input.
    *
-   * @param minimumInput The minimum value expected from the input.
+   * @param minimumInput The minimum 
+   * value expected from the input.
    * @param maximumInput The maximum value expected from the input.
    */
   private void setInputRange(double minimumInput, double maximumInput) {
