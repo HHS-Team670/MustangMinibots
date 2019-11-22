@@ -8,11 +8,17 @@ public class DistanceDrive extends Command {
 	
 	private double speedL, speedR, dist;
 	
-	public DistanceDrive(double distance_cm, double lspeed, double rspeed) {
+	/**
+	 * 
+	 * @param distance_in Target distance in inches
+	 * @param lspeed Speed for left side
+	 * @param rspeed Speed for right side
+	 */
+	public DistanceDrive(double distance_in, double lspeed, double rspeed) {
 		this.speedL = lspeed;
 		this.speedR = rspeed;
 		//this.seconds = seconds;
-		this.dist = distance_cm;
+		this.dist = distance_in;
 		requires(Robot.driveBase);
 	}
 

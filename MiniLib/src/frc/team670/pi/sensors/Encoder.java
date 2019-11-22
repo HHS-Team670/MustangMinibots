@@ -29,7 +29,7 @@ public class Encoder {
 
 	private int leftPinState;
 	private int rightPinState;
-	
+
 	private boolean reversed;
 
 	public int count;
@@ -100,10 +100,9 @@ public class Encoder {
 	 * @return int Ticks - the number of ticks
 	 */
 	public int getTicks() {
-		if(reversed) {
+		if (reversed) {
 			return -1 * this.count;
-		}
-		else {
+		} else {
 			return this.count;
 		}
 	}
@@ -114,16 +113,17 @@ public class Encoder {
 	 * @return Double rotations - the number of rotations the wheel has gone through
 	 */
 	public double getRotations() {
-		return Math.abs(getTicks()) / 800.0;
+		return Math.abs(getTicks()) / RobotConstants.ENCODER_TICKS_PER_ROTATION;
 	}
 
 	/**
+	 * 
 	 * Calculates and returns the distance for which the motors have rotated
 	 * 
-	 * @return distance traveled in centimeters
+	 * @return distance traveled in inches
 	 */
 	public double getDistance() {
-		return (2 * Math.PI * (RobotConstants.DRIVE_BASE_WHEEL_DIAMETER / 2) * getRotations());
+		return (Math.PI * RobotConstants.DRIVE_BASE_WHEEL_DIAMETER * getRotations());
 	}
 
 //	public double getVelocityCm() {
