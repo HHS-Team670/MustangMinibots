@@ -2,10 +2,10 @@
 Code for Team 670's 2020 OffSeason Workshops' MustangMinibots
 
 ## Repository Organization
-MiniLib: Java code and files to be deployed to run on the RoboRIO that are organized and deployed with GradleRIO
-Minibot: Basic Java code and files to be deployed to run on the RoboRIO 
-NetworkTables: Java code and files that act as a database and client with the server running on the RoboRio
-Testers: Jar file to test encoders
+- MiniLib: Java code and files to be deployed to run on the RoboRIO that are organized and deployed with GradleRIO
+- Minibot: Basic Java code and files to be deployed to run on the RoboRIO 
+- NetworkTables: Java code and files that act as a database and client with the server running on the RoboRio
+- Testers: Jar file to test encoders
 
 ## Branching and Workflow on this Repository
 [Please check this document for the team's policy for committing code to GitHub!](https://docs.google.com/document/d/1vO_dtVTDw3-l0x0BabiAE5C45O6bJlQeLL1Uy9McOcQ/edit)
