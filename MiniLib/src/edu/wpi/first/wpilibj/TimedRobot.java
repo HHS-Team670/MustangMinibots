@@ -74,6 +74,7 @@ public class TimedRobot extends IterativeRobotBase {
     long millisToNextTime = (long)(1000.0 * m_period);
     long nextTime = System.currentTimeMillis() + millisToNextTime;
     // Loop forever, calling the appropriate mode-dependent function
+    autonomousInit();
     while (true) {
 //      long curTime = NotifierJNI.waitForNotifierAlarm(m_notifier);
 //      if (curTime == 0) {

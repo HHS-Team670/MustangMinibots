@@ -5,6 +5,7 @@ plugins{
 }
 
 def ROBOT_MAIN_CLASS = "frc.team670.robot.Main"
+def includeDesktopSupport = true
 
 task zip(type: Zip, group: "Archive", description: "Archives sources in a zip file") {
     from "src"
@@ -21,7 +22,7 @@ deploy {
 
             locations {
                 ssh {
-                    address = "192.168.4.1"  // Required. The address to try
+                    address = "raspberrypi.local"  // Required. The address to try
                     user = 'pi'             // Required. The user to login as
                     password = 'hhs670'               // The password for the user. Default: blank (empty) string
                     ipv6 = false                // Are IPv6 addresses permitted? Default: false
@@ -41,7 +42,12 @@ deploy {
 sourceSets {
     main {
          java {
-            srcDirs = ['src']
+            srcDirs = ['src/main/java/']
+         }
+    }
+    test {
+         java {
+            srcDirs = ['src/test/java/']
          }
     }
 }
@@ -62,6 +68,9 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
     compile (name:'pi4j-core', ext:'jar')
     compile (name:'MiniLib', ext:'jar')
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
+
+    testImplementation 'junit:junit:4.12'
 }
 
 jar{
