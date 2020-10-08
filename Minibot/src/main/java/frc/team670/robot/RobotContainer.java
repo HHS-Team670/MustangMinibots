@@ -70,7 +70,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new TimeDrive(1, 0.5, driveBase);
+    return new TimeDrive(2, 0.5, driveBase);
   }
 
 
