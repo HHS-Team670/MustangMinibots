@@ -17,7 +17,7 @@ public class PIDDistanceDrive extends CommandBase {
 
 	// TODO: Find values
 	// proportional speed constant
-	double kP = 0.0;
+	double kP = 0.1;
 
 	// integral speed constant
 	double kI = 0.0;
@@ -60,6 +60,8 @@ public class PIDDistanceDrive extends CommandBase {
 		Logger.consoleLog("R setpoint: %s", m_rightController.getSetpoint());
 		Logger.consoleLog("TicksL: %s TicksR: %s, SpeedL: %s SpeedR: %s", leftTicks, rightTicks, leftSpeed, rightSpeed);
 		driveBase.tankDrive(leftSpeed, rightSpeed);
+		System.out.println(leftSpeed);
+		System.out.println(rightSpeed);
 	}
 
 	public boolean isFinished() {

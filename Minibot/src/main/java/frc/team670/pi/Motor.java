@@ -46,6 +46,12 @@ public class Motor {
 	 *          speed forward
 	 */
 	public void set(double s) {
+		if(s>1){
+			s=1;
+		}
+		if(s<-1){
+			s=-1;
+		}
 		if (s <= 1.0 && s >= -1.0) {
 		    this.speed = ((int) ((Math.abs(s)) * 100));
 		    if (s > 0) {

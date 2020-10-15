@@ -8,11 +8,13 @@
 package frc.team670.robot;
 
 import edu.wpi.first.wpilibj.RobotBase;
+import frc.team670.pi.tests.EncoderTest;
+import jpigpio.PigpioException;
 
 /**
  * Do NOT add any static variables to this class, or any initialization at all.
- * Unless you know what you are doing, do not modify this file except to
- * change the parameter class to the startRobot call.
+ * Unless you know what you are doing, do not modify this file except to change
+ * the parameter class to the startRobot call.
  */
 public final class Main {
   private Main() {
@@ -21,9 +23,16 @@ public final class Main {
   /**
    * Main initialization function. Do not perform any initialization here.
    *
-   * <p>If you change your main robot class, change the parameter type.
+   * <p>
+   * If you change your main robot class, change the parameter type.
    */
   public static void main(String... args) {
     RobotBase.startRobot(Robot::new);
+  //   try {
+  //     EncoderTest.main(args);
+  //   } catch (InterruptedException | PigpioException e) {
+  //     // TODO Auto-generated catch block
+  //     e.printStackTrace();
+  //   }
   }
 }

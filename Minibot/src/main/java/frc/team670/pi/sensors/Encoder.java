@@ -100,11 +100,12 @@ public class Encoder {
 	 * @return int Ticks - the number of ticks
 	 */
 	public int getTicks() {
-		if (reversed) {
-			return -1 * this.count;
-		} else {
-			return this.count;
-		}
+		// if (reversed) {
+		// 	return -1 * this.count;
+		// } else {
+		// 	return this.count;
+		// }
+		return this.count;
 	}
 
 	/**
