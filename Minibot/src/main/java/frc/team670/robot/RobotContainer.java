@@ -72,11 +72,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-<<<<<<< Updated upstream
     return new CombinedDrive(driveBase);
-=======
-    return new TimeDrive(2.5, 1, driveBase);
->>>>>>> Stashed changes
   }
 
 
