@@ -31,7 +31,7 @@ public class BalancedDrive extends Command {
   }
 
   protected double actualSpeed(Encoder m) {
-      return (m.getRotations() / m.getTicks());
+      return Math.abs(m.getTicks());
   }
 
   // Called just before this Command runs the first time
