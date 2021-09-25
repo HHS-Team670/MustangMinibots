@@ -12,7 +12,7 @@ public class DistanceDrive extends CommandBase {
 	private double speedL, speedR, dist;
 
 	private DriveBase driveBase;
-	
+
 	/**
 	 * 
 	 * @param distance_in Target distance in inches
@@ -22,25 +22,15 @@ public class DistanceDrive extends CommandBase {
 	public DistanceDrive(double distance_in, double lspeed, double rspeed, DriveBase driveBase) {
 		this.speedL = lspeed;
 		this.speedR = rspeed;
-		//this.seconds = seconds;
 		this.dist = distance_in;
 		this.driveBase = driveBase;
 		addRequirements(driveBase);
 	}
-
-	// Called just before this Command runs the first time
 	
-	public void initialize() {
-		//setTimeout(seconds);
-		Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s", 
-				speedL, speedR, getDistance());
-	}	
 
 	// Called repeatedly when this Command is scheduled to run
 	
 	public void execute() { 
-		Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s Ticks: %s", 
-				speedL, speedR, getDistance(), driveBase.getLeftEncoder().getTicks());		
 		driveBase.tankDrive(speedL, speedR);
 		correct();
 	}
@@ -50,8 +40,6 @@ public class DistanceDrive extends CommandBase {
 	
 	public void end() {
 		driveBase.stop();
-		Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s Ticks: %s", 
-				speedL, speedR, getDistance(), driveBase.getRightEncoder().getTicks());
 	}
 
 	// Called when another command which requires one or more of the same
@@ -78,17 +66,17 @@ public class DistanceDrive extends CommandBase {
 	
 	// Make this return true when this Command no longer needs to run execute()
 		@Override
-		public boolean isFinished() {
-			return getDistance() > Math.abs(dist);
-			//return (this.error <= 1);
-		}
+	public boolean isFinished() {
+		return getDistance() > Math.abs(dist);
+		//return (this.error <= 1);
+	}
 		
 			
-		public double getDistance()
-		{
-			double distance = driveBase.getLeftEncoder().getDistance();
-			return Math.abs(distance);
-		}
+	public double getDistance()
+	{
+		double distance = driveBase.getLeftEncoder().getDistance();
+		return Math.abs(distance);
+	}
 
 }
 

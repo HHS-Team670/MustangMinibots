@@ -14,29 +14,26 @@ public class BalancedDrive extends WaitCommand {
   private double ticksL, ticksR;
 
 	public BalancedDrive(double seconds, double lspeed, double rspeed, DriveBase driveBase) {
-    super(seconds);
+    	super(seconds);
 		this.speedL = lspeed;
 		this.speedR = rspeed;
 		this.seconds = seconds;
-    addRequirements(driveBase);
-    this.driveBase = driveBase;
+    	addRequirements(driveBase);
+    	this.driveBase = driveBase;
 	}
 
 	
 	public void correct() {
 		double currentTicksL = Math.abs(driveBase.getLeftEncoder().getTicks());
-    double currentTicksR = Math.abs(driveBase.getRightEncoder().getTicks());
-    Logger.consoleLog("Left Ticks: %s Right Ticks: %s", currentTicksL, currentTicksR);
+    	double currentTicksR = Math.abs(driveBase.getRightEncoder().getTicks());
 		if (Math.abs(currentTicksL - currentTicksR) < 5)
 			return;
 		else if (currentTicksL > currentTicksR){
 			speedL -= 0.01;
-		}
-				
+		}		
 		else if (currentTicksL < currentTicksR){
 			speedR -= 0.01;
 		}
-		Logger.consoleLog("Left Speed: %s Right Speed: %s Seconds: %s", speedL, speedR, seconds);
 		this.ticksL = currentTicksL;
 		this.ticksR = currentTicksR;
 
@@ -54,12 +51,6 @@ public class BalancedDrive extends WaitCommand {
 	@Override
 	public void end(boolean interupted) {
 		driveBase.stop();
-		Logger.consoleLog("Left Speed: %s Right Speed: %s Seconds: %s", speedL, speedR, seconds);
-		System.out.println(ticksL);
-		System.out.println(ticksR);
-		System.out.println(speedL);
-		System.out.println(speedR);
-
 	}
 
 }
