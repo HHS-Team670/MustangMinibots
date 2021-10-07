@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.team670.robot.commands.drive.BalancedDrive;
-import frc.team670.robot.commands.drive.CombinedDrive;
+import frc.team670.robot.commands.drive.DistanceDrive;
 import frc.team670.robot.commands.drive.TimeDrive;
 import frc.team670.robot.subsystems.DriveBase;
 import frc.team670.robot.utils.Logger;
@@ -72,7 +72,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new CombinedDrive(driveBase);
+    return new DistanceDrive(10, 1, 1, driveBase);
   }
 
 
