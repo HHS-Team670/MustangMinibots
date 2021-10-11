@@ -21,7 +21,7 @@ public class TimeDrive extends WaitCommand {
 
   public TimeDrive(double seconds, double power, DriveBase driveBase) {
     super(seconds);
-    //super(seconds/60); In minutes
+    //super(seconds/60); In minutes ARMAAN IS BAD AT MINECRAFT
     this.power = power;
     addRequirements(driveBase);
     this.driveBase = driveBase;
