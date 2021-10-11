@@ -39,7 +39,6 @@ public class DistanceDrive extends CommandBase {
         Logger.consoleLog("TicksL: %s TicksR: %s, SpeedL: %s SpeedR: %s", leftEncoder.getTicks(), rightEncoder.getTicks(), leftPower, rightPower);
     }
 
-
     @Override
     public void execute() {
         driveBase.tankDrive(leftPower,rightPower);
@@ -49,8 +48,7 @@ public class DistanceDrive extends CommandBase {
     @Override
     public boolean isFinished() {
         Encoder leftEncoder = driveBase.getLeftEncoder();
-        Encoder rightEncoder = driveBase.getRightEncoder();
-        
+        Encoder rightEncoder = driveBase.getRightEncoder();        
         int tickLimit=  (int) ( distance / (2.497 * Math.PI / 800));// In inches
         //int tickLimit=  (int) ( distance / (2.497 *2,54* Math.PI / 800));// In cm
         //int tickLimit=  (int) ( distance*12 / ((2.497)*Math.PI / 800));// In feet
