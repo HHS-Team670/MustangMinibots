@@ -1,5 +1,5 @@
 package frc.team670.robot.commands.drive;
-
+import frc.team670.pi.sensors.Encoder;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team670.robot.Robot;
 import frc.team670.robot.RobotConstants;
@@ -7,90 +7,80 @@ import frc.team670.robot.RobotContainer;
 import frc.team670.robot.subsystems.DriveBase;
 import frc.team670.robot.utils.Logger;
 
+
 public class DistanceDrive extends CommandBase {
-	
-	private double speedL, speedR, dist;
 
-	private DriveBase driveBase;
-	
-	/**
-	 * 
-	 * @param distance_in Target distance in inches
-	 * @param lspeed Speed for left side
-	 * @param rspeed Speed for right side
-	 */
-	public DistanceDrive(double distance_in, double lspeed, double rspeed, DriveBase driveBase) {
-		this.speedL = lspeed;
-		this.speedR = rspeed;
-		//this.seconds = seconds;
-		this.dist = distance_in;
-		this.driveBase = driveBase;
-		addRequirements(driveBase);
-	}
+    private DriveBase driveBase;
+    private double distance;
+    private double leftPower;
+    private double rightPower;
+    
+    public DistanceDrive(DriveBase driveBase,double distance,double leftPower, double rightPower) {
+        this.driveBase=driveBase;
+        this.leftPower=leftPower;
+        this.rightPower=rightPower;
+        this.distance=distance;
+        addRequirements(driveBase);
 
-	// Called just before this Command runs the first time
-	
-	public void initialize() {
-		//setTimeout(seconds);
-		Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s", 
-				speedL, speedR, getDistance());
-	}	
 
-	// Called repeatedly when this Command is scheduled to run
-	
-	public void execute() { 
-		Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s Ticks: %s", 
-				speedL, speedR, getDistance(), driveBase.getLeftEncoder().getTicks());		
-		driveBase.tankDrive(speedL, speedR);
-		correct();
-	}
 
-	
-	// Called once after isFinished returns true
-	
-	public void end() {
-		driveBase.stop();
-		Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s Ticks: %s", 
-				speedL, speedR, getDistance(), driveBase.getRightEncoder().getTicks());
-	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	public void interrupted() {
-		end();
-	}	
-	
-	// Checks that the wheels are driving at the same speed, corrects the speed
-	// so that the left/right are equal
-	public void correct() {
-		double currentTicksL = driveBase.getLeftEncoder().getTicks();
-		double currentTicksR = driveBase.getRightEncoder().getTicks();
-		
-		if (Math.abs(currentTicksL - currentTicksR) < 5)
-			return;
-		
-		else if (currentTicksL > currentTicksR)
-				speedL -= 0.01;
-		
-		else if (currentTicksL < currentTicksR)
-				speedR -= 0.01;
-	}
-	
-	// Make this return true when this Command no longer needs to run execute()
-		@Override
-		public boolean isFinished() {
-			return getDistance() > Math.abs(dist);
-			//return (this.error <= 1);
-		}
-		
-			
-		public double getDistance()
-		{
-			double distance = driveBase.getLeftEncoder().getDistance();
-			return Math.abs(distance);
-		}
+
+    }
+    
+    public void correct() {
+        Encoder leftEncoder = driveBase.getLeftEncoder();
+        Encoder rightEncoder = driveBase.getRightEncoder();
+
+        if (Math.abs(leftEncoder.getTicks() - rightEncoder.getTicks()) < 5) 
+            return;
+
+        if (leftEncoder.getTicks() < rightEncoder.getTicks()){
+            rightPower -= 0.01;
+        } else if (leftEncoder.getTicks() > rightEncoder.getTicks()){
+            leftPower -= 0.01;
+        }
+
+        Logger.consoleLog("TicksL: %s TicksR: %s, SpeedL: %s SpeedR: %s", leftEncoder.getTicks(), rightEncoder.getTicks(), leftPower, rightPower);
+    }
+
+
+    @Override
+    public void execute() {
+        driveBase.tankDrive(leftPower,rightPower);
+        correct();
+        
+        
+
+    }
+
+    @Override
+    public boolean isFinished() {
+        Encoder leftEncoder = driveBase.getLeftEncoder();
+        Encoder rightEncoder = driveBase.getRightEncoder();
+        
+        int tickLimit=  (int) ( distance / (2.497 * Math.PI / 800));// In inches
+        //int tickLimit=  (int) ( distance / (2.497 *2,54* Math.PI / 800));// In cm
+        //int tickLimit=  (int) ( distance*12 / ((2.497)*Math.PI / 800));// In feet
+        
+        int currentTicks=(leftEncoder.getTicks()+rightEncoder.getTicks())/2;
+        if(currentTicks>=tickLimit)
+        {
+            return true;
+        }
+        return false;
+        
+
+    }
+
+    public void end() {
+        driveBase.stop();
+
+    }
+
+    //800 ticks per rotation
+    //diameter 2.497 inches
+    
+
 
 }
-
-	
-
