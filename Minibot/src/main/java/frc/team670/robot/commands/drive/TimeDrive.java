@@ -19,12 +19,18 @@ public class TimeDrive extends WaitCommand {
   private DriveBase driveBase;
   private double power;
 
-  public TimeDrive(double seconds, double power, DriveBase driveBase) {
-    super(seconds);
-    //super(seconds/60); In minutes
+  public TimeDrive(double time, String unit, double power, DriveBase driveBase) {
+    // Param unit: "s" for seconds, "m" for minutes
+    if (unit == "s") {
+      super(time);
+    } else if (unit == "m") {
+      super(time/60); // In minutes
+    }
     this.power = power;
     addRequirements(driveBase);
     this.driveBase = driveBase;
+
+    Logger.consoleLog("Time: %s %s Power: %s", time, unit, power)
   }
 
   // Called repeatedly when this Command is scheduled to run

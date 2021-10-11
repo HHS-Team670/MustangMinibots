@@ -21,11 +21,6 @@ public class DistanceDrive extends CommandBase {
         this.rightPower=rightPower;
         this.distance=distance;
         addRequirements(driveBase);
-
-
-
-
-
     }
     
     public void correct() {
@@ -49,9 +44,6 @@ public class DistanceDrive extends CommandBase {
     public void execute() {
         driveBase.tankDrive(leftPower,rightPower);
         correct();
-        
-        
-
     }
 
     @Override
@@ -69,13 +61,10 @@ public class DistanceDrive extends CommandBase {
             return true;
         }
         return false;
-        
-
     }
 
     public void end() {
         driveBase.stop();
-
     }
 
     //800 ticks per rotation
