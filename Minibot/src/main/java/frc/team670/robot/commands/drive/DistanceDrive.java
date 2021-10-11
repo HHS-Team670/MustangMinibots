@@ -49,6 +49,7 @@ public class DistanceDrive extends CommandBase {
     public void execute() {
         driveBase.tankDrive(leftPower,rightPower);
         correct();
+
         
         
 
@@ -62,19 +63,23 @@ public class DistanceDrive extends CommandBase {
         int tickLimit=  (int) ( distance / (2.497 * Math.PI / 800));// In inches
         //int tickLimit=  (int) ( distance / (2.497 *2,54* Math.PI / 800));// In cm
         //int tickLimit=  (int) ( distance*12 / ((2.497)*Math.PI / 800));// In feet
-        
+        Logger.consoleLog("tickLimit: %s", tickLimit);
         int currentTicks=(leftEncoder.getTicks()+rightEncoder.getTicks())/2;
+        Logger.consoleLog("currentTicks: %s", currentTicks);
         if(currentTicks>=tickLimit)
         {
+            
             return true;
         }
         return false;
+        
         
 
     }
 
     public void end() {
         driveBase.stop();
+        Logger.consoleLog("Stopped");
 
     }
 
