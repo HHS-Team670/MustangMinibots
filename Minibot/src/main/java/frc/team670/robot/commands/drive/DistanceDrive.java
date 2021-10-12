@@ -15,11 +15,12 @@ public class DistanceDrive extends CommandBase {
     private double leftPower;
     private double rightPower;
     
-    public DistanceDrive(DriveBase driveBase,double distance,double leftPower, double rightPower) {
+    public DistanceDrive(DriveBase driveBase, double distance, String unit, double leftPower, double rightPower) {
         this.driveBase=driveBase;
         this.leftPower=leftPower;
         this.rightPower=rightPower;
         this.distance=distance;
+        this.unit = unit; // "i" for inch, "f" for feet, "c" for centimeter
         addRequirements(driveBase);
     }
     
@@ -48,14 +49,22 @@ public class DistanceDrive extends CommandBase {
     @Override
     public boolean isFinished() {
         Encoder leftEncoder = driveBase.getLeftEncoder();
-        Encoder rightEncoder = driveBase.getRightEncoder();        
-        int tickLimit=  (int) ( distance / (2.497 * Math.PI / 800));// In inches
-        //int tickLimit=  (int) ( distance / (2.497 *2,54* Math.PI / 800));// In cm
-        //int tickLimit=  (int) ( distance*12 / ((2.497)*Math.PI / 800));// In feet
+        Encoder rightEncoder = driveBase.getRightEncoder(); 
+        /*       
+        int tickLimit = (distance / (2.497 * Math.PI / 800));// In inches
+        int tickLimit = (distance / (2.497 *2.54* Math.PI / 800));// In cm
+        int tickLimit = (distance*12 / ((2.497)*Math.PI / 800));// In feet
+        */
+
+        double ticksPerInch = 800/(2.497*Math.PI);
+        double ticksPerFoot = ticksPerInch/12;
+        double ticksPerCm = ticksPerInch*2.54;
+
+        double tickLimit = distance*(unit=="f"?ticksPerFoot:unit=="c"?ticksPerCm:ticksPerInch) // default unit is inch
         Logger.consoleLog("tickLimit: %s", tickLimit);
         int currentTicks=(leftEncoder.getTicks()+rightEncoder.getTicks())/2;
         Logger.consoleLog("currentTicks: %s", currentTicks);
-        
+
         if(currentTicks>=tickLimit) {
             
             return true;
