@@ -32,7 +32,8 @@ public class DistanceDrive extends CommandBase {
 	
 	public void execute() { 
 		driveBase.tankDrive(speedL, speedR);
-		correct();
+		Logger.consoleLog("Left speed: ", speedL, "Right speed: ", speedR, "Left Ticks: ", driveBase.getLeftEncoder().getTicks(), "Right Ticks: ", driveBase.getRightEncoder().getTicks(), "Distance: ", driveBase.getRightEncoder().getDistance());
+		// correct();
 	}
 
 	
@@ -48,21 +49,21 @@ public class DistanceDrive extends CommandBase {
 		end();
 	}	
 	
-	// Checks that the wheels are driving at the same speed, corrects the speed
-	// so that the left/right are equal
-	public void correct() {
-		double currentTicksL = driveBase.getLeftEncoder().getTicks();
-		double currentTicksR = driveBase.getRightEncoder().getTicks();
+	// // Checks that the wheels are driving at the same speed, corrects the speed
+	// // so that the left/right are equal
+	// public void correct() {
+	// 	double currentTicksL = driveBase.getLeftEncoder().getTicks();
+	// 	double currentTicksR = driveBase.getRightEncoder().getTicks();
 		
-		if (Math.abs(currentTicksL - currentTicksR) < 5)
-			return;
+	// 	if (Math.abs(currentTicksL - currentTicksR) < 5)
+	// 		return;
 		
-		else if (currentTicksL > currentTicksR)
-				speedL -= 0.01;
+	// 	else if (currentTicksL > currentTicksR)
+	// 			speedL -= 0.01;
 		
-		else if (currentTicksL < currentTicksR)
-				speedR -= 0.01;
-	}
+	// 	else if (currentTicksL < currentTicksR)
+	// 			speedR -= 0.01;
+	// }
 	
 	// Make this return true when this Command no longer needs to run execute()
 		@Override
@@ -74,7 +75,7 @@ public class DistanceDrive extends CommandBase {
 			
 	public double getDistance()
 	{
-		double distance = driveBase.getLeftEncoder().getDistance();
+		double distance = driveBase.getRightEncoder().getDistance();
 		return Math.abs(distance);
 	}
 
