@@ -14,12 +14,12 @@ public class BalancedDrive extends WaitCommand {
   private double ticksL, ticksR;
 
 	public BalancedDrive(double seconds, double lspeed, double rspeed, DriveBase driveBase) {
-    super(seconds);
-	this.speedL = lspeed;
-	this.speedR = rspeed;
-	this.seconds = seconds;
-    addRequirements(driveBase);
-    this.driveBase = driveBase;
+        super(seconds);
+	    this.speedL = lspeed;
+	    this.speedR = rspeed;
+	    this.seconds = seconds;
+        addRequirements(driveBase);
+        this.driveBase = driveBase;
 	}
 
 	
