@@ -51,11 +51,6 @@ public class DistanceDrive extends CommandBase {
     public boolean isFinished() {
         Encoder leftEncoder = driveBase.getLeftEncoder();
         Encoder rightEncoder = driveBase.getRightEncoder(); 
-        /*       
-        int tickLimit = (distance / (2.497 * Math.PI / 800));// In inches
-        int tickLimit = (distance / (2.497 *2.54* Math.PI / 800));// In cm
-        int tickLimit = (distance*12 / ((2.497)*Math.PI / 800));// In feet
-        */
 
         double ticksPerInch = 800/(2.497*Math.PI);
         double ticksPerFoot = ticksPerInch/12;
