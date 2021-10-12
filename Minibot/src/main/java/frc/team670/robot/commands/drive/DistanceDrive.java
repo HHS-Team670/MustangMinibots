@@ -56,7 +56,7 @@ public class DistanceDrive extends CommandBase {
         double ticksPerFoot = ticksPerInch/12;
         double ticksPerCm = ticksPerInch*2.54;
 
-        double tickLimit = distance*(unit=="f"?ticksPerFoot:unit=="c"?ticksPerCm:ticksPerInch); // default unit is inch
+        double tickLimit = distance*(unit=="f"?ticksPerFoot:unit=="c"?ticksPerCm:unit=="i"?ticksPerInch:0); // default unit is inch
         Logger.consoleLog("tickLimit: %s", tickLimit);
         int currentTicks=(leftEncoder.getTicks()+rightEncoder.getTicks())/2;
         Logger.consoleLog("currentTicks: %s", currentTicks);
