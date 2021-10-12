@@ -24,7 +24,7 @@ public class DistanceDrive extends CommandBase {
 
 	public void execute() { 
 		driveBase.tankDrive(speedL, speedR);
-		correct();
+		// correct();
 	}
 
 
@@ -33,21 +33,20 @@ public class DistanceDrive extends CommandBase {
 		driveBase.stop();
 	}
 
-	public void correct() {
-		double currentTicksL = driveBase.getLeftEncoder().getTicks();
-		double currentTicksR = driveBase.getRightEncoder().getTicks();
+	// public void correct() {
+	// 	double currentTicksL = driveBase.getLeftEncoder().getTicks();
+	// 	double currentTicksR = driveBase.getRightEncoder().getTicks();
 		
-		if (Math.abs(currentTicksL - currentTicksR) < 5)
-			return;
+	// 	if (Math.abs(currentTicksL - currentTicksR) < 5)
+	// 		return;
 		
-		else if (currentTicksL > currentTicksR)
-				speedL -= 0.01;
+	// 	else if (currentTicksL > currentTicksR)
+	// 			speedL -= 0.01;
 		
-		else if (currentTicksL < currentTicksR)
-				speedR -= 0.01;
-	}
+	// 	else if (currentTicksL < currentTicksR)
+	// 			speedR -= 0.01;
+	// }
 	
-	@Override
 	public boolean isFinished() {
 		return getDistance() > Math.abs(dist);
 	}
@@ -55,7 +54,7 @@ public class DistanceDrive extends CommandBase {
 			
 	public double getDistance()
 	{
-		double distance = driveBase.getLeftEncoder().getDistance();
+		double distance = driveBase.getRightEncoder().getDistance();
 		return Math.abs(distance);
 	}
 
