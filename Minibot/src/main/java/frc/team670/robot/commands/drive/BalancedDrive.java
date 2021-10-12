@@ -39,7 +39,6 @@ public class BalancedDrive extends WaitCommand {
 
 	}
 	
-	// Called repeatedly when this Command is scheduled to run
 	@Override
 
 	public void execute() {
@@ -47,7 +46,6 @@ public class BalancedDrive extends WaitCommand {
 		correct();
 	}
 
-	// Called once after isFinished returns true
 	@Override
 	public void end(boolean interupted) {
 		driveBase.stop();

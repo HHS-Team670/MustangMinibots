@@ -13,12 +13,6 @@ public class DistanceDrive extends CommandBase {
 
 	private DriveBase driveBase;
 
-	/**
-	 * 
-	 * @param distance_in Target distance in inches
-	 * @param lspeed Speed for left side
-	 * @param rspeed Speed for right side
-	 */
 	public DistanceDrive(double distance_in, double lspeed, double rspeed, DriveBase driveBase) {
 		this.speedL = lspeed;
 		this.speedR = rspeed;
@@ -28,28 +22,17 @@ public class DistanceDrive extends CommandBase {
 	}
 	
 
-	// Called repeatedly when this Command is scheduled to run
-	
 	public void execute() { 
 		driveBase.tankDrive(speedL, speedR);
 		correct();
 	}
 
-	
-	// Called once after isFinished returns true
-	
-	public void end() {
+
+
+	public void end(boolean isInterupted) {
 		driveBase.stop();
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	public void interrupted() {
-		end();
-	}	
-	
-	// Checks that the wheels are driving at the same speed, corrects the speed
-	// so that the left/right are equal
 	public void correct() {
 		double currentTicksL = driveBase.getLeftEncoder().getTicks();
 		double currentTicksR = driveBase.getRightEncoder().getTicks();
@@ -64,11 +47,9 @@ public class DistanceDrive extends CommandBase {
 				speedR -= 0.01;
 	}
 	
-	// Make this return true when this Command no longer needs to run execute()
-		@Override
+	@Override
 	public boolean isFinished() {
 		return getDistance() > Math.abs(dist);
-		//return (this.error <= 1);
 	}
 		
 			
