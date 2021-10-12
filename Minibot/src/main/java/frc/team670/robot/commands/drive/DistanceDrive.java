@@ -55,8 +55,8 @@ public class DistanceDrive extends CommandBase {
         Logger.consoleLog("tickLimit: %s", tickLimit);
         int currentTicks=(leftEncoder.getTicks()+rightEncoder.getTicks())/2;
         Logger.consoleLog("currentTicks: %s", currentTicks);
-        if(currentTicks>=tickLimit)
-        {
+        
+        if(currentTicks>=tickLimit) {
             
             return true;
         }
