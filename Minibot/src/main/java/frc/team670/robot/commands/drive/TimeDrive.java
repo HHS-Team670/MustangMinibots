@@ -21,11 +21,12 @@ public class TimeDrive extends WaitCommand {
 
   public TimeDrive(double time, String unit, double power, DriveBase driveBase) {
     // Param unit: "s" for seconds, "m" for minutes
-    if (unit == "s") {
-      super(time);
-    } else if (unit == "m") {
-      super(time/60); // In minutes
-    }
+    super(unit=="s"?time:time/60);// super must be called in the first line of the constructor 
+    // if (unit == "s") {
+    //   super(time);
+    // } else if (unit == "m") {
+    //  super(time/60); // In minutes
+    // }
     this.power = power;
     addRequirements(driveBase);
     this.driveBase = driveBase;
