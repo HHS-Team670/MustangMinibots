@@ -73,7 +73,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     //return new TimeDrive(driveBase,5, "s", 1);
-    return  new DistanceDrive(driveBase, 10, 1, 1);//WRITE THE NAME OF THE COMMAND YOU WANT TO RUN
+    return  new DistanceDrive(driveBase, 10,"i", 1, 1);//WRITE THE NAME OF THE COMMAND YOU WANT TO RUN
   }
 
 
