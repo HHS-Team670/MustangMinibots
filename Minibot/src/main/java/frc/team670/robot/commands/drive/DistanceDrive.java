@@ -26,28 +26,25 @@ public class DistanceDrive extends CommandBase {
 		this.driveBase = driveBase;
 		addRequirements(driveBase);
 	}
+
+
+				
+	public double getDistance()
+	{
+		double distance = driveBase.getRightEncoder().getDistance();
+		return Math.abs(distance);
+	}
 	
 
 	// Called repeatedly when this Command is scheduled to run
 	
 	public void execute() { 
 		driveBase.tankDrive(speedL, speedR);
-		Logger.consoleLog("Left speed: ", speedL, "Right speed: ", speedR, "Left Ticks: ", driveBase.getLeftEncoder().getTicks(), "Right Ticks: ", driveBase.getRightEncoder().getTicks(), "Distance: ", driveBase.getRightEncoder().getDistance());
+		Logger.consoleLog("LeftSpeed: %s Right Speed: %s LeftTicks: %s  RightTicks: %s DistanceT: %s", 
+				speedL, speedR, driveBase.getLeftEncoder().getTicks(), driveBase.getRightEncoder().getTicks(), driveBase.getRightEncoder().getDistance());
 		// correct();
 	}
 
-	
-	// Called once after isFinished returns true
-	
-	public void end() {
-		driveBase.stop();
-	}
-
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
-	public void interrupted() {
-		end();
-	}	
 	
 	// // Checks that the wheels are driving at the same speed, corrects the speed
 	// // so that the left/right are equal
@@ -68,15 +65,18 @@ public class DistanceDrive extends CommandBase {
 	// Make this return true when this Command no longer needs to run execute()
 		@Override
 	public boolean isFinished() {
+		Logger.consoleLog("isFinished: %s", getDistance() > Math.abs(dist));
 		return getDistance() > Math.abs(dist);
 		//return (this.error <= 1);
 	}
-		
-			
-	public double getDistance()
-	{
-		double distance = driveBase.getRightEncoder().getDistance();
-		return Math.abs(distance);
+	
+
+	// Called once after isFinished returns true
+	
+	@Override
+	public void end(boolean isInteruppted) { // DO NOT CHANGE
+		Logger.consoleLog("Stopping drivebase!");
+		driveBase.stop();
 	}
 
 }
