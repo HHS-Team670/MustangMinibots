@@ -25,8 +25,8 @@ public class BalancedDrive extends WaitCommand {
 	
 	public void correct() {
 		double currentTicksL = Math.abs(driveBase.getLeftEncoder().getTicks());
-    double currentTicksR = Math.abs(driveBase.getRightEncoder().getTicks());
-    Logger.consoleLog("Left Ticks: %s Right Ticks: %s", currentTicksL, currentTicksR);
+        double currentTicksR = Math.abs(driveBase.getRightEncoder().getTicks());
+        Logger.consoleLog("Left Ticks: %s Right Ticks: %s", currentTicksL, currentTicksR);
 		if (Math.abs(currentTicksL - currentTicksR) < 5)
 			return;
 		else if (currentTicksL > currentTicksR){
