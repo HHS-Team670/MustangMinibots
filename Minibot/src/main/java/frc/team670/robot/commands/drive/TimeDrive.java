@@ -19,8 +19,8 @@ public class TimeDrive extends WaitCommand {
   private DriveBase driveBase;
   private double power;
 
-  public TimeDrive(double time, String unit, double power, DriveBase driveBase) {
-    // Param unit: "s" for seconds, "m" for minutes; default in seconds
+  public TimeDrive( DriveBase driveBase,double time, String unit, double power) {
+    // Param unit: "s" for seconds, "m" for minutes
     super(unit=="m"?time*60:time);// super must be called in the first line of the constructor 
     // if (unit == "s") {
     //   super(time);
