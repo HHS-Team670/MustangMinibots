@@ -75,7 +75,7 @@ public class DistanceDrive extends CommandBase {
 
     }
 
-    public void end() {
+    public void end(boolean isInteruppted) {
         driveBase.stop();
     }
 
