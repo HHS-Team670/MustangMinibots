@@ -14,6 +14,7 @@ public class DistanceDrive extends CommandBase {
     private double distance;
     private double leftPower;
     private double rightPower;
+    private String unit;
     
     public DistanceDrive(DriveBase driveBase, double distance, String unit, double leftPower, double rightPower) {
         this.driveBase=driveBase;
