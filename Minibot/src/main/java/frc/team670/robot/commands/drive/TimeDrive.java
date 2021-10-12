@@ -31,7 +31,7 @@ public class TimeDrive extends WaitCommand {
     addRequirements(driveBase);
     this.driveBase = driveBase;
 
-    Logger.consoleLog("Time: %s %s Power: %s", time, unit, power)
+    Logger.consoleLog("Time: %s %s Power: %s", time, unit, power);
   }
 
   // Called repeatedly when this Command is scheduled to run
