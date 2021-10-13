@@ -1,4 +1,4 @@
-package frc.team670.robot.commands;
+package frc.team670.robot.commands.drive;
 
 public class Turn extends InstantCommand{
 
