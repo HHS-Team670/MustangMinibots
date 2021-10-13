@@ -24,8 +24,8 @@ public class TimeDrive extends WaitCommand {
     super(unit=="m"?time*60:time); // super must be called in the first line of the constructor 
     
     this.power = power;
-    addRequirements(driveBase);
     this.driveBase = driveBase;
+    addRequirements(driveBase);
 
     Logger.consoleLog("Time: %s %s Power: %s", time, unit, power);
   }
