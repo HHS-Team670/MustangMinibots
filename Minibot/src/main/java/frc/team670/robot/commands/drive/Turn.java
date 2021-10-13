@@ -76,5 +76,10 @@ public class Turn extends CommandBase{
 
         
     }
+    @Override
+    public void end(boolean isInterrupted)
+    {
+        driveBase.stop();
+    }
     
 }
