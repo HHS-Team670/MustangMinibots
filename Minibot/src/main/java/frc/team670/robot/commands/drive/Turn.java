@@ -59,21 +59,20 @@ public class Turn extends CommandBase{
         driveBase.tankDrive(leftPower, rightPower);        
     }
     @Override
-    public boolean isFinished()
-    {
-        double minibotDiameter=6.23;// Replace this with minibot diameter in inches
-        double arcLengthPerMoter=Math.abs(minibotDiameter*Math.PI*degrees/720);
-        int ticksPerRotation=800;
-        double wheelDiameter=2.497;
-        int currentTicks= driveBase.getRightEncoder().getTicks();
-        double distance=Math.abs((currentTicks/ticksPerRotation)*wheelDiameter*Math.PI);
-        if(distance>=arcLengthPerMoter)
+    public boolean isFinished() { // can some one add comments so it makes a little more sense?
+        double minibotDiameter = 6.23; // Replace this with minibot diameter in inches
+        double arcLengthPerMotor = Math.abs(minibotDiameter*Math.PI*degrees/720);
+        int ticksPerRotation = 800;
+        double wheelDiameter = 2.497;
+
+        int currentTicks = driveBase.getRightEncoder().getTicks();
+        double distance = Math.abs((currentTicks/ticksPerRotation)*wheelDiameter*Math.PI);
+        if(distance >= arcLengthPerMotor)
         {
             return true;
-
+        } else {
+            return false;
         }
-        return false;      
-
         
     }
     @Override
