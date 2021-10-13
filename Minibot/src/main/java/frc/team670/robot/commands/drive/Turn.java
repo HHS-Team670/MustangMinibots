@@ -35,7 +35,7 @@ public class Turn extends CommandBase{
         {
             direction=0;
         }
-        this.rightPower = -1*direction*power;
+        this.rightPower =direction*power;
         this.leftPower = direction*power;
 
     }
@@ -61,8 +61,20 @@ public class Turn extends CommandBase{
     @Override
     public boolean isFinished()
     {
+        double minibotDiameter=6.23;// Replace this with minibot diameter in inches
+        double arcLengthPerMoter=Math.abs(minibotDiameter*Math.PI*degrees/720);
+        int ticksPerRotation=800;
+        double wheelDiameter=2.497;
+        int currentTicks= driveBase.getRightEncoder().getTicks();
+        double distance=Math.abs((currentTicks/ticksPerRotation)*wheelDiameter*Math.PI);
+        if(distance>=arcLengthPerMoter)
+        {
+            return true;
+
+        }
+        return false;      
+
         
-        return false;
     }
     
 }
