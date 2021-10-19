@@ -241,7 +241,7 @@ public abstract class IterativeRobotBase extends RobotBase {
 		  // TODO shut down motors here
 	  }
 	  else {  
-      teleopPeriodic();
+      autonomousPeriodic();
 	  }
      // m_watchdog.addEpoch("teleopPeriodic()");
 //    } else {
