@@ -70,7 +70,7 @@ public class PIDDistanceDrive extends CommandBase {
 		return (m_leftController.atSetpoint() || m_rightController.atSetpoint());
 	}
 
-	public void end() {
+	public void end(boolean isFinished) {
 		Logger.consoleLog("Is finished", m_leftController.getSetpoint());
 		driveBase.stop();
 	}
