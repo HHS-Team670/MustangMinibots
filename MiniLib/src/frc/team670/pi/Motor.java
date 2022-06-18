@@ -55,6 +55,8 @@ public class Motor {
 		    } else {
 				stop();
 		    }
+			Logger.consoleLog("Motor speed: %s.", s);
+
 		} else {
 		    Logger.consoleLog("Invalid motor speed: %s. Values must be between -1.0 and 1.0", s);
 		}

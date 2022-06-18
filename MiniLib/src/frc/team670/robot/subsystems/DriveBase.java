@@ -114,6 +114,7 @@ public class DriveBase extends Subsystem {
 		this.leftSpeed = leftSpeed;
 		this.rightSpeed = rightSpeed;
 		//correct();
+		
 		left.set(this.leftSpeed);
 		right.set(this.rightSpeed);
 	}
