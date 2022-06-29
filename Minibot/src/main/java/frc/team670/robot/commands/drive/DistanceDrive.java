@@ -10,6 +10,7 @@ import frc.team670.robot.utils.Logger;
 public class DistanceDrive extends CommandBase {
 	
 	private double speedL, speedR, dist;
+	
 
 	private DriveBase driveBase;
 	
@@ -39,16 +40,18 @@ public class DistanceDrive extends CommandBase {
 	// Called repeatedly when this Command is scheduled to run
 	
 	public void execute() { 
-		Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s Ticks: %s", 
-				speedL, speedR, getDistance(), driveBase.getLeftEncoder().getTicks());		
+
+		Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s TicksL: %s TicksR %s", 
+				speedL, speedR, getDistance(), (driveBase.getLeftEncoder().getTicks()/1.16421),driveBase.getRightEncoder().getTicks());		
 		driveBase.tankDrive(speedL, speedR);
+	
 		correct();
 	}
 
 	
 	// Called once after isFinished returns true
 	
-	public void end() {
+	public void end(boolean interrupted) {
 		driveBase.stop();
 		Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s Ticks: %s", 
 				speedL, speedR, getDistance(), driveBase.getRightEncoder().getTicks());
@@ -57,24 +60,35 @@ public class DistanceDrive extends CommandBase {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	public void interrupted() {
-		end();
+		end(true);
 	}	
 	
 	// Checks that the wheels are driving at the same speed, corrects the speed
 	// so that the left/right are equal
 	public void correct() {
-		double currentTicksL = driveBase.getLeftEncoder().getTicks();
+		double currentTicksL = driveBase.getLeftEncoder().getTicks()/1.16421;
 		double currentTicksR = driveBase.getRightEncoder().getTicks();
 		
 		if (Math.abs(currentTicksL - currentTicksR) < 5)
 			return;
 		
-		else if (currentTicksL > currentTicksR)
-				speedL -= 0.01;
+		// else if (currentTicksL > currentTicksR)
+		// 		speedL -= ;
 		
-		else if (currentTicksL < currentTicksR)
-				speedR -= 0.01;
-	}
+		// else if (currentTicksL < currentTicksR)
+		// 		speedR -= 0.05;
+	
+		else if (currentTicksL > currentTicksR){
+			speedL -= 0.05;
+			speedR += 0.05;
+		}
+			
+		else if (currentTicksL < currentTicksR){
+			speedR -= 0.05;
+			speedL += 0.05;
+		}
+			
+	}		
 	
 	// Make this return true when this Command no longer needs to run execute()
 		@Override

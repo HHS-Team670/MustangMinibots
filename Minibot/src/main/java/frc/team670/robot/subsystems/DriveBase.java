@@ -45,16 +45,16 @@ public class DriveBase extends SubsystemBase {
 		// get a handle to the GPIO controller
 		final GpioController gpio = GpioFactory.getInstance();
 		// initialize your motors
-		left = new Motor(MOTOR_1_PIN_A, MOTOR_1_PIN_B, RaspiPin.GPIO_06);
-		right = new Motor(MOTOR_2_PIN_A, MOTOR_2_PIN_B, RaspiPin.GPIO_03);
+		right = new Motor(MOTOR_1_PIN_A, MOTOR_1_PIN_B, RaspiPin.GPIO_06);
+		left = new Motor(MOTOR_2_PIN_A, MOTOR_2_PIN_B, RaspiPin.GPIO_03);
 		try {
-			le = new Encoder(13, 26, false); //TODO  modify this based on motor direction
+			re = new Encoder(5, 6, true); //TODO  modify this based on motor direction
 		} catch (PigpioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			re = new Encoder(5, 6, false); //TODO  modify this based on motor direction
+			le = new Encoder(4, 18, false); //TODO  modify this based on motor direction
 		} catch (PigpioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -78,24 +78,24 @@ public class DriveBase extends SubsystemBase {
 		tankDrive(this.leftSpeed, this.rightSpeed, false);
 	}
 
-	public void correct() {
-		double error = Math.abs(this.le.getTicks()) - Math.abs(this.re.getTicks());
-		while (Math.abs(error) > 5) {
-			if (error > 0)
-				this.leftSpeed -= 0.05;
-			if (error < 0)
-				this.rightSpeed -= 0.05;
-			System.out.println(le.getTicks() + " " + re.getTicks());
-		}
-		/*
-		 * error = left-right readings if e+: left>right, slow left if e-: left<right,
-		 * slow right while !==, adjust until equal
-		 */
-//	  drive_straight_enc(power):
-//		    error = left_encoder - right_encoder
-//		    turn_power = kP * error
-//		    drive.arcadeDrive(power, turn_power, squaredInputs=False)
-	}
+// 	public void correct() {
+// 		double error = Math.abs(this.le.getTicks()) - Math.abs(this.re.getTicks());
+// 		while (Math.abs(error) > 5) {
+// 			if (error > 0)
+// 				this.leftSpeed -= 0.05;
+// 			if (error < 0)
+// 				this.rightSpeed -= 0.05;
+// 			System.out.println(le.getTicks() + " " + re.getTicks());
+// 		}
+// 		/*
+// 		 * error = left-right readings if e+: left>right, slow left if e-: left<right,
+// 		 * slow right while !==, adjust until equal
+// 		 */
+// //	  drive_straight_enc(power):
+// //		    error = left_encoder - right_encoder
+// //		    turn_power = kP * error
+// //		    drive.arcadeDrive(power, turn_power, squaredInputs=False)
+// 	}
 
 //  public void initBrakeMode() {
 //    setMotorsBrakeMode(allMotors, IdleMode.kBrake);
@@ -113,9 +113,11 @@ public class DriveBase extends SubsystemBase {
 	public void tankDrive(double leftSpeed, double rightSpeed, boolean squaredInputs) {
 		this.leftSpeed = leftSpeed;
 		this.rightSpeed = rightSpeed;
-		//correct();
+		// correct();
 		left.set(this.leftSpeed);
 		right.set(this.rightSpeed);
+		// left.set(0.25);
+		// right.set(1.0);
 	}
 
 	/**

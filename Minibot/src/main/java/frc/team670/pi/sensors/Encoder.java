@@ -114,7 +114,7 @@ public class Encoder {
 	 * @return Double rotations - the number of rotations the wheel has gone through
 	 */
 	public double getRotations() {
-		return Math.abs(getTicks()) / RobotConstants.ENCODER_TICKS_PER_ROTATION;
+		return Math.abs((double)getTicks()) / RobotConstants.ENCODER_TICKS_PER_ROTATION;
 	}
 
 	/**
