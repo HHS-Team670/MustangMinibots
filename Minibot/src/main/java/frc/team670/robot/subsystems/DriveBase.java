@@ -74,7 +74,7 @@ public class DriveBase extends SubsystemBase {
 	 */
 	public void tankDrive(double leftSpeed, double rightSpeed) {
 		this.leftSpeed = leftSpeed;
-		this.rightSpeed = -1*rightSpeed;
+		this.rightSpeed = rightSpeed;
 		tankDrive(this.leftSpeed, this.rightSpeed, false);
 	}
 

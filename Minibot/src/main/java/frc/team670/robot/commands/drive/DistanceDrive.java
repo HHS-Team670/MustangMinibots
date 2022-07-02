@@ -87,6 +87,11 @@ public class DistanceDrive extends CommandBase {
 			speedR -= 0.05;
 			speedL += 0.05;
 		}
+		speedL= speedL>1?1:speedL;
+		speedL= speedL<-1?-1:speedL;
+
+		speedR= speedR>1?1:speedR;
+		speedR= speedR<-1?-1:speedR;
 			
 	}		
 	
@@ -100,7 +105,7 @@ public class DistanceDrive extends CommandBase {
 			
 		public double getDistance()
 		{
-			double distance = driveBase.getLeftEncoder().getDistance();
+			double distance = (driveBase.getRightEncoder().getDistance())/1;
 			return Math.abs(distance);
 		}
 
