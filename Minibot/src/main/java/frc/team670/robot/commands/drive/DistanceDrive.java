@@ -10,6 +10,7 @@ import frc.team670.robot.utils.Logger;
 public class DistanceDrive extends CommandBase {
 	
 	private double speedL, speedR, dist;
+	private boolean correcting=false;
 	
 
 	private DriveBase driveBase;
@@ -42,10 +43,15 @@ public class DistanceDrive extends CommandBase {
 	public void execute() { 
 
 		Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s TicksL: %s TicksR %s", 
-				speedL, speedR, getDistance(), (driveBase.getLeftEncoder().getTicks()/1.16421),driveBase.getRightEncoder().getTicks());		
-		driveBase.tankDrive(speedL, speedR);
-	
+				speedL, speedR, getDistance(), (driveBase.getLeftEncoder().getTicks()/1.16421),-driveBase.getRightEncoder().getTicks());		
+		if(!correcting){
+			driveBase.tankDrive(speedL, speedR);
+
+
+		}
 		correct();
+
+	
 	}
 
 	
@@ -67,7 +73,7 @@ public class DistanceDrive extends CommandBase {
 	// so that the left/right are equal
 	public void correct() {
 		double currentTicksL = driveBase.getLeftEncoder().getTicks()/1.16421;
-		double currentTicksR = driveBase.getRightEncoder().getTicks();
+		double currentTicksR = -driveBase.getRightEncoder().getTicks();
 		
 		if (Math.abs(currentTicksL - currentTicksR) < 5)
 			return;
@@ -79,13 +85,13 @@ public class DistanceDrive extends CommandBase {
 		// 		speedR -= 0.05;
 	
 		else if (currentTicksL > currentTicksR){
-			speedL -= 0.05;
-			speedR += 0.05;
+			speedL -= 0.025;
+			speedR += 0.025;
 		}
 			
 		else if (currentTicksL < currentTicksR){
-			speedR -= 0.05;
-			speedL += 0.05;
+			speedR -= 0.025;
+			speedL += 0.025;
 		}
 		speedL= speedL>1?1:speedL;
 		speedL= speedL<-1?-1:speedL;
@@ -98,7 +104,23 @@ public class DistanceDrive extends CommandBase {
 	// Make this return true when this Command no longer needs to run execute()
 		@Override
 		public boolean isFinished() {
-			return getDistance() > Math.abs(dist);
+			if(getDistance() > Math.abs(dist)){
+				double currentTicksL = driveBase.getLeftEncoder().getTicks()/1.16421;
+				double currentTicksR = -driveBase.getRightEncoder().getTicks();
+				if(Math.abs(currentTicksL - currentTicksR) <10){
+
+					return true;
+				}
+				if(currentTicksL>currentTicksR){
+					driveBase.tankDrive(0, 0.5);
+				}else{
+					driveBase.tankDrive(0.5, 0);
+
+				}
+				correcting=true;
+				return false;
+			}
+			return false;
 			//return (this.error <= 1);
 		}
 		
