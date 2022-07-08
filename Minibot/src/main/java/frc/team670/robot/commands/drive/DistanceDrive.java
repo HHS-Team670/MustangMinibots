@@ -75,7 +75,7 @@ public class DistanceDrive extends CommandBase {
 		double currentTicksL = driveBase.getLeftEncoder().getTicks()/1.16421;
 		double currentTicksR = -driveBase.getRightEncoder().getTicks();
 		
-		if (Math.abs(currentTicksL - currentTicksR) < 5)
+		if (Math.abs(currentTicksL - currentTicksR) < 15)
 			return;
 		
 		// else if (currentTicksL > currentTicksR)
@@ -121,6 +121,7 @@ public class DistanceDrive extends CommandBase {
 				return false;
 			}
 			return false;
+			// return getDistance() > Math.abs(dist);
 			//return (this.error <= 1);
 		}
 		
