@@ -23,7 +23,6 @@ if [ "$(whoami)" != 'root' ]; then
   sudo $SCRIPTPATH'/'$SELF
   exit 1
 fi
-clear
 echo 'Script running with root privileges.'
 
 # Change SSH password
@@ -74,6 +73,15 @@ wpa_passphrase=hhs6700$BOT_NUMBER
 wpa_key_mgmt=WPA-PSK
 wpa_pairwise=TKIP
 rsn_pairwise=CCMP
+EOF
+
+# now we change the MOTD to get the user to run the install script
+cp /etc/motd /etc/motd.bak
+cat >> /etc/motd << EOF
+!!!!!!!!!!!!!!!!!!!!
+Please run the installer.sh script in the minibot repo
+to finish setting up.
+!!!!!!!!!!!!!!!!!!!!
 EOF
 
 echo "Done!"
