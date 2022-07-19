@@ -41,6 +41,7 @@ systemctl enable hostapd
 DEBIAN_FRONTEND=noninteractive apt install -y netfilter-persistent iptables-persistent
 
 cat >> /etc/dhcpd.conf << EOF
+
 interface wlan0
     static ip_address=192.168.$BOT_NUMBER.1/24
     nohook wpa_supplicant
