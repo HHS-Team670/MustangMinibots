@@ -34,7 +34,7 @@ touch /boot/ssh
 # Wifi AP setup
 
 # Install the package
-apt install -y hostapd dnsmasq
+apt install -y hostapd dnsmasq openjdk-11-jdk
 systemctl unmask hostapd
 systemctl enable hostapd
 
