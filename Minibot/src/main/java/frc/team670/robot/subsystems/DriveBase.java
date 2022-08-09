@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team670.pi.Motor;
 import frc.team670.pi.sensors.Encoder;
 import frc.team670.robot.commands.drive.*;
+import frc.team670.robot.utils.Logger;
 import jpigpio.PigpioException;
 
 /**
@@ -28,8 +29,8 @@ import jpigpio.PigpioException;
  */
 public class DriveBase extends SubsystemBase {
 
-	private static int MOTOR_1_PIN_A = 4;
-	private static int MOTOR_1_PIN_B = 5;
+	private static int MOTOR_1_PIN_A = 5;
+	private static int MOTOR_1_PIN_B = 6;
 	private static int MOTOR_2_PIN_A = 0;
 	private static int MOTOR_2_PIN_B = 1;
 
@@ -45,16 +46,16 @@ public class DriveBase extends SubsystemBase {
 		// get a handle to the GPIO controller
 		final GpioController gpio = GpioFactory.getInstance();
 		// initialize your motors
-		right = new Motor(MOTOR_1_PIN_A, MOTOR_1_PIN_B, RaspiPin.GPIO_06);
-		left = new Motor(MOTOR_2_PIN_A, MOTOR_2_PIN_B, RaspiPin.GPIO_03);
+		left = new Motor(MOTOR_1_PIN_A, MOTOR_1_PIN_B, RaspiPin.GPIO_06);
+		right = new Motor(MOTOR_2_PIN_A, MOTOR_2_PIN_B, RaspiPin.GPIO_03);
 		try {
-			re = new Encoder(5, 6, false); //TODO  modify this based on motor direction
+			le = new Encoder(5, 6, false); //TODO  modify this based on motor direction
 		} catch (PigpioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			le = new Encoder(4, 18, false); //TODO  modify this based on motor direction
+			re = new Encoder(13, 19, false); //TODO  modify this based on motor direction
 		} catch (PigpioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -112,6 +113,7 @@ public class DriveBase extends SubsystemBase {
 	 */
 	public void tankDrive(double leftSpeed, double rightSpeed, boolean squaredInputs) {
 		this.leftSpeed = leftSpeed;
+		Logger.consoleLog("Tank Driveing : "+ rightSpeed+" "+leftSpeed);
 		this.rightSpeed = rightSpeed;
 		// correct();
 		left.set(this.leftSpeed);

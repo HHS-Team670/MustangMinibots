@@ -71,7 +71,7 @@ public class Encoder {
 //		 leftPin.setShutdownOptions(true);
 //		 rightPin = gpio.provisionDigitalInputPin(rightP);
 //		 rightPin.setShutdownOptions(true);
-		pigpio = new PigpioSocket("localhost", 8888);
+		pigpio = new PigpioSocket("::1", 8888);
 		pigpio.gpioSetAlertFunc(leftP, (gpio, level, tick) -> {
 //				System.out.println(
 //					String.format("Callback in Java: We received an alert on: %d with %d at %d",

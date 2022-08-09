@@ -43,13 +43,13 @@ public class DistanceDrive extends CommandBase {
 	public void execute() { 
 
 		Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s TicksL: %s TicksR %s", 
-				speedL, speedR, getDistance(), (driveBase.getLeftEncoder().getTicks()/1.16421),-driveBase.getRightEncoder().getTicks());		
-		if(!correcting){
+				speedL, speedR, getDistance(), (driveBase.getLeftEncoder().getTicks()),driveBase.getRightEncoder().getTicks());		
+		// if(!correcting){
 			driveBase.tankDrive(speedL, speedR);
 
 
-		}
-		correct();
+		// }
+		// correct();
 
 	
 	}
@@ -72,8 +72,8 @@ public class DistanceDrive extends CommandBase {
 	// Checks that the wheels are driving at the same speed, corrects the speed
 	// so that the left/right are equal
 	public void correct() {
-		double currentTicksL = driveBase.getLeftEncoder().getTicks()/1.16421;
-		double currentTicksR = -driveBase.getRightEncoder().getTicks();
+		double currentTicksL = driveBase.getLeftEncoder().getTicks();
+		double currentTicksR = driveBase.getRightEncoder().getTicks();
 		
 		if (Math.abs(currentTicksL - currentTicksR) < 15)
 			return;
@@ -105,20 +105,21 @@ public class DistanceDrive extends CommandBase {
 		@Override
 		public boolean isFinished() {
 			if(getDistance() > Math.abs(dist)){
-				double currentTicksL = driveBase.getLeftEncoder().getTicks()/1.16421;
-				double currentTicksR = -driveBase.getRightEncoder().getTicks();
-				if(Math.abs(currentTicksL - currentTicksR) <10){
+				// double currentTicksL = driveBase.getLeftEncoder().getTicks()/1.16421;
+				// double currentTicksR = -driveBase.getRightEncoder().getTicks();
+				// if(Math.abs(currentTicksL - currentTicksR) <15){
 
-					return true;
-				}
-				if(currentTicksL>currentTicksR){
-					driveBase.tankDrive(0, 0.5);
-				}else{
-					driveBase.tankDrive(0.5, 0);
+				// 	return true;
+				// }
+				// if(currentTicksL>currentTicksR){
+				// 	driveBase.tankDrive(0, 0.5);
+				// }else{
+				// 	driveBase.tankDrive(0.5, 0);
 
-				}
-				correcting=true;
-				return false;
+				// }
+				// correcting=true;
+				// return false;
+				return true;
 			}
 			return false;
 			// return getDistance() > Math.abs(dist);
@@ -128,7 +129,7 @@ public class DistanceDrive extends CommandBase {
 			
 		public double getDistance()
 		{
-			double distance = (driveBase.getRightEncoder().getDistance())/1;
+			double distance = (driveBase.getRightEncoder().getDistance());
 			return Math.abs(distance);
 		}
 
