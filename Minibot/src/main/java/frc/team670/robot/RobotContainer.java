@@ -73,7 +73,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new DistanceDrive(50,1,1,driveBase);
+    return new DistanceDrive(36,-1,-1,driveBase);
   }
 
 
