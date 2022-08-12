@@ -31,6 +31,15 @@ echo 'pi:hhs670' | chpasswd
 # Enable ssh (will go into effect on reboot)
 touch /boot/ssh
 
+# Set up WiringPi 
+apt-get remove wiringpi -y
+apt-get --yes install git-core gcc make
+cd /home/pi
+git clone https://github.com/WiringPi/WiringPi --branch master --single-branch wiringpi
+cd /home/pi/wiringpi
+./build
+
+
 # Wifi AP setup
 
 # Install the package
