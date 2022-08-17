@@ -105,25 +105,11 @@ public class DistanceDrive extends CommandBase {
 		@Override
 		public boolean isFinished() {
 			if(getDistance() > Math.abs(dist)){
-				// double currentTicksL = driveBase.getLeftEncoder().getTicks()/1.16421;
-				// double currentTicksR = -driveBase.getRightEncoder().getTicks();
-				// if(Math.abs(currentTicksL - currentTicksR) <15){
-
-				// 	return true;
-				// }
-				// if(currentTicksL>currentTicksR){
-				// 	driveBase.tankDrive(0, 0.5);
-				// }else{
-				// 	driveBase.tankDrive(0.5, 0);
-
-				// }
-				// correcting=true;
-				// return false;
+				
 				return true;
 			}
 			return false;
-			// return getDistance() > Math.abs(dist);
-			//return (this.error <= 1);
+
 		}
 		
 			
