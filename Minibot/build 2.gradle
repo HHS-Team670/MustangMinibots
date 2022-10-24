@@ -1,0 +1,82 @@
+plugins{
+    id "base"
+    id 'java-library'
+    id "jaci.gradle.EmbeddedTools" version "2019.11.13"
+}
+
+def ROBOT_MAIN_CLASS = "frc.team670.robot.Main"
+def includeDesktopSupport = true
+
+task zip(type: Zip, group: "Archive", description: "Archives sources in a zip file") {
+    from "src"
+    setArchiveName "basic-demo-1.0.zip"
+}
+
+deploy {
+    targets {
+        target("rpi") {
+            directory = '/home/pi/Projects'  // The root directory to start deploying to. Default: user home
+            maxChannels = 1         // The number of channels to open on the target (how many files / commands to run at the same time). Default: 1
+            timeout = 3             // Timeout to use when connecting to target. Default: 3 (seconds)
+            failOnMissing = true    // Should the build fail if the target can't be found? Default: true
+
+            locations {
+                ssh {
+                    address "192.168.1.1"  // Required. The address to try
+                    user = 'pi'             // Required. The user to login as
+                    password = 'hhs670'               // The password for the user. Default: blank (empty) string
+                    ipv6 = false                // Are IPv6 addresses permitted? Default: false
+                }
+            }
+        }
+    }
+    artifacts {
+        // Define my artifact. In this case, the default java build for this project.
+        javaArtifact('coprocessorCode') {
+            targets << "rpi"
+            jar = 'jar'     // This sets the jarfile to deploy. The default jar task in gradle is simply called 'jar'
+        }
+    }
+}
+
+sourceSets {
+    main {
+         java {
+            srcDirs = ['src/main/java/']
+         }
+    }
+    test {
+         java {
+            srcDirs = ['src/test/java/']
+         }
+    }
+}
+
+repositories {
+    // Since my Apache Commons dependency (defined below) exists in the Maven Central Repository, 
+    // I need to define it as a repository for this project.
+    mavenCentral()
+    flatDir {
+       dirs 'libs'
+   }
+}
+
+dependencies {
+    // In this case, I'm adding the Apache Commons library for demonstration purposes.
+    // (This library isn't actually needed, but serves the purpose of demonstrating how
+    // to add a custom library)
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    compile (name:'pi4j-core', ext:'jar')
+    compile (name:'MiniLib', ext:'jar')
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
+
+    testImplementation 'junit:junit:4.12'
+}
+
+jar{
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    // I need to set my manifest up so the coprocessor knows where my main class is
+    manifest {
+        attributes 'Main-Class': ROBOT_MAIN_CLASS
+    }
+}
