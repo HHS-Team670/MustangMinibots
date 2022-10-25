@@ -14,14 +14,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.team670.robot.commands.drive.BalancedDrive;
-import frc.team670.robot.commands.drive.CombinedDrive;
-import frc.team670.robot.commands.drive.DistanceDrive;
-import frc.team670.robot.commands.drive.TimeDrive;
-import frc.team670.robot.commands.drive.Turn;
+
+import frc.team670.robot.commands.TimeDrive;
+
 import frc.team670.robot.subsystems.DriveBase;
 import frc.team670.robot.utils.Logger;
-
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -32,10 +29,8 @@ import frc.team670.robot.utils.Logger;
  */
 public class RobotContainer {
 
-
   private static DriveBase driveBase = new DriveBase();
   private static OI oi;
-
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -44,7 +39,6 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
   }
-
 
   /**
    * Use this method to define your button->command mappings. Buttons can be
@@ -64,7 +58,7 @@ public class RobotContainer {
     } catch (Throwable e) {
       Logger.logException(e);
     }
-    
+
     Logger.consoleLog();
   }
 
@@ -74,12 +68,11 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new Turn(Math.PI/2,1,driveBase);
+    return new TimeDrive(driveBase, 1.0, 5);
   }
 
+  public static void autonomousInit() {
 
-  public static void autonomousInit(){
-    
   }
 
   public static void teleopInit() {
@@ -87,12 +80,12 @@ public class RobotContainer {
 
   }
 
-  public static void disabled(){
+  public static void disabled() {
     Logger.consoleLog("Robot Disabled");
   }
 
   public static void periodic() {
-    
+
   }
 
 }

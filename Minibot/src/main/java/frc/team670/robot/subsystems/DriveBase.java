@@ -18,7 +18,6 @@ import com.pi4j.io.gpio.RaspiPin;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.team670.pi.Motor;
 import frc.team670.pi.sensors.Encoder;
-import frc.team670.robot.commands.drive.*;
 import frc.team670.robot.utils.Logger;
 import jpigpio.PigpioException;
 
@@ -49,13 +48,13 @@ public class DriveBase extends SubsystemBase {
 		left = new Motor(MOTOR_1_PIN_A, MOTOR_1_PIN_B, RaspiPin.GPIO_06);
 		right = new Motor(MOTOR_2_PIN_A, MOTOR_2_PIN_B, RaspiPin.GPIO_03);
 		try {
-			le = new Encoder(5, 6, false); //TODO  modify this based on motor direction
+			le = new Encoder(5, 6, false); // TODO modify this based on motor direction
 		} catch (PigpioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			re = new Encoder(13, 19, false); //TODO  modify this based on motor direction
+			re = new Encoder(13, 19, false); // TODO modify this based on motor direction
 		} catch (PigpioException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -79,28 +78,28 @@ public class DriveBase extends SubsystemBase {
 		tankDrive(this.leftSpeed, this.rightSpeed, false);
 	}
 
-// 	public void correct() {
-// 		double error = Math.abs(this.le.getTicks()) - Math.abs(this.re.getTicks());
-// 		while (Math.abs(error) > 5) {
-// 			if (error > 0)
-// 				this.leftSpeed -= 0.05;
-// 			if (error < 0)
-// 				this.rightSpeed -= 0.05;
-// 			System.out.println(le.getTicks() + " " + re.getTicks());
-// 		}
-// 		/*
-// 		 * error = left-right readings if e+: left>right, slow left if e-: left<right,
-// 		 * slow right while !==, adjust until equal
-// 		 */
-// //	  drive_straight_enc(power):
-// //		    error = left_encoder - right_encoder
-// //		    turn_power = kP * error
-// //		    drive.arcadeDrive(power, turn_power, squaredInputs=False)
-// 	}
+	// public void correct() {
+	// double error = Math.abs(this.le.getTicks()) - Math.abs(this.re.getTicks());
+	// while (Math.abs(error) > 5) {
+	// if (error > 0)
+	// this.leftSpeed -= 0.05;
+	// if (error < 0)
+	// this.rightSpeed -= 0.05;
+	// System.out.println(le.getTicks() + " " + re.getTicks());
+	// }
+	// /*
+	// * error = left-right readings if e+: left>right, slow left if e-: left<right,
+	// * slow right while !==, adjust until equal
+	// */
+	// // drive_straight_enc(power):
+	// // error = left_encoder - right_encoder
+	// // turn_power = kP * error
+	// // drive.arcadeDrive(power, turn_power, squaredInputs=False)
+	// }
 
-//  public void initBrakeMode() {
-//    setMotorsBrakeMode(allMotors, IdleMode.kBrake);
-//  }
+	// public void initBrakeMode() {
+	// setMotorsBrakeMode(allMotors, IdleMode.kBrake);
+	// }
 
 	/**
 	 * 
@@ -113,7 +112,8 @@ public class DriveBase extends SubsystemBase {
 	 */
 	public void tankDrive(double leftSpeed, double rightSpeed, boolean squaredInputs) {
 		this.leftSpeed = leftSpeed;
-		Logger.consoleLog("Tank Driveing : "+ rightSpeed+" "+leftSpeed+" "+le.getTicks()+" "+re.getTicks()+" "+le.getDistance()+" "+re.getDistance());
+		Logger.consoleLog("Tank Driveing : " + rightSpeed + " " + leftSpeed + " " + le.getTicks() + " " + re.getTicks()
+				+ " " + le.getDistance() + " " + re.getDistance());
 		this.rightSpeed = rightSpeed;
 		// correct();
 		left.set(this.leftSpeed);
@@ -130,32 +130,37 @@ public class DriveBase extends SubsystemBase {
 		right.set(0);
 	}
 
-//  public void sendEncoderDataToDashboard() {
-//    // if (leftDIOEncoder != null) {
-//    //   SmartDashboard.putNumber("Left DIO Encoder: ", leftMustangEncoder.getPositionInches());
-//    // }
-//
-//    // if (rightDIOEncoder != null) {
-//    //   SmartDashboard.putNumber("Right Encoder: ", rightDIOEncoder.get());
-//    // }
-//
-//    // if (leftDIOEncoder == null) {
-//    //   SmartDashboard.putString("Left DIO Encoder:", "LEFT DIO ENCODER IS NULL!");
-//    // }
-//    // if (rightDIOEncoder == null) {
-//    //   SmartDashboard.putNumber("Right Encoder:", rightMustangEncoder.getPositionInches());
-//    // }
-//    if(leftMustangEncoder != null) {
-//      SmartDashboard.putString("Left Encoder Inches", leftMustangEncoder.getPositionInches() + "");
-//    } else {
-//      SmartDashboard.putString("Left Encoder Inches", "null");
-//    }
-//    if(rightMustangEncoder != null) {
-//      SmartDashboard.putString("Right Encoder Inches", rightMustangEncoder.getPositionInches() + "");
-//    } else {
-//      SmartDashboard.putString("Left Encoder Inches", "null");
-//    }
-//  }
+	// public void sendEncoderDataToDashboard() {
+	// // if (leftDIOEncoder != null) {
+	// // SmartDashboard.putNumber("Left DIO Encoder: ",
+	// leftMustangEncoder.getPositionInches());
+	// // }
+	//
+	// // if (rightDIOEncoder != null) {
+	// // SmartDashboard.putNumber("Right Encoder: ", rightDIOEncoder.get());
+	// // }
+	//
+	// // if (leftDIOEncoder == null) {
+	// // SmartDashboard.putString("Left DIO Encoder:", "LEFT DIO ENCODER IS
+	// NULL!");
+	// // }
+	// // if (rightDIOEncoder == null) {
+	// // SmartDashboard.putNumber("Right Encoder:",
+	// rightMustangEncoder.getPositionInches());
+	// // }
+	// if(leftMustangEncoder != null) {
+	// SmartDashboard.putString("Left Encoder Inches",
+	// leftMustangEncoder.getPositionInches() + "");
+	// } else {
+	// SmartDashboard.putString("Left Encoder Inches", "null");
+	// }
+	// if(rightMustangEncoder != null) {
+	// SmartDashboard.putString("Right Encoder Inches",
+	// rightMustangEncoder.getPositionInches() + "");
+	// } else {
+	// SmartDashboard.putString("Left Encoder Inches", "null");
+	// }
+	// }
 
 	public void initDefaultCommand() {
 		setDefaultCommand(null);
