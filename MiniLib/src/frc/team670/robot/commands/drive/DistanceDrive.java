@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream:MiniLib/src/frc/team670/robot/commands/drive/DistanceDrive.java
 package frc.team670.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -89,3 +90,67 @@ public class DistanceDrive extends Command {
 
 	
 
+=======
+
+package frc.team670.robot.commands;
+import java.util.HashMap;
+import java.util.Map;
+
+//import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.team670.robot.subsystems.DriveBase;
+import frc.team670.robot.utils.Logger;
+import frc.team670.robot.RobotConstants;
+
+import frc.team670.pi.sensors.Encoder;
+
+
+public class DistanceDrive extends CommandBase {
+    DriveBase driveBase;
+    double powerR, powerL;
+
+
+    public DistanceDrive(DriveBase driveBase, double power, double seconds) {
+        this.driveBase = driveBase;
+        addRequirements(driveBase);
+        this.powerL = power;
+        this.powerR = power;
+
+    }
+    // public void init(){
+
+    // }
+    public void execute() {
+        balance();
+        driveBase.tankDrive(powerL, powerR);
+        //Monitor the distance taravelled and ensure that the motors are balanced
+
+    }
+    public void balance(){
+        Encoder le = driveBase.getLeftEncoder();   
+        Encoder re = driveBase.getRightEncoder();
+        double ticksLeft = le.getTicks();
+        double ticksRight = re.getTicks();
+        if(Math.abs(ticksLeft - ticksRight)> 20){
+        if(ticksLeft > ticksRight){
+            powerL -= 0.05;
+        }else if(ticksRight> ticksLeft){
+            powerR -= 0.05;
+        }
+        }
+    }
+    public boolean isFinished(){
+        Encoder re = driveBase.getRightEncoder();
+        double ticks = re.getTicks();
+
+        int travelDistance = 36;
+        double distance = ticks / RobotConstants.ENCODER_TICKS_PER_ROTATION * RobotConstants.DRIVE_BASE_WHEEL_DIAMETER * Math.PI;
+        return distance >= travelDistance;
+    }
+    public void end(boolean isInteruppted) {
+        driveBase.stop();
+    }
+
+
+}
+>>>>>>> Stashed changes:Minibot/src/main/java/frc/team670/robot/commands/drive/DistanceDrive.java
