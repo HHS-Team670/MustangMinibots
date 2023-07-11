@@ -1,5 +1,5 @@
 
-package frc.team670.robot.commands;
+package frc.team670.robot.commands.drive;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +19,7 @@ public class TurnDrive extends CommandBase {
 
     public TurnDrive(DriveBase driveBase, double power, double seconds) {
         this.driveBase = driveBase;
-        addRequirements(driveBase);
+        //addRequirements(driveBase);
         this.powerL = power;
         this.powerR = power;
 
