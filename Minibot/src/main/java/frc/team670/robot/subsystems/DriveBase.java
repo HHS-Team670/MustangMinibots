@@ -113,7 +113,7 @@ public class DriveBase extends SubsystemBase {
 	 */
 	public void tankDrive(double leftSpeed, double rightSpeed, boolean squaredInputs) {
 		this.leftSpeed = leftSpeed;
-		Logger.consoleLog("Tank Driveing : "+ rightSpeed+" "+leftSpeed+" "+le.getTicks()+" "+re.getTicks()+" "+le.getDistance()+" "+re.getDistance());
+		//Logger.consoleLog("Tank Driveing : "+ rightSpeed+" "+leftSpeed+" "+le.getTicks()+" "+re.getTicks()+" "+le.getDistance()+" "+re.getDistance());
 		this.rightSpeed = rightSpeed;
 		// correct();
 		left.set(this.leftSpeed);

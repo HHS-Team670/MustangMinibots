@@ -34,16 +34,16 @@ public class DistanceDrive extends CommandBase {
 	
 	public void initialize() {
 		//setTimeout(seconds);
-		Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s", 
-				speedL, speedR, getDistance());
+		//Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s", 
+		//		speedL, speedR, getDistance());
 	}	
 
 	// Called repeatedly when this Command is scheduled to run
 	
 	public void execute() { 
 
-		Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s TicksL: %s TicksR %s", 
-				speedL, speedR, getDistance(), (driveBase.getLeftEncoder().getTicks()),driveBase.getRightEncoder().getTicks());		
+		//Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s TicksL: %s TicksR %s", 
+			//	speedL, speedR, getDistance(), (driveBase.getLeftEncoder().getTicks()),driveBase.getRightEncoder().getTicks());		
 		// if(!correcting){
 			driveBase.tankDrive(speedL, speedR);
 
@@ -59,8 +59,8 @@ public class DistanceDrive extends CommandBase {
 	
 	public void end(boolean interrupted) {
 		driveBase.stop();
-		Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s Ticks: %s", 
-				speedL, speedR, getDistance(), driveBase.getRightEncoder().getTicks());
+		//Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s Ticks: %s", 
+		//		speedL, speedR, getDistance(), driveBase.getRightEncoder().getTicks());
 	}
 
 	// Called when another command which requires one or more of the same
@@ -115,7 +115,7 @@ public class DistanceDrive extends CommandBase {
 			
 		public double getDistance()
 		{
-			double distance = (driveBase.getRightEncoder().getDistance());
+			double distance = (driveBase.getLeftEncoder().getDistance());
 			return Math.abs(distance);
 		}
 

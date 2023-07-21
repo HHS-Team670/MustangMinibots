@@ -22,7 +22,7 @@ deploy {
 
             locations {
                 ssh {
-                    address "192.168.1.1"  // Required. The address to try
+                    address "192.168.4.1"  // Required. The address to try
                     user = 'pi'             // Required. The user to login as
                     password = 'hhs670'               // The password for the user. Default: blank (empty) string
                     ipv6 = false                // Are IPv6 addresses permitted? Default: false

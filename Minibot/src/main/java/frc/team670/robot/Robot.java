@@ -83,7 +83,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    Logger.consoleLog("Autonomous Init");
+    Logger.consoleLog("Autonomous Init Starts");
     RobotContainer.autonomousInit();
     // RobotContainer.clearSubsystemSetpoints();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
