@@ -16,25 +16,18 @@ import frc.team670.robot.utils.Logger;
 
 public class TimeDrive extends WaitCommand {
 
-  private DriveBase driveBase;
-  private double power;
-
   public TimeDrive(double seconds, double power, DriveBase driveBase) {
-    super(seconds);
-    this.power = power;
-    addRequirements(driveBase);
-    this.driveBase = driveBase;
+    
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    driveBase.tankDrive(power, power);
+    
   }
 
   // Called once after isFinished returns true
   @Override
   public void end(boolean isInteruppted) {
-    driveBase.stop();
   }
 }
