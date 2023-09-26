@@ -74,33 +74,8 @@ public class DriveBase extends SubsystemBase {
 	 * @throws InterruptedException
 	 */
 	public void tankDrive(double leftSpeed, double rightSpeed) {
-		this.leftSpeed = leftSpeed;
-		this.rightSpeed = rightSpeed;
-		tankDrive(this.leftSpeed, this.rightSpeed, false);
+		
 	}
-
-// 	public void correct() {
-// 		double error = Math.abs(this.le.getTicks()) - Math.abs(this.re.getTicks());
-// 		while (Math.abs(error) > 5) {
-// 			if (error > 0)
-// 				this.leftSpeed -= 0.05;
-// 			if (error < 0)
-// 				this.rightSpeed -= 0.05;
-// 			System.out.println(le.getTicks() + " " + re.getTicks());
-// 		}
-// 		/*
-// 		 * error = left-right readings if e+: left>right, slow left if e-: left<right,
-// 		 * slow right while !==, adjust until equal
-// 		 */
-// //	  drive_straight_enc(power):
-// //		    error = left_encoder - right_encoder
-// //		    turn_power = kP * error
-// //		    drive.arcadeDrive(power, turn_power, squaredInputs=False)
-// 	}
-
-//  public void initBrakeMode() {
-//    setMotorsBrakeMode(allMotors, IdleMode.kBrake);
-//  }
 
 	/**
 	 * 
@@ -112,60 +87,24 @@ public class DriveBase extends SubsystemBase {
 	 * @throws InterruptedException
 	 */
 	public void tankDrive(double leftSpeed, double rightSpeed, boolean squaredInputs) {
-		this.leftSpeed = leftSpeed;
-		//Logger.consoleLog("Tank Driveing : "+ rightSpeed+" "+leftSpeed+" "+le.getTicks()+" "+re.getTicks()+" "+le.getDistance()+" "+re.getDistance());
-		this.rightSpeed = rightSpeed;
-		// correct();
-		left.set(this.leftSpeed);
-		right.set(this.rightSpeed);
-		// left.set(0.25);
-		// right.set(1.0);
+		
 	}
 
 	/**
 	 * Stops the motors on the drive base (sets them to 0).
 	 */
 	public void stop() {
-		left.set(0);
-		right.set(0);
+		
 	}
-
-//  public void sendEncoderDataToDashboard() {
-//    // if (leftDIOEncoder != null) {
-//    //   SmartDashboard.putNumber("Left DIO Encoder: ", leftMustangEncoder.getPositionInches());
-//    // }
-//
-//    // if (rightDIOEncoder != null) {
-//    //   SmartDashboard.putNumber("Right Encoder: ", rightDIOEncoder.get());
-//    // }
-//
-//    // if (leftDIOEncoder == null) {
-//    //   SmartDashboard.putString("Left DIO Encoder:", "LEFT DIO ENCODER IS NULL!");
-//    // }
-//    // if (rightDIOEncoder == null) {
-//    //   SmartDashboard.putNumber("Right Encoder:", rightMustangEncoder.getPositionInches());
-//    // }
-//    if(leftMustangEncoder != null) {
-//      SmartDashboard.putString("Left Encoder Inches", leftMustangEncoder.getPositionInches() + "");
-//    } else {
-//      SmartDashboard.putString("Left Encoder Inches", "null");
-//    }
-//    if(rightMustangEncoder != null) {
-//      SmartDashboard.putString("Right Encoder Inches", rightMustangEncoder.getPositionInches() + "");
-//    } else {
-//      SmartDashboard.putString("Left Encoder Inches", "null");
-//    }
-//  }
 
 	public void initDefaultCommand() {
 		setDefaultCommand(null);
 	}
-
+	//returns the left encoder
 	public Encoder getLeftEncoder() {
-		// TODO Auto-generated method stub
-		return this.le;
+	
 	}
-
+	//returns the right encoder
 	public Encoder getRightEncoder() {
 		return this.re;
 	}

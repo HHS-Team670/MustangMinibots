@@ -33,23 +33,12 @@ public class DistanceDrive extends CommandBase {
 	// Called just before this Command runs the first time
 	
 	public void initialize() {
-		//setTimeout(seconds);
-		//Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s", 
-		//		speedL, speedR, getDistance());
+	
 	}	
 
 	// Called repeatedly when this Command is scheduled to run
 	
 	public void execute() { 
-
-		//Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s TicksL: %s TicksR %s", 
-			//	speedL, speedR, getDistance(), (driveBase.getLeftEncoder().getTicks()),driveBase.getRightEncoder().getTicks());		
-		// if(!correcting){
-			driveBase.tankDrive(speedL, speedR);
-
-
-		// }
-		// correct();
 
 	
 	}
@@ -58,9 +47,6 @@ public class DistanceDrive extends CommandBase {
 	// Called once after isFinished returns true
 	
 	public void end(boolean interrupted) {
-		driveBase.stop();
-		//Logger.consoleLog("LeftSpeed: %s Right Speed: %s DistanceT: %s Ticks: %s", 
-		//		speedL, speedR, getDistance(), driveBase.getRightEncoder().getTicks());
 	}
 
 	// Called when another command which requires one or more of the same
@@ -71,52 +57,23 @@ public class DistanceDrive extends CommandBase {
 	
 	// Checks that the wheels are driving at the same speed, corrects the speed
 	// so that the left/right are equal
+	//unnecessary
 	public void correct() {
-		double currentTicksL = driveBase.getLeftEncoder().getTicks();
-		double currentTicksR = driveBase.getRightEncoder().getTicks();
 		
-		if (Math.abs(currentTicksL - currentTicksR) < 15)
-			return;
-		
-		// else if (currentTicksL > currentTicksR)
-		// 		speedL -= ;
-		
-		// else if (currentTicksL < currentTicksR)
-		// 		speedR -= 0.05;
-	
-		else if (currentTicksL > currentTicksR){
-			speedL -= 0.025;
-			speedR += 0.025;
-		}
-			
-		else if (currentTicksL < currentTicksR){
-			speedR -= 0.025;
-			speedL += 0.025;
-		}
-		speedL= speedL>1?1:speedL;
-		speedL= speedL<-1?-1:speedL;
-
-		speedR= speedR>1?1:speedR;
-		speedR= speedR<-1?-1:speedR;
 			
 	}		
 	
 	// Make this return true when this Command no longer needs to run execute()
+	//checks if the minibot has traveled more the distance that you told it to
 		@Override
 		public boolean isFinished() {
-			if(getDistance() > Math.abs(dist)){
-				
-				return true;
-			}
-			return false;
-
+			
 		}
 		
-			
+			//calculated the distance traveled
 		public double getDistance()
 		{
-			double distance = (driveBase.getLeftEncoder().getDistance());
-			return Math.abs(distance);
+			
 		}
 
 }
