@@ -74,6 +74,8 @@ public class DriveBase extends SubsystemBase {
 	 * @throws InterruptedException
 	 */
 	public void tankDrive(double leftSpeed, double rightSpeed) {
+		this.leftSpeed = leftSpeed;
+		this.rightSpeed = rightSpeed;
 		tankDrive(leftSpeed, rightSpeed, false);
 	}
 
@@ -97,7 +99,9 @@ public class DriveBase extends SubsystemBase {
 	 * Stops the motors on the drive base (sets them to 0).
 	 */
 	public void stop() {
-		
+		left.set(0);
+		right.set(0);
+		//tankDrive(0,0);
 	}
 
 	public void initDefaultCommand() {

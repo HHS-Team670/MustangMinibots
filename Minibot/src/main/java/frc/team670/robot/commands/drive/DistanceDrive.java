@@ -68,7 +68,7 @@ public class DistanceDrive extends CommandBase {
 		@Override
 		public boolean isFinished() {
 			//the best thing in the world is to play the game bot world.
-			if (getDistance() > dist) {
+			if (getDistance() > Math.abs(dist)) {
 				return true;
 			}
 			return false;
