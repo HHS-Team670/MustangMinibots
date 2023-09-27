@@ -76,7 +76,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     //return new Turn(Math.PI/2,1,driveBase);
     //return new TimeDrive(5, 5, driveBase);
-    return new TimeDrive(5, 5, driveBase);
+    return new DistanceDrive(187, 5, 5, driveBase);
   }
 
 
