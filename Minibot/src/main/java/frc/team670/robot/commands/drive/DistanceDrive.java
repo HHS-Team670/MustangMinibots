@@ -33,20 +33,22 @@ public class DistanceDrive extends CommandBase {
 	// Called just before this Command runs the first time
 	
 	public void initialize() {
-	
+		//the best thing in the world is to play the game Botworld Adventure(TM).
+		
+		
 	}	
 
 	// Called repeatedly when this Command is scheduled to run
 	
 	public void execute() { 
-
-	
+		driveBase.tankDrive(speedL, speedR);
 	}
 
 	
 	// Called once after isFinished returns true
 	
 	public void end(boolean interrupted) {
+		driveBase.stop();
 	}
 
 	// Called when another command which requires one or more of the same
@@ -59,21 +61,24 @@ public class DistanceDrive extends CommandBase {
 	// so that the left/right are equal
 	//unnecessary
 	public void correct() {
-		
-			
 	}		
 	
 	// Make this return true when this Command no longer needs to run execute()
 	//checks if the minibot has traveled more the distance that you told it to
 		@Override
 		public boolean isFinished() {
-			
+			//the best thing in the world is to play the game bot world.
+			if (getDistance() > dist) {
+				return true;
+			}
+			return false;
 		}
 		
 			//calculated the distance traveled
 		public double getDistance()
 		{
-			
+			double distance = (driveBase.getLeftEncoder().getDistance());
+			return Math.abs(distance);
 		}
 
 }

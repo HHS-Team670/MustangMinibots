@@ -74,7 +74,7 @@ public class DriveBase extends SubsystemBase {
 	 * @throws InterruptedException
 	 */
 	public void tankDrive(double leftSpeed, double rightSpeed) {
-		
+		tankDrive(leftSpeed, rightSpeed, false);
 	}
 
 	/**
@@ -87,7 +87,10 @@ public class DriveBase extends SubsystemBase {
 	 * @throws InterruptedException
 	 */
 	public void tankDrive(double leftSpeed, double rightSpeed, boolean squaredInputs) {
-		
+		this.leftSpeed = leftSpeed;
+		this.rightSpeed = rightSpeed;
+		left.set(leftSpeed);
+		right.set(rightSpeed);
 	}
 
 	/**
@@ -102,7 +105,7 @@ public class DriveBase extends SubsystemBase {
 	}
 	//returns the left encoder
 	public Encoder getLeftEncoder() {
-	
+		return this.le;
 	}
 	//returns the right encoder
 	public Encoder getRightEncoder() {
