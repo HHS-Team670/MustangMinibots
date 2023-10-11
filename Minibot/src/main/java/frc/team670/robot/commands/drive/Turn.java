@@ -53,7 +53,7 @@ public class Turn extends CommandBase {
 	// subsystems is scheduled to run
 	public void interrupted() {
 		end(true);
-	}	
+	}
 	
 	
 	
