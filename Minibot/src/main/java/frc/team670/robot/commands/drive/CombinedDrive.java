@@ -18,9 +18,9 @@ public class CombinedDrive extends SequentialCommandGroup {
 	public CombinedDrive(DriveBase drivebase) {
 		addRequirements(drivebase);
         addCommands(
-			new TimeDrive(5, 1, drivebase),
+			//new TimeDrive(5, 1, drivebase),
 			new WaitCommand(4), 
-			new TimeDrive(5, 1, drivebase),
+			//new TimeDrive(5, 1, drivebase),
 			new WaitCommand(4),
 			new DistanceDrive(30, 1, 1, drivebase),
 			new WaitCommand(4),

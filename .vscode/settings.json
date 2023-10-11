@@ -1,3 +1,4 @@
 {
-    "java.configuration.updateBuildConfiguration": "disabled"
+    "java.configuration.updateBuildConfiguration": "disabled",
+    "java.import.gradle.java.home": "C:\\Program Files\\Java\\jdk-11.0.0.1"
 }
