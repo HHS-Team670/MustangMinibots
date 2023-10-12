@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.team670.robot.commands.drive.BalancedDrive;
-import frc.team670.robot.commands.drive.CombinedDrive;
+// import frc.team670.robot.commands.drive.CombinedDrive;
 import frc.team670.robot.commands.drive.DistanceDrive;
 import frc.team670.robot.commands.drive.TimeDrive;
 import frc.team670.robot.commands.drive.Turn;
@@ -76,7 +76,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     //return new Turn(Math.PI/2,1,driveBase);
     //return new TimeDrive(5, 5, driveBase);
-    return new TimeDrive(5, 5, driveBase);
+    return new TimeDrive(5, 1, 0, driveBase);
   }
 
 
