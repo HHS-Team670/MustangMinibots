@@ -10,6 +10,7 @@ package frc.team670.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.team670.robot.Robot;
+import frc.team670.robot.subsystems.DriveBase;
 import frc.team670.robot.utils.Logger;
 
 /**
@@ -19,10 +20,14 @@ public class TimeDrive extends Command {
 
     private double speed, seconds;
     private int executeCounter;
+    private double powerL, powerR;
+    
 
-  public TimeDrive(double seconds, double speed) {
-    this.speed = speed;
-    this.seconds = seconds;
+  public TimeDrive(double seconds, DriveBase driveBase) {
+	  super(seconds);
+	  this.powerL = 0.3;
+	  this.powerR = 0.6;
+    
     executeCounter = 0;
     requires(Robot.driveBase);
   }
@@ -61,4 +66,6 @@ public class TimeDrive extends Command {
   protected void interrupted() {
     end();
   }
+  
+  
 }
