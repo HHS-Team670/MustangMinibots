@@ -22,7 +22,7 @@ public class CombinedDrive extends SequentialCommandGroup {
 			new TimeDrive(5, 10, 10, drivebase),
 			new Turn(-(Math.PI*2), 0, drivebase),
 			//new WaitCommand(4), 
-			new TimeDrive(5, 10, 10, drivebase),
+			new TimeDrive(5, 10, 10, drivebase)
 			//new WaitCommand(4),
 			//new DistanceDrive(30, 1, 1, drivebase),
 			//new WaitCommand(4),
