@@ -18,13 +18,13 @@ public class CombinedDrive extends SequentialCommandGroup {
 	public CombinedDrive(DriveBase drivebase) {
 		addRequirements(drivebase);
         addCommands(
-			new Turn(Math.PI/24, 0, drivebase),
+			new TimeDrive(1, 0.1, 0, drivebase),
 			new WaitCommand(4), 
-			new TimeDrive(5, 10, 10, drivebase),
+			new TimeDrive(5, 0.1, 0.1, drivebase),
 			new WaitCommand(4), 
-			new Turn(-(Math.PI/12), 0, drivebase),
+			new TimeDrive(1, 0, 0.1, drivebase),
 			new WaitCommand(4), 
-			new TimeDrive(5, 10, 10, drivebase)
+			new TimeDrive(5, 0.1, 0.1, drivebase)
 			//new WaitCommand(4),
 			//new DistanceDrive(30, 1, 1, drivebase),
 			//new WaitCommand(4),
